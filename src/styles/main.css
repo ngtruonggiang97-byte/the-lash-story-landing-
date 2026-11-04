@@ -4,7 +4,11 @@
 :root {
   --deco: #bfa88a;              /* sand dam hon 1 bac cho hoa tiet tren nen pearl */
   --sec: clamp(88px, 14vw, 160px);  /* khoang cach giua cac section */
+  /* Co chung cho H2 lon (Our Story, Collection, Menu, Dat lich, Inspiration).
+     Nho ro so voi H1 hero: mobile ~41px vs 55px, desktop 1440 ~86px vs 138px. */
+  --h2: clamp(40px, 10.5vw, 56px);
 }
+@media (min-width: 1024px) { :root { --h2: clamp(64px, 6vw, 88px); } }
 
 .skip { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--moss); color: var(--pearl); padding: 10px 14px; }
 .skip:focus { left: 8px; }
@@ -131,8 +135,7 @@
     radial-gradient(60% 60% at 85% 80%, #8a7f6a 0%, transparent 70%),
     linear-gradient(200deg, #a2957f, #5f5846); }
 .story__ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.story__ph--1, .story__ph--3 { aspect-ratio: 4 / 5; }
-.story__ph--2 { aspect-ratio: 3 / 2; }
+.story__ph { aspect-ratio: 4 / 5; } /* ca 4 anh doc 4:5 */
 /* nhan nho o goc, chi hien khi dang la anh tam (JS gan .is-ph). Cung co chu voi nhan hero. */
 .story__label {
   display: none; position: absolute; left: 12px; bottom: 12px; max-width: calc(100% - 24px);
@@ -142,29 +145,31 @@
 .story__label b { font-weight: 500; letter-spacing: .04em; margin-right: 4px; }
 .story__ph.is-ph .story__label { display: block; }
 
-/* Mobile: chu -> anh 1 + anh 3 canh nhau (anh 3 lech xuong) -> anh 2 ngang rong het le.
-   Tat ca nam trong le noi dung, khong tran mep. */
-.story__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
-.story__left { display: contents; }
+/* Mobile: chu, roi 4 anh 4:5 xep 2 cot so le (cot phai ha xuong 32px).
+   Cot trai: anh 1, anh 2. Cot phai: anh 3, anh 4. */
+.story__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; padding-bottom: 32px; }
+.story__left, .story__mid { display: contents; }
 .story__text { grid-column: 1 / -1; grid-row: 1; margin-bottom: 28px; }
 .story__ph--1 { grid-column: 1; grid-row: 2; }
-.story__ph--3 { grid-column: 2; grid-row: 2; margin-top: 32px; }
-.story__ph--2 { grid-column: 1 / -1; grid-row: 3; }
+.story__ph--3 { grid-column: 2; grid-row: 2; top: 32px; }
+.story__ph--2 { grid-column: 1; grid-row: 3; }
+.story__ph--4 { grid-column: 2; grid-row: 3; top: 32px; }
 
-/* Desktop: 3 cot bang nhau tren luoi 12 (moi cot 4 o), cao gon ~ 1 man hinh.
-   Cot trai: doan van + dia chi o tren, anh 2 (3:2) o duoi. Cot giua: anh 1 (4:5).
-   Cot phai: anh 3 (4:5) ha thap 1 nhip. Day anh 2 ngang day anh 1. */
+/* Desktop: 3 cot bang nhau tren luoi 12 (moi cot 4 o), theo bo cuc Ryan chot:
+   Cot trai: doan van + dia chi, ngay duoi la anh 2. Cot giua: anh 1, duoi la anh 4.
+   Cot phai: anh 3 ha thap 1 nhip. */
 @media (min-width: 1024px) {
   .story { padding-bottom: 24px; }
-  .story .story__head { margin-bottom: 28px; }      /* chan chu "y" khong cham dong phu */
+  .story .story__head { margin-bottom: 24px; }      /* chan chu "y" khong cham dong phu */
   .story__sub { margin-bottom: 56px; }
-  .story__grid { grid-template-columns: repeat(12, 1fr); column-gap: 24px; row-gap: 0; }
-  .story__left { display: flex; flex-direction: column; grid-column: 1 / 5; grid-row: 1; align-self: stretch; }
-  .story__text { margin: 0 0 40px; }
+  .story__grid { grid-template-columns: repeat(12, 1fr); column-gap: 24px; row-gap: 0; padding-bottom: 0; }
+  .story__left, .story__mid { display: flex; flex-direction: column; gap: 24px; grid-row: 1; }
+  .story__left { grid-column: 1 / 5; gap: 0; }
+  .story__mid { grid-column: 5 / 9; }
+  .story__text { margin: 0 0 32px; }
   .story__body { font-size: 15px; max-width: none; }
-  .story__ph--2 { margin-top: auto; }
-  .story__ph--1 { grid-column: 5 / 9; grid-row: 1; }
-  .story__ph--3 { grid-column: 9 / 13; grid-row: 1; margin-top: 72px; }
+  .story__ph--3 { grid-column: 9 / 13; grid-row: 1; top: 0; margin-top: 72px; }
+  .story__ph--4 { top: 0; }
 }
 
 /* Anh 2 va 3 troi rat nhe theo cuon (CSS scroll-driven, dung `translate` de khong
@@ -209,9 +214,9 @@ a.studio:hover img { opacity: .75; }
 .coll__head { position: relative; display: flex; align-items: flex-end; gap: 16px; margin-bottom: 40px; }
 .coll__title {
   margin: 0; font-family: var(--f-en); font-weight: 400;
-  font-size: clamp(52px, 15vw, 168px); line-height: 1; letter-spacing: -.04em; color: var(--moss);
+  font-size: var(--h2); line-height: 1; letter-spacing: -.04em; color: var(--moss);
 }
-.coll__bf { width: clamp(44px, 9vw, 92px); margin-bottom: .6em; transform: rotate(-8deg); }
+.coll__bf { width: calc(var(--h2) * .72); margin-bottom: .6em; transform: rotate(-8deg); }
 .coll__stage { display: grid; gap: 36px; }
 
 .deck {
@@ -292,7 +297,7 @@ a.studio:hover img { opacity: .75; }
 }
 .menu__paper { position: relative; background: var(--pearl); padding: 56px 20px 48px; }
 .menu__head { display: grid; gap: 12px; margin-bottom: 40px; }
-.menu__title { margin: 0; font-family: var(--f-en); font-weight: 400; font-size: clamp(52px, 15vw, 140px); line-height: 1; letter-spacing: -.04em; color: var(--moss); }
+.menu__title { margin: 0; font-family: var(--f-en); font-weight: 400; font-size: var(--h2); line-height: 1; letter-spacing: -.04em; color: var(--moss); }
 .menu__date { margin: 0; font-size: 13px; }
 
 .menu__groups { display: grid; gap: 48px; }
@@ -321,7 +326,7 @@ a.studio:hover img { opacity: .75; }
 .book { padding: var(--sec) var(--gutter) 0; display: grid; gap: 40px; }
 .book__intro { position: relative; }
 .book__bf { width: 48px; margin-bottom: 16px; }
-.book__title { margin: 0; font-family: var(--f-vi); font-weight: 500; font-size: clamp(48px, 13vw, 104px); line-height: 1.05; color: var(--moss); padding-bottom: .05em; }
+.book__title { margin: 0; font-family: var(--f-vi); font-weight: 500; font-size: calc(var(--h2) * 1.1); /* Cormorant nho hon Baskerville cung co */ line-height: 1.05; color: var(--moss); padding-bottom: .05em; }
 .book__lead { margin: 14px 0 28px; max-width: 34ch; font-size: 15px; }
 .book__links { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
 
@@ -386,7 +391,7 @@ a.studio:hover img { opacity: .75; }
 .foot { margin-top: var(--sec); }
 .insta { padding: 0 0 64px; }
 .insta__head { display: grid; justify-items: start; gap: 10px; padding: 0 var(--gutter); margin-bottom: 28px; }
-.insta__title { margin: 0; font-family: var(--f-en); font-weight: 400; font-size: clamp(44px, 12vw, 120px); line-height: 1; letter-spacing: -.04em; color: var(--moss); }
+.insta__title { margin: 0; font-family: var(--f-en); font-weight: 400; font-size: var(--h2); line-height: 1; letter-spacing: -.04em; color: var(--moss); }
 .insta__handle { font-family: var(--f-en); font-style: italic; font-size: 16px; color: var(--moss); text-underline-offset: 5px; text-decoration-thickness: 1px; }
 .insta__row {
   display: grid; grid-auto-flow: column; grid-auto-columns: 62vw; gap: 8px;
