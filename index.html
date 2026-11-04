@@ -44,26 +44,41 @@
 
     <!-- ========== OUR STORY ========== -->
     <section class="story" aria-labelledby="story-title" data-reveal-group>
-      <div class="story__text">
-        <p class="story__label" data-reveal="fade">Since 2018</p>
-        <h2 id="story-title" class="story__title" data-reveal="words">A quiet corner on Quán Thánh</h2>
-        <p class="story__body" data-reveal="fade" style="--delay: calc(var(--stagger) * 3)">The Nail Story mở cửa từ cuối năm 2018, ở một góc nhỏ trên phố Quán Thánh. Mỗi bộ móng ở đây bắt đầu từ việc lắng nghe: bạn sắp đi đâu, mặc gì, dạo này thích điều gì. Từ đó màu, form và từng chi tiết nhỏ được chọn, để bộ móng mang câu chuyện của riêng bạn.</p>
-        <ul class="story__facts" data-reveal="fade" style="--delay: calc(var(--stagger) * 5)">
-          <li>Từ 12/2018</li>
-          <li>43 Quán Thánh, Ba Đình</li>
-          <li>Tư vấn và báo giá trước khi làm</li>
-        </ul>
+      <!-- Tieu de dung chung class voi Collection de khop font, co, le, khoang cach -->
+      <div class="coll__head story__head">
+        <h2 id="story-title" class="coll__title" data-reveal="chars">Our Story</h2>
+        <span class="mask mask--bf2 coll__bf story__bf" aria-hidden="true" data-reveal="fade"></span>
       </div>
-      <!-- 3 anh doc 4:5: chep de file trong public/images/story/ (giu ten story-1/2/3.webp) -->
-      <div class="story__photos">
-        <figure class="story__ph story__ph--1" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">
+      <p class="story__sub" data-reveal="fade">A quiet corner on Quán Thánh</p>
+
+      <!--
+        Anh khong gian: chep de vao public/images/story/, giu nguyen ten file.
+        File tam hien tai la anh trong suot rat nho; khi co anh that (> 64px) nhan "ANH x" tu an.
+        Cach chup chi tiet: xem SHOTLIST.md (muc Our Story).
+          story-1.webp  doc 4:5   (>= 1200x1500)  Toan canh studio
+          story-2.webp  ngang 3:2 (>= 1800x1200)  Goc cho / ban lam mong
+          story-3.webp  doc 4:5   (>= 1200x1500)  Can chi tiet: ke mau, do nghe
+      -->
+      <div class="story__grid">
+        <div class="story__left">
+          <div class="story__text">
+            <p class="story__body" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">The Nail Story mở cửa từ cuối năm 2018, ở một góc nhỏ trên phố Quán Thánh. Mỗi bộ móng ở đây bắt đầu từ việc lắng nghe: bạn sắp đi đâu, mặc gì, dạo này thích điều gì. Từ đó màu, form và từng chi tiết nhỏ được chọn, để bộ móng mang câu chuyện của riêng bạn.</p>
+            <p class="story__facts" data-reveal="fade" style="--delay: calc(var(--stagger) * 3)">
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=43+Qu%C3%A1n+Th%C3%A1nh+Ba+%C4%90%C3%ACnh+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener"><i data-icon="map-pin"></i>43 Quán Thánh, Ba Đình</a>
+            </p>
+          </div>
+          <figure class="story__ph story__ph--2" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">
+            <img src="/images/story/story-2.webp" alt="Góc chờ và bàn làm móng tại studio" width="1800" height="1200" loading="lazy" decoding="async" />
+            <figcaption class="story__label"><b>ẢNH 2 · 3:2</b> Góc chờ / bàn làm móng</figcaption>
+          </figure>
+        </div>
+        <figure class="story__ph story__ph--1" data-reveal="fade" style="--delay: var(--stagger)">
           <img src="/images/story/story-1.webp" alt="Toàn cảnh studio The Nail Story" width="1200" height="1500" loading="lazy" decoding="async" />
+          <figcaption class="story__label"><b>ẢNH 1 · 4:5</b> Toàn cảnh studio</figcaption>
         </figure>
-        <figure class="story__ph story__ph--2" data-reveal="fade" style="--delay: calc(var(--stagger) * 3)">
-          <img src="/images/story/story-2.webp" alt="Góc ghế chờ và bàn làm móng tại studio" width="1200" height="1500" loading="lazy" decoding="async" />
-        </figure>
-        <figure class="story__ph story__ph--3" data-reveal="fade" style="--delay: calc(var(--stagger) * 4)">
+        <figure class="story__ph story__ph--3" data-reveal="fade" style="--delay: calc(var(--stagger) * 3)">
           <img src="/images/story/story-3.webp" alt="Cận cảnh kệ màu và đồ nghề" width="1200" height="1500" loading="lazy" decoding="async" />
+          <figcaption class="story__label"><b>ẢNH 3 · 4:5</b> Cận chi tiết: kệ màu, đồ nghề</figcaption>
         </figure>
       </div>
     </section>

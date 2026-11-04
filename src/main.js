@@ -37,6 +37,13 @@ $("[data-slots]").innerHTML = TIME_SLOTS.map((t) => `
 
 mountIcons();
 
+/* ================= Our Story: nhan anh tam ================= */
+// File tam trong public/images/story/ la anh trong suot vai pixel. Khi chep de anh that, nhan tu an.
+$$(".story__ph img").forEach((im) => {
+  const mark = () => im.closest(".story__ph").classList.toggle("is-ph", im.naturalWidth > 0 && im.naturalWidth < 64);
+  im.complete ? mark() : im.addEventListener("load", mark, { once: true });
+});
+
 /* ================= Collection: chong the ================= */
 const deck = $("[data-deck]");
 const info = $(".info");
