@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Mockup A · Vỏ ngọc · The Nail Story</title>
+  <link rel="preload" href="/fonts/LibreBaskerville.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/src/styles/base.css" />
+  <link rel="stylesheet" href="/src/mockups/a.css" />
+</head>
+<body>
+  <div class="mock-badge">Mockup A · Vỏ ngọc · Font nội dung tạm: Be Vietnam Pro (chờ Aptima / TT Norm)</div>
+
+  <header class="nav">
+    <a href="#" class="nav__logo" aria-label="The Nail Story - về đầu trang">
+      <img src="/img/logo/logo-tns-ink.png" alt="Studio The Nail Story" width="786" height="140" />
+    </a>
+    <a href="#dat-lich" class="nav__cta">Đặt lịch</a>
+  </header>
+
+  <main>
+    <!-- HERO: khung vom lech phai, chu trai chong len mep duoi -->
+    <section class="hero" aria-label="Giới thiệu">
+      <figure class="hero__frame shot nacre-sweep">
+        <img class="hero__butterfly" src="/img/logo/butterfly-ink.png" alt="" width="98" height="93" />
+        <figcaption class="shot__label">
+          <b>ẢNH KHÔNG GIAN · dọc 4:5 (mobile) / 3:4 (desktop)</b>
+          Góc bàn làm nail cạnh cửa sổ, ánh chiều xiên trái. Không người. Khay ngọc trai, lọ sơn, một cành hoa trắng. Chừa khoảng trống phía dưới cho chữ.
+        </figcaption>
+      </figure>
+
+      <div class="hero__copy">
+        <h1 class="hero__title">Every set<br /><em>tells a story</em></h1>
+        <p class="hero__sub">Nail art ở một góc nhỏ phố Quán Thánh, từ 2018.</p>
+        <div class="hero__actions">
+          <a href="#dat-lich" class="btn btn--solid">Đặt lịch</a>
+          <a href="#collection" class="link">Xem mẫu</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLLECTION: dai oval vuot ngang, vien xa cu doi anh theo toc do vuot -->
+    <section class="coll" id="collection" aria-labelledby="coll-title">
+      <div class="coll__head">
+        <h2 id="coll-title" class="coll__title">Mẫu đã làm<br />tại studio</h2>
+        <p class="coll__count" aria-live="polite"><span data-current>01</span> / 12</p>
+      </div>
+
+      <div class="coll__track" data-track tabindex="0" aria-label="Collection, vuốt ngang để xem"></div>
+
+      <div class="coll__foot">
+        <div class="coll__progress" aria-hidden="true"><span data-progress></span></div>
+        <div class="coll__arrows">
+          <button class="arrow" data-prev aria-label="Mẫu trước">&#8592;</button>
+          <button class="arrow" data-next aria-label="Mẫu sau">&#8594;</button>
+        </div>
+      </div>
+      <p class="coll__note">Mỗi bộ được tư vấn và báo giá trước khi làm. Chi tiết có thể chỉnh theo ý và ngân sách của bạn.</p>
+    </section>
+
+    <section id="dat-lich" class="form-stub">
+      <p>Form đặt lịch (dựng ở bước sau). Mẫu đã chọn: <strong data-picked>chưa chọn</strong></p>
+    </section>
+  </main>
+
+  <script type="module" src="/src/mockups/a.js"></script>
+</body>
+</html>

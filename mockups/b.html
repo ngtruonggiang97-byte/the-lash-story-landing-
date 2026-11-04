@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Mockup B · Lookbook · The Nail Story</title>
+  <link rel="preload" href="/fonts/LibreBaskerville.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/src/styles/base.css" />
+  <link rel="stylesheet" href="/src/mockups/b.css" />
+</head>
+<body>
+  <div class="mock-badge">Mockup B · Lookbook · Font nội dung tạm: Be Vietnam Pro (chờ Aptima / TT Norm)</div>
+
+  <main>
+    <!-- HERO: anh full-bleed, tagline lon phu foil xa cu -->
+    <section class="hero" aria-label="Giới thiệu">
+      <div class="hero__bg shot" aria-hidden="true">
+        <p class="shot__label">
+          <b>ẢNH / VIDEO KHÔNG GIAN · dọc 9:16 (mobile) / ngang 16:9 (desktop)</b>
+          Toàn cảnh studio nhìn từ cửa vào, ánh sáng tự nhiên, tone ấm. Một khách ngồi xa, tay đặt trên bàn, mặt ngoài khung. Nửa dưới khung tối và trống để đặt chữ. Video: 6-8s, máy trượt chậm.
+        </p>
+      </div>
+
+      <header class="nav">
+        <a href="#" class="nav__logo" aria-label="The Nail Story - về đầu trang">
+          <img src="/img/logo/logo-tns-pearl.png" alt="Studio The Nail Story" width="786" height="140" />
+        </a>
+        <a href="#dat-lich" class="nav__cta">Đặt lịch</a>
+      </header>
+
+      <div class="hero__copy">
+        <h1 class="hero__title nacre-text">Every set<br class="br-m" /><br class="br-d" /> tells a<br class="br-m" /> story</h1>
+        <div class="hero__row">
+          <p class="hero__sub">Nail art ở một góc nhỏ phố Quán Thánh, từ 2018.</p>
+          <a href="#dat-lich" class="btn btn--pearl">Đặt lịch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLLECTION: chong the nhu bang mau mong, vuot de lat -->
+    <section class="coll" id="collection" aria-labelledby="coll-title">
+      <h2 id="coll-title" class="coll__title">Mẫu đã làm tại studio</h2>
+
+      <div class="coll__stage">
+        <div class="deck" data-deck aria-roledescription="carousel" aria-label="Collection"></div>
+
+        <div class="info" aria-live="polite">
+          <p class="info__idx"><span data-idx>01</span> <span class="info__of">/ 12</span></p>
+          <h3 class="info__name" data-name></h3>
+          <p class="info__meta"><span data-base></span> · <span data-ext></span></p>
+          <p class="info__price" data-price></p>
+          <div class="info__actions">
+            <button class="btn btn--moss" type="button" data-pick aria-pressed="false">Chọn mẫu này</button>
+            <div class="arrows">
+              <button class="arrow" data-prev aria-label="Mẫu trước">&#8592;</button>
+              <button class="arrow" data-next aria-label="Mẫu sau">&#8594;</button>
+            </div>
+          </div>
+          <p class="info__note">Mỗi bộ được tư vấn và báo giá trước khi làm. Chi tiết có thể chỉnh theo ý và ngân sách của bạn.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="dat-lich" class="form-stub">
+      <p>Form đặt lịch (dựng ở bước sau). Mẫu đã chọn: <strong data-picked>chưa chọn</strong></p>
+    </section>
+  </main>
+
+  <script type="module" src="/src/mockups/b.js"></script>
+</body>
+</html>

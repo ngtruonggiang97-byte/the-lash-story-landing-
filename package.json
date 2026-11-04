@@ -1,0 +1,20 @@
+{
+  "name": "the-nail-story-landing",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "shots": "node scripts/shots.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.64.1",
+    "vite": "^6.4.5"
+  },
+  "dependencies": {
+    "@phosphor-icons/core": "^2.1.1",
+    "simple-icons": "^16.36.0"
+  }
+}
