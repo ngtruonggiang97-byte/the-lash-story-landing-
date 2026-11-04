@@ -30,14 +30,15 @@
 
   /* ---- Motion tokens: cham, mem. Moi thoi luong / easing tren trang lay tu day ---- */
   --ease-soft: cubic-bezier(.37, 0, .63, 1); /* ease-in-out sine: hien ra, chuyen canh */
-  --dur-reveal: 1.6s;   /* chu / khoi hien ra khi cuon */
-  --dur-slow: 2.2s;     /* anh, mat na anh, hero */
-  --dur-hover: .6s;     /* hover, doi noi dung nho */
-  --dur-ui: .35s;       /* phan hoi bam nut, focus input */
-  --dur-nacre: 5.5s;    /* foil xa cu tren tagline hero */
-  --dur-card: 1.1s;     /* collection: card bay di / card sau hien len */
-  --dur-card-back: .9s; /* collection: card tra ve cho cu */
-  --stagger: 140ms;     /* do tre giua cac tu / phan tu */
+  /* v2 (Ryan: "on nhung cham qua"): rut ~30%, giu easing sine */
+  --dur-reveal: 1.1s;   /* chu / khoi hien ra khi cuon */
+  --dur-slow: 1.5s;     /* anh, mat na anh, hero */
+  --dur-hover: .45s;    /* hover, doi noi dung nho */
+  --dur-ui: .3s;        /* phan hoi bam nut, focus input */
+  --dur-nacre: 4s;      /* foil xa cu tren tagline hero */
+  --dur-card: .8s;      /* collection: card bay di / card sau hien len */
+  --dur-card-back: .6s; /* collection: card tra ve cho cu */
+  --stagger: 100ms;     /* do tre giua cac tu / phan tu */
   --rise: 14px;         /* quang dich chuyen toi da khi hien ra */
   --blur-in: 4px;
   --gutter: 20px;
