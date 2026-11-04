@@ -45,15 +45,22 @@
   display: flex; flex-direction: column; justify-content: space-between;
   color: var(--pearl); overflow: hidden;
 }
-.hero__bg { position: absolute; inset: 0; z-index: -1; }
-.hero__bg.shot {
-  background:
-    linear-gradient(180deg, rgba(40, 36, 28, .35) 0%, transparent 25%, transparent 45%, rgba(40, 36, 28, .78) 100%),
-    radial-gradient(70% 55% at 72% 30%, #b9a991 0%, transparent 70%),
-    radial-gradient(60% 50% at 20% 60%, #8a7f6a 0%, transparent 70%),
-    linear-gradient(160deg, #a2957f, #5f5846);
+.hero__bg { position: absolute; inset: 0; z-index: -1; background: #5f5846; }
+.hero__bg picture { position: absolute; inset: 0; }
+.hero__bg img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+/* lop toi tren/duoi de logo, tagline va nut doc duoc tren anh mat tien */
+.hero__bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(40, 36, 28, .45) 0%, rgba(40, 36, 28, .1) 22%, rgba(40, 36, 28, .15) 45%, rgba(40, 36, 28, .82) 100%);
 }
-.hero__bg .shot__label { inset: 76px 16px auto auto; max-width: 300px; font-size: 10.5px; }
+@media (min-width: 1024px) {
+  /* desktop: chu nam de len mai hien sang mau, them lop toi o goc trai duoi */
+  .hero__bg::after {
+    background:
+      radial-gradient(70% 75% at 15% 100%, rgba(40, 36, 28, .7) 0%, transparent 70%),
+      linear-gradient(180deg, rgba(40, 36, 28, .45) 0%, rgba(40, 36, 28, .1) 22%, rgba(40, 36, 28, .25) 50%, rgba(40, 36, 28, .85) 100%);
+  }
+}
 
 .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 var(--gutter); }
 .nav__logo img { width: 132px; height: auto; }
@@ -92,7 +99,6 @@
   .br-m { display: none; } .br-d { display: inline; }
   .hero { min-height: min(100svh, 1000px); }
   .nav { height: 72px; } .nav__logo img { width: 168px; }
-  .hero__bg .shot__label { inset: 96px var(--gutter) auto auto; max-width: 340px; font-size: 12px; }
   .hero__copy { padding-bottom: 40px; }
   .hero__title { font-size: clamp(88px, 9.6vw, 160px); }
   .hero__row { flex-direction: row; align-items: flex-end; justify-content: space-between; margin-top: 28px; }
@@ -136,36 +142,37 @@
 .story__label b { font-weight: 500; letter-spacing: .04em; margin-right: 4px; }
 .story__ph.is-ph .story__label { display: block; }
 
-/* Mobile: chu -> anh 1 rong het le -> anh 2 + 3 canh nhau, tran ra mep man hinh (moi anh ~49% be ngang) */
-.story__grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 10px; align-items: start; }
+/* Mobile: chu -> anh 1 + anh 3 canh nhau (anh 3 lech xuong) -> anh 2 ngang rong het le.
+   Tat ca nam trong le noi dung, khong tran mep. */
+.story__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
 .story__left { display: contents; }
-.story__text { grid-column: 1 / -1; grid-row: 1; margin-bottom: 40px; }
-.story__ph--1 { grid-column: 1 / -1; grid-row: 2; }
-.story__ph--2 { grid-column: 1; grid-row: 3; margin: 10px 0 0 calc(var(--gutter) * -1); }
-.story__ph--3 { grid-column: 2; grid-row: 3; margin: 56px calc(var(--gutter) * -1) 0 0; }
+.story__text { grid-column: 1 / -1; grid-row: 1; margin-bottom: 28px; }
+.story__ph--1 { grid-column: 1; grid-row: 2; }
+.story__ph--3 { grid-column: 2; grid-row: 2; margin-top: 32px; }
+.story__ph--2 { grid-column: 1 / -1; grid-row: 3; }
 
-/* Desktop: luoi 12 cot, cung le voi cac section khac.
-   Hang 2: doan van cot 1-5, anh 1 cot 7-12 (canh tren ngang dong dau doan van).
-   Hang 3: anh 2 cot 1-6 keo len khoang trong duoi doan van; anh 3 cot 8-11 ha thap hon. */
+/* Desktop: 3 cot bang nhau tren luoi 12 (moi cot 4 o), cao gon ~ 1 man hinh.
+   Cot trai: doan van + dia chi o tren, anh 2 (3:2) o duoi. Cot giua: anh 1 (4:5).
+   Cot phai: anh 3 (4:5) ha thap 1 nhip. Day anh 2 ngang day anh 1. */
 @media (min-width: 1024px) {
-  .story { padding-bottom: 48px; }                  /* cho cho anh 3 troi xuong */
+  .story { padding-bottom: 24px; }
   .story .story__head { margin-bottom: 28px; }      /* chan chu "y" khong cham dong phu */
-  .story__sub { margin-bottom: 64px; }
-  .story__grid { grid-template-columns: repeat(12, 1fr); column-gap: 24px; }
-  .story__left { display: flex; flex-direction: column; grid-column: 1 / 7; grid-row: 1; align-self: stretch; }
-  .story__text { margin: 0 0 72px; max-width: calc((100% - 5 * 24px) / 6 * 5 + 4 * 24px); }
-  .story__body { font-size: 16px; max-width: 44ch; }
-  .story__ph--1 { grid-column: 7 / 13; grid-row: 1; }
-  .story__ph--2 { margin: auto 0 -96px; }           /* day xuong cuoi cot trai, thong qua day anh 1 */
-  .story__ph--3 { grid-column: 8 / 12; grid-row: 2; margin: 48px 0 0; }
+  .story__sub { margin-bottom: 56px; }
+  .story__grid { grid-template-columns: repeat(12, 1fr); column-gap: 24px; row-gap: 0; }
+  .story__left { display: flex; flex-direction: column; grid-column: 1 / 5; grid-row: 1; align-self: stretch; }
+  .story__text { margin: 0 0 40px; }
+  .story__body { font-size: 15px; max-width: none; }
+  .story__ph--2 { margin-top: auto; }
+  .story__ph--1 { grid-column: 5 / 9; grid-row: 1; }
+  .story__ph--3 { grid-column: 9 / 13; grid-row: 1; margin-top: 72px; }
 }
 
-/* Anh 2 va 3 troi rat cham theo cuon, toi da 36px (CSS scroll-driven, dung `translate` de khong
+/* Anh 2 va 3 troi rat nhe theo cuon (CSS scroll-driven, dung `translate` de khong
    dung cham transform cua hieu ung hien ra) */
 @supports (animation-timeline: view()) {
   .story__ph--2, .story__ph--3 { animation: story-drift linear both; animation-timeline: view(); animation-range: cover; }
-  .story__ph--2 { --drift: 28px; }
-  .story__ph--3 { --drift: 36px; }
+  .story__ph--2 { --drift: 12px; }
+  .story__ph--3 { --drift: 20px; }
 }
 @keyframes story-drift { from { translate: 0 var(--drift); } to { translate: 0 calc(var(--drift) * -1); } }
 
@@ -413,7 +420,8 @@ a.studio:hover img { opacity: .75; }
   border: 1px solid rgba(250, 249, 244, .3); transition: background-color var(--dur-ui) var(--ease-soft), border-color var(--dur-ui) var(--ease-soft);
 }
 .foot__social a:hover { background: rgba(250, 249, 244, .1); border-color: rgba(250, 249, 244, .6); }
-.foot__social svg { width: 17px; height: 17px; }
+.foot__social i { display: grid; place-items: center; line-height: 0; } /* <i> inline lam lech icon theo baseline */
+.foot__social svg { display: block; width: 17px; height: 17px; }
 .foot__social a[aria-label="Zalo"] svg { width: 28px; height: 28px; } /* logo Zalo la wordmark, can to hon */
 .foot__copy { margin: 8px 0 0; padding-top: 24px; border-top: 1px solid rgba(250, 249, 244, .18); font-size: 12px; opacity: .75; }
 :where(.foot__base) :focus-visible { outline-color: var(--pearl); }

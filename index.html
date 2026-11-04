@@ -18,12 +18,13 @@
   <main>
     <!-- ========== HERO ========== -->
     <section class="hero" aria-label="Giới thiệu">
-      <div class="hero__bg shot" aria-hidden="true">
-        <!-- TODO: thay bang anh / video khong gian khi chup xong (xem shot list) -->
-        <p class="shot__label">
-          <b>ẢNH / VIDEO KHÔNG GIAN · dọc 9:16 (mobile) / ngang 16:9 (desktop)</b>
-          Toàn cảnh studio nhìn từ cửa vào, ánh sáng tự nhiên, tone ấm. Nửa dưới khung tối và trống để đặt chữ.
-        </p>
+      <!-- Anh mat tien 43 Quan Thanh. Goc: assets/space/storefront-original.webp (713x854).
+           Thay anh: chep de public/images/hero/hero-mobile.webp (doc) va hero-desktop.webp (ngang 16:9). -->
+      <div class="hero__bg">
+        <picture>
+          <source media="(min-width: 1024px)" srcset="/images/hero/hero-desktop.webp" width="713" height="401" />
+          <img src="/images/hero/hero-mobile.webp" alt="Mặt tiền The Story Studio, 43 Quán Thánh" width="570" height="854" fetchpriority="high" decoding="async" />
+        </picture>
       </div>
 
       <header class="nav">
@@ -214,7 +215,7 @@
         <li><a href="#" aria-label="TikTok (chưa có link)"><i data-icon="tiktok"></i></a></li>
         <li><a href="https://zalo.me/0866566819" target="_blank" rel="noopener" aria-label="Zalo"><i data-icon="zalo"></i></a></li>
       </ul>
-      <p class="foot__copy">© 2026 The Nail Story · Từ 12/2018</p>
+      <p class="foot__copy">© 2026 The Nail Story</p>
     </div>
   </footer>
 
