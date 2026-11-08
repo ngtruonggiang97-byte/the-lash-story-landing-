@@ -1,4 +1,4 @@
-import { COLLECTION, fmtPrice, extLabel, img, bySlug } from "./data/collection.js";
+import { COLLECTION, fmtPrice, extLabel, img } from "./data/collection.js";
 import { PRICES, PRICE_DATE, TIME_SLOTS } from "./data/prices.js";
 import { mountIcons, ICONS } from "./icons.js";
 
@@ -57,11 +57,12 @@ $("[data-menu]").innerHTML = PRICES.map((g, gi) => `
     ${g.note ? `<p class="mgroup__note">${g.note}</p>` : ""}
   </div>`).join("");
 
-/* ================= Inspiration (anh tam) ================= */
-const INSTA = ["mighty-mirror", "milky-french-tip", "sepia-victorian", "leopard-luxe-french", "bow-tiful", "teal-marble-gem"];
-$("[data-insta]").innerHTML = INSTA.map((s, i) => `
-  <a class="itile" style="--i:${i}" href="https://www.instagram.com/thenailstory.studio/" target="_blank" rel="noopener" aria-label="Xem trên Instagram">
-    <img src="${img(s)}" alt="" width="${bySlug(s).w}" height="${bySlug(s).h}"${bySlug(s).pos ? ` style="object-position:${bySlug(s).pos}"` : ""} loading="lazy" decoding="async" />
+/* ================= Inspiration: 6 post Instagram moi nhat ================= */
+// Cap nhat: doi ma post (phan sau /p/ trong link) va chep de anh public/images/insta/insta-N.webp (640x640).
+const INSTA = ["DfJdflUvk1R", "De9i8zlvewD", "DfBvlF6vR19", "DGqEjRSv_9O", "DeUBd2iva9-", "DcNUfeQj_sL"];
+$("[data-insta]").innerHTML = INSTA.map((code, i) => `
+  <a class="itile" style="--i:${i}" href="https://www.instagram.com/p/${code}/" target="_blank" rel="noopener" aria-label="Xem bài đăng ${i + 1} trên Instagram">
+    <img src="/images/insta/insta-${i + 1}.webp" alt="" width="640" height="640" loading="lazy" decoding="async" />
     <span class="itile__ic">${ICONS.instagram}</span>
   </a>`).join("");
 
