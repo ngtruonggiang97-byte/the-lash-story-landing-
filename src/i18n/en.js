@@ -127,7 +127,7 @@ export default {
     phoneRule: "intl",
     err: {
       name: "Please tell us your name.",
-      phone: "Please enter a phone number with your country code, for example +84 86 656 6819.",
+      phone: "Please check your phone number.",
       date: "Choose the date you would like to visit.",
       dateGone: "That date has already passed.",
       time: "Choose a time.",

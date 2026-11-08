@@ -42,9 +42,8 @@ export function initForm() {
   };
   fillHidden();
 
-  const phoneOk = (v) => (I.phoneRule === "vn"
-    ? /^(0|\+?84)(3|5|7|8|9)\d{8}$/.test(v.replace(/[\s.\-]/g, ""))
-    : /^\+?\d{8,15}$/.test(v.replace(/[\s.\-()]/g, "")));
+  // Thoai mai cho khach: chi can 7-15 chu so, co the co dau +, khoang trang, dau cham, gach, ngoac (so quoc te khong co so 0 dau)
+  const phoneOk = (v) => /^\+?\d{7,15}$/.test(v.replace(/[\s.\-()]/g, ""));
 
   const rules = {
     name: (v) => (v.trim().length >= 2 ? "" : I.err.name),

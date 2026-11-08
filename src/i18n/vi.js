@@ -128,7 +128,7 @@ export default {
     phoneRule: "vn",
     err: {
       name: "Bạn cho studio xin tên nhé.",
-      phone: "Số điện thoại chưa đúng, ví dụ 086 656 6819.",
+      phone: "Bạn kiểm tra lại số điện thoại giúp studio nhé.",
       date: "Chọn ngày bạn muốn đến.",
       dateGone: "Ngày này đã qua.",
       time: "Chọn một khung giờ.",
