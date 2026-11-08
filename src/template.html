@@ -12,6 +12,11 @@
   <title>{{meta.title}}</title>
   <meta name="description" content="{{meta.description}}" />
   <meta name="theme-color" content="#5f5846" />
+  <!-- Favicon: vong sao tu guideline. Goc: assets/brand/favicon-source.png -->
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" href="/icon-32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="canonical" href="{{url.self}}" />
   <link rel="alternate" hreflang="vi" href="{{url.vi}}" />
   <link rel="alternate" hreflang="en" href="{{url.en}}" />
@@ -111,17 +116,28 @@
     <!-- ========== OUR SERVICES: 2 STUDIO ========== -->
     <section class="studios" aria-labelledby="studios-title" data-reveal-group>
       <h2 id="studios-title" class="studios__title" data-reveal="words">{{services.title}}</h2>
+      <!-- Moi the = 3 hang (logo / noi dung / hanh dong). Desktop: 2 the dung chung 3 hang (subgrid) nen logo thang hang
+           voi logo, nut / mui ten thang hang voi nhau o day; hang giua tu co theo noi dung.
+           Chu hien sau logo 0.15s, mui ten / nut hien sau them 0.15s. -->
       <div class="studios__grid">
-        <a class="studio" href="#collection" data-reveal="fade">
-          <img src="/img/logo/logo-tns-ink.png" alt="{{services.nailAlt}}" width="786" height="140" loading="lazy" />
-          <span class="studio__cap" aria-hidden="true"><i>{{icon:arrow-right}}</i></span>
+        <a class="studio studio--nail" href="#collection">
+          <span class="studio__logo" data-reveal="fade"><img src="/img/logo/logo-tns-ink.png" alt="{{services.nailAlt}}" width="786" height="140" loading="lazy" /></span>
+          <div class="studio__body" data-reveal="fade" style="--delay: .15s">
+            <p class="studio__desc">{{services.nailDesc}}</p>
+          </div>
+          <span class="studio__act studio__cap" aria-hidden="true" data-reveal="fade" style="--delay: .3s"><i>{{icon:arrow-right}}</i></span>
         </a>
         <span class="studios__amp" aria-hidden="true" data-reveal="fade"><span class="mask mask--ring"></span></span>
-        <div class="studio studio--lash" data-reveal="fade" style="--delay: var(--stagger)">
-          <img src="/img/logo/logo-tls-ink.png" alt="{{services.lashAlt}}" width="668" height="120" loading="lazy" />
-          <p class="studio__line">{{services.lashLine}}</p>
-          <!-- TODO: link tam, sau nay dan sang trang The Lash Story -->
-          <a class="btn btn--line btn--sm" href="#">{{services.lashCta}} <i>{{icon:arrow-right}}</i></a>
+        <div class="studio studio--lash">
+          <span class="studio__logo" data-reveal="fade" style="--delay: var(--stagger)"><img src="/img/logo/logo-tls-ink.png" alt="{{services.lashAlt}}" width="668" height="120" loading="lazy" /></span>
+          <div class="studio__body" data-reveal="fade" style="--delay: calc(var(--stagger) + .15s)">
+            <p class="studio__line">{{services.lashLine}}</p>
+            <p class="studio__desc">{{services.lashDesc}}</p>
+          </div>
+          <div class="studio__act" data-reveal="fade" style="--delay: calc(var(--stagger) + .3s)">
+            <!-- TODO: link tam, sau nay dan sang trang The Lash Story -->
+            <a class="btn btn--line btn--sm" href="#">{{services.lashCta}} <i>{{icon:arrow-right}}</i></a>
+          </div>
         </div>
       </div>
     </section>

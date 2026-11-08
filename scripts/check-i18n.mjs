@@ -81,6 +81,46 @@ for (const [path, tag] of [["/", "vi"], ["/en/", "en"]]) {
   await ctx.close();
 }
 
+/* ============ 3b. Our Services: hang thang nhau, mo ta, tagline giu nguyen ============ */
+for (const [path, d, tag] of [["/", vi, "vi"], ["/en/", en, "en"]]) {
+  const m = (page) => page.evaluate(() => {
+    const q = (s) => document.querySelector(s);
+    const r = (el) => el.getBoundingClientRect();
+    const cs = (el) => getComputedStyle(el);
+    const lines = (el) => Math.round(r(el).height / parseFloat(cs(el).lineHeight));
+    const nailDesc = q(".studio--nail .studio__desc"), lashDesc = q(".studio--lash .studio__desc"), line = q(".studio__line");
+    const delay = (el) => parseFloat(cs(el).transitionDelay.split(",")[0]);
+    return {
+      logoTopDiff: Math.abs(r(q(".studio--nail .studio__logo img")).top - r(q(".studio--lash .studio__logo img")).top),
+      actMidDiff: Math.abs((r(q(".studio--nail .studio__cap svg")).top + r(q(".studio--nail .studio__cap svg")).bottom) / 2 - (r(q(".studio--lash .btn")).top + r(q(".studio--lash .btn")).bottom) / 2),
+      nailLines: lines(nailDesc), lashLines: lines(lashDesc), size: parseFloat(cs(nailDesc).fontSize), lh: parseFloat(cs(nailDesc).lineHeight) / parseFloat(cs(nailDesc).fontSize),
+      descColor: cs(lashDesc).color, lineColor: cs(line).color, lineSize: parseFloat(cs(line).fontSize), lineText: line.textContent.trim(), nailText: nailDesc.textContent.trim(), lashText: lashDesc.textContent.trim(),
+      align: [cs(q(".studio--nail")).textAlign, cs(q(".studio--lash")).textAlign],
+      gapLogoBody: r(nailDesc).top - r(q(".studio--nail .studio__logo")).bottom,
+      // chu -> hanh dong: o cot cao hon (Lash) la 26px; mobile do ca mui ten Nail. Cot thap hon o desktop co khoang thua do hang dung chung.
+      gapBodyAct: r(q(".studio--lash .btn")).top - r(lashDesc).bottom, gapNailArrow: r(q(".studio--nail .studio__cap svg")).top - r(nailDesc).bottom,
+      dBody: delay(q(".studio--nail .studio__body")) - delay(q(".studio--nail .studio__logo")),
+      sw: document.documentElement.scrollWidth - innerWidth,
+    };
+  });
+  for (const [size, vp, mobile] of [["1440", { width: 1440, height: 900 }, false], ["390", { width: 390, height: 844 }, true]]) {
+    const { ctx, page } = await newPage({ viewport: vp, isMobile: mobile, hasTouch: mobile });
+    await page.goto(`${BASE}${path}?freeze`, { waitUntil: "networkidle" });
+    await page.evaluate(() => document.querySelector(".studios").scrollIntoView());
+    await page.waitForTimeout(600);
+    const g = await m(page);
+    ok(g.nailText === d.services.nailDesc && g.lashText === d.services.lashDesc && g.lineText === d.services.lashLine, `[${tag} ${size}] mo ta 2 dich vu + tagline Lash giu nguyen dung chu`);
+    ok(g.size >= 16 && g.size <= 17.5 && Math.abs(g.lh - 1.6) < 0.05 && g.lineSize === 14 && g.descColor !== g.lineColor, `[${tag} ${size}] mo ta ${g.size}px / lh ${g.lh.toFixed(2)}, tagline ${g.lineSize}px, khac mau (${g.descColor} vs ${g.lineColor})`);
+    ok(g.nailLines <= 4 && g.lashLines <= 4, `[${tag} ${size}] mo ta toi da 4 dong (nail ${g.nailLines}, lash ${g.lashLines})`);
+    ok(Math.abs(g.dBody - 0.15) < 0.02, `[${tag} ${size}] mo ta hien sau logo ${g.dBody.toFixed(2)}s`);
+    ok(g.gapLogoBody >= 20 && g.gapLogoBody <= 24 && g.gapBodyAct >= 24 && g.gapBodyAct <= 28 && (mobile ? g.gapNailArrow >= 24 && g.gapNailArrow <= 28 : true), `[${tag} ${size}] khoang cach logo->chu ${g.gapLogoBody | 0}px, chu->nut Lash ${g.gapBodyAct | 0}px${mobile ? `, chu->mui ten Nail ${g.gapNailArrow | 0}px` : ""}`);
+    if (!mobile) ok(g.logoTopDiff <= 4 && g.actMidDiff <= 3 && g.align[0] !== "right" && g.align[1] === "right", `[${tag} ${size}] logo ngang nhau (lech ${g.logoTopDiff.toFixed(1)}px), mui ten / nut cung hang (lech ${g.actMidDiff.toFixed(1)}px), nail trai / lash phai`);
+    else ok(g.align[0] !== "right" && g.align[1] !== "right", `[${tag} ${size}] mobile can trai`);
+    ok(g.sw <= 0, `[${tag} ${size}] khong tran ngang`);
+    await ctx.close();
+  }
+}
+
 /* ============ 4. UTM + truong an ============ */
 {
   const { ctx, page } = await newPage();

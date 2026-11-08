@@ -43,7 +43,9 @@ export default {
     title: "Our Services",
     nailAlt: "The Nail Story",
     lashAlt: "The Lash Story",
+    nailDesc: "Biến mỗi bộ móng thành một bức tranh nhỏ thể hiện cá tính của riêng bạn, từ nét nhẹ nhàng tinh tế đến những thiết kế đầy nghệ thuật.",
     lashLine: "Chăm sóc mi, lông mày trong cùng không gian.",
+    lashDesc: "Đôi mắt là nơi câu chuyện bắt đầu. Mi và lông mày được chăm chút để gương mặt bạn rạng rỡ một cách tự nhiên.",
     lashCta: "Khám phá",
   },
 

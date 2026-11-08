@@ -30,7 +30,9 @@ Tạo tự động bằng `npm run i18n:table` từ `src/i18n/vi.js` và `en.js`
 | `services.title` | Our Services | = giữ nguyên |
 | `services.nailAlt` | The Nail Story | = giữ nguyên |
 | `services.lashAlt` | The Lash Story | = giữ nguyên |
+| `services.nailDesc` | Biến mỗi bộ móng thành một bức tranh nhỏ thể hiện cá tính của riêng bạn, từ nét nhẹ nhàng tinh tế đến những thiết kế đầy nghệ thuật. | Turn every set into a small painting that speaks for your personality, from quiet and refined to boldly artistic. |
 | `services.lashLine` | Chăm sóc mi, lông mày trong cùng không gian. | Lash and brow care in the same space. |
+| `services.lashDesc` | Đôi mắt là nơi câu chuyện bắt đầu. Mi và lông mày được chăm chút để gương mặt bạn rạng rỡ một cách tự nhiên. | The eyes are where a story begins. Lashes and brows, cared for so your face glows naturally. |
 | `services.lashCta` | Khám phá | Explore |
 | `collection.title` | Collection | = giữ nguyên |
 | `collection.deckLabel` | Collection, vuốt để xem mẫu tiếp theo | Collection, swipe to see the next set |

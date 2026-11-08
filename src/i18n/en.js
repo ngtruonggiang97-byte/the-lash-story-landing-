@@ -42,7 +42,9 @@ export default {
     title: "Our Services",
     nailAlt: "The Nail Story",
     lashAlt: "The Lash Story",
+    nailDesc: "Turn every set into a small painting that speaks for your personality, from quiet and refined to boldly artistic.",
     lashLine: "Lash and brow care in the same space.",
+    lashDesc: "The eyes are where a story begins. Lashes and brows, cared for so your face glows naturally.",
     lashCta: "Explore",
   },
 

@@ -240,30 +240,45 @@
 }
 @keyframes story-drift { from { translate: 0 var(--drift); } to { translate: 0 calc(var(--drift) * -1); } }
 
-/* ================= STUDIOS ================= */
-.studios { padding: var(--sec) var(--gutter) 0; }
+/* ================= STUDIOS (Our Services) ================= */
+.studios { --rise: 12px; padding: var(--sec) var(--gutter) 0; }   /* hien ra: dich toi da 12px */
 .studios__title { margin: 0 0 40px; font-family: var(--f-en); font-weight: 400; font-style: italic; font-size: 20px; color: var(--moss); }
 .studios__grid { display: grid; gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+/* Moi the = logo / noi dung / hanh dong (mui ten hoac nut). Mobile: xep doc, can trai. */
 .studio {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 18px;
+  display: flex; flex-direction: column; align-items: flex-start;
   padding: 40px 0; text-decoration: none; color: var(--moss);
 }
-.studio img { width: min(76%, 360px); height: auto; transition: opacity var(--dur-hover) var(--ease-soft); }
+.studio__logo { display: block; width: min(76%, 360px); }
+.studio__logo img { display: block; width: 100%; height: auto; transition: opacity var(--dur-hover) var(--ease-soft); }
+a.studio:hover .studio__logo img { opacity: .75; }
+.studio__body { margin-top: 22px; }                       /* logo -> chu: 20-24px */
+.studio__act { margin-top: 26px; }                        /* chu -> hanh dong: 24-28px */
+/* Tagline cua Lash (nho, dam mau) khac ro voi mo ta (to hon, nhat hon) */
+.studio__line { margin: 0 0 12px; font-size: 14px; color: var(--ink); max-width: 46ch; text-wrap: balance; }
+.studio__desc { margin: 0; max-width: 36ch; font-size: 16.5px; line-height: 1.6; color: var(--moss); text-wrap: pretty; }
 .studio__cap { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink); }
+.studio__cap i, .btn i { display: grid; place-items: center; line-height: 0; }   /* <i> inline lam icon lech theo baseline */
 .studio__cap svg { width: 18px; height: 18px; transition: transform var(--dur-hover) var(--ease-soft); }
 a.studio:hover .studio__cap svg { transform: translateX(4px); }
-a.studio:hover img { opacity: .75; }
-.studio__line { margin: 0; font-size: 14px; color: var(--ink); max-width: 46ch; text-wrap: balance; }
 .studios__amp { display: flex; align-items: center; gap: 16px; }
 .studios__amp::before, .studios__amp::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 .studios__amp .mask { width: 36px; }
 
+/* Desktop: 2 the dung chung 3 hang (subgrid) -> logo thang hang logo, mui ten / nut thang hang nhau o day.
+   Hang giua tu co theo noi dung (khong ep 2 mo ta bang chieu cao nhau). Cot trai can trai, cot phai can phai. */
 @media (min-width: 1024px) {
-  .studios__grid { grid-template-columns: 1fr auto 1fr; align-items: stretch; }
-  .studio { padding: 64px 0 56px; }
-  .studio img { width: min(80%, 420px); }
-  .studio:last-child { align-items: flex-end; text-align: right; }
-  .studios__amp { flex-direction: column; padding: 0 40px; }
+  .studios__grid { grid-template-columns: 1fr auto 1fr; grid-template-rows: auto auto auto; align-items: stretch; }
+  .studio { display: grid; grid-row: 1 / span 3; grid-template-rows: subgrid; justify-items: start; align-items: start; padding: 64px 0 56px; }
+  .studio--nail { grid-column: 1; }
+  .studio--lash { grid-column: 3; justify-items: end; text-align: right; }
+  .studio--lash .studio__body p { margin-left: auto; }
+  .studio__logo { width: min(80%, 420px); }
+  .studio__body, .studio__act { margin-top: 0; }           /* khoang cach do .studio__body / .studio__act ben duoi */
+  .studio__body { padding-top: 22px; }
+  .studio__act { padding-top: 26px; align-self: stretch; display: flex; align-items: center; }   /* mui ten can giua nut */
+  .studios__amp { grid-column: 2; grid-row: 1 / span 3; flex-direction: column; padding: 0 40px; }
   .studios__amp::before, .studios__amp::after { width: 1px; height: auto; }
   .studios__amp .mask { width: 44px; }
 }
