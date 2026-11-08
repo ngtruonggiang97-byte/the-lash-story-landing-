@@ -1,37 +1,43 @@
-// Bang gia: chi giu id + gia (VND, ghi "K" = nghin). Ten dich vu o src/i18n -> menu.items.<id>.
-// Nguon: assets/brand/bang-gia.png (ap dung tu 20/05/2026 - ngay hien thi nam trong i18n menu.effective).
-export const PRICES = [
-  {
-    id: "gel",
-    items: [
-      { id: "apex", price: "350K" },
-      { id: "pedi", price: "250K" },
-      { id: "biab", price: "400K" },
-      { id: "press", price: "450K" },
-      { id: "gelx", price: "500K" },
-      { id: "dual", price: "650K" },
-      { id: "removal", price: "40 - 100K" },
-      { id: "length", price: "100 - 200K" },
-    ],
-  },
-  {
-    id: "design",
-    items: [
-      { id: "glitter", price: "100K" },
-      { id: "chrome", price: "130K" },
-      { id: "french", price: "150K" },
-      { id: "ombre", price: "150K" },
-      { id: "others", price: "15 - 300K" },
-      { id: "concealer", price: "50K" },
-    ],
-  },
-  {
-    id: "spa",
-    items: [
-      { id: "handSpa", price: "400K" },
-      { id: "footSpa", price: "400K" },
-    ],
-  },
+// Bang gia The Lash Story: chi giu id + gia (VND, ghi "K" = nghin). Ten dich vu o src/i18n -> menu.*
+// Nguon: assets/brand/lash-bang-gia-1.jpg, lash-bang-gia-2.jpg (ap dung tu 20/05/2026).
+// img: anh tam cat tu bang gia (scripts/crop-lash-images.py) -> public/img/lash-looks/<img>.webp
+
+// Lash Extension: 3 nhom kieu mi, moi kieu co anh de hien trong khung xem
+export const EXTENSION = [
+  { id: "natural", looks: [
+    { id: "classic", price: "350K", img: "classic" },
+    { id: "babyLash", price: "400K", img: "baby-lash" },
+  ] },
+  { id: "signature", looks: [
+    { id: "classicPlus", price: "400K", img: "classic-plus" },
+    { id: "kittenLash", price: "400K", img: "kitten-lash" },
+    { id: "pixieLash", price: "400K", img: "pixie-lash" },
+    { id: "sunnyLash", price: "420K", img: "sunny-lash" },
+  ] },
+  { id: "glam", looks: [
+    { id: "medusaLash", price: "450K", img: "medusa-lash" },
+    { id: "animeLash", price: "450K", img: "anime-lash" },
+  ] },
+];
+
+export const SURCHARGE = [
+  { id: "removal", price: "40 - 80K" },
+  { id: "bottom", price: "50 - 80K" },
+  { id: "thick", price: "+50K" },
+  { id: "special", price: "+50K" },
+];
+
+export const LASH_LIFT = [
+  { id: "lift", price: "500K" },
+  { id: "liftPremium", price: "650K" },
+  { id: "treatment", price: "200K" },
+];
+
+export const BROW_LIFT = [
+  { id: "browLift", price: "550K" },
+  { id: "browPremium", price: "700K" },
+  { id: "browTint", price: "250K" },
+  { id: "threading", price: "120 - 150K" },
 ];
 
 // TODO Ryan: xac nhan gio mo cua that cua studio

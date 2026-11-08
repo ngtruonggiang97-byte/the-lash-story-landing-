@@ -1,6 +1,6 @@
 // Form dat lich: validate, truong an cho ads (lang, page_url, utm_*), gui di (neu da co endpoint), su kien Lead.
 // Moi chu hien thi lay tu <script id="i18n-data"> (cung nguon voi HTML tinh, xem src/i18n).
-import { FORM_ENDPOINT } from "./config/form.js";
+import { FORM_ENDPOINT, FORM_BRAND } from "./config/form.js";
 import { track } from "./tracking.js";
 
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
@@ -105,6 +105,7 @@ export function initForm() {
     const f = new FormData(form);
     const slot = form.querySelector('input[name="time"]:checked');
     const payload = {
+      brand: FORM_BRAND,
       name: f.get("name").trim(),
       phone: f.get("phone").replace(/[\s.\-()]/g, ""),
       date: f.get("date"),

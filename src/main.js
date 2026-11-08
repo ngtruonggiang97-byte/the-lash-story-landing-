@@ -41,113 +41,59 @@ if (new URLSearchParams(location.search).has("freeze")) document.documentElement
   }
 }
 
-/* ================= Collection: chong the ================= */
-const deck = $("[data-deck]");
-const info = $(".info");
-// Slide va thong tin mau da nam san trong HTML tinh (build/render.js); JS chi lo chuyen dong.
-const slides = $$(".slide", deck);
-let order = slides.map((_, i) => i);
+/* ================= Lash Extension: tablist + khung anh ================= */
+// HTML (tab, panel, anh) da dung san trong build/render.js. JS chi doi trang thai chon + vet nacre.
+const lx = $("[data-lx]");
+if (lx) {
+  const tabs = $$('[role="tab"]', lx);
+  const panels = $$('[role="tabpanel"]', lx);
+  const desk = matchMedia("(min-width: 1024px)");
+  const dur = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--dur-reveal")) * 1000 || 1100;
+  let cur = 0;
 
-function layout(swap = true) {
-  order.forEach((idx, k) => {
-    const s = slides[idx];
-    s.style.setProperty("--k", Math.min(k, 3));
-    s.style.zIndex = String(slides.length - k);
-    s.classList.toggle("is-hidden", k > 2);
-    s.classList.toggle("is-top", k === 0);
-  });
-  renderInfo(swap);
-}
-function renderInfo(swap) {
-  const c = slides[order[0]].dataset;   // data-c-name / data-c-meta / data-c-price tren tung slide
-  const write = () => {
-    $("[data-idx]", info).textContent = String(order[0] + 1).padStart(2, "0");
-    $("[data-name]", info).textContent = c.cName;
-    $("[data-meta]", info).textContent = c.cMeta;
-    $("[data-price]", info).textContent = c.cPrice;
-    info.classList.remove("is-swap");
-  };
-  if (!swap || reduce) return write();
-  info.classList.add("is-swap");
-  setTimeout(write, ms("--dur-hover"));
-}
-// doc thoi luong tu token CSS (vd "1.1s" / "600ms") -> ms
-function ms(token) {
-  const v = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
-  return v.endsWith("ms") ? parseFloat(v) : parseFloat(v) * 1000;
-}
-// Card tren cung bay di, cung luc card sau tien len (ca hai trong --dur-card)
-function next(dir = -1) {
-  const top = slides[order[0]];
-  order.push(order.shift());
-  layout();
-  top.style.zIndex = String(slides.length + 1);
-  top.style.transform = `translate(${dir * 120}%, -3%) rotate(${dir * 7}deg)`;
-  top.style.opacity = "0";
-  setTimeout(() => {
-    top.classList.add("is-drag");          // tat transition, dua ve cuoi chong khong bi thay
-    top.style.transform = ""; top.style.opacity = ""; top.style.zIndex = String(slides.length - order.indexOf(+top.dataset.i));
-    void top.offsetWidth;
-    top.classList.remove("is-drag");
-  }, reduce ? 0 : ms("--dur-card"));
-}
-function prev() {
-  const idx = order.pop();
-  order.unshift(idx);
-  const s = slides[idx];
-  s.classList.add("is-drag");
-  s.style.transform = "translate(-120%, -3%) rotate(-7deg)";
-  s.style.opacity = "0";
-  s.style.zIndex = String(slides.length + 1);
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    s.classList.remove("is-drag");
-    s.style.transform = ""; s.style.opacity = "";
-    layout();
-  }));
-}
-
-let drag = null;
-deck.addEventListener("pointerdown", (e) => {
-  const top = slides[order[0]];
-  if (!top.contains(e.target)) return;
-  drag = { x: e.clientX, y: e.clientY, el: top, dx: 0, axis: null, id: e.pointerId };
-});
-deck.addEventListener("pointermove", (e) => {
-  const top = slides[order[0]];
-  const r = top.getBoundingClientRect();
-  top.style.setProperty("--mx", ((e.clientX - r.left) / r.width).toFixed(3));
-  top.style.setProperty("--my", ((e.clientY - r.top) / r.height).toFixed(3));
-  if (!drag) return;
-  const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
-  if (!drag.axis && Math.hypot(dx, dy) > 6) {
-    drag.axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
-    if (drag.axis === "x") drag.el.setPointerCapture(drag.id);
+  function select(i) {
+    if (i === cur) return false;
+    cur = i;
+    tabs.forEach((t, k) => {
+      const on = k === i;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      t.classList.toggle("is-on", on);
+      panels[k].classList.toggle("is-on", on);
+      panels[k].classList.remove("is-sheen");
+    });
+    if (!reduce) {
+      const p = panels[i];
+      void p.offsetWidth;                       // chay lai animation moi lan doi anh
+      p.classList.add("is-sheen");
+    }
+    return true;
   }
-  if (drag.axis !== "x") return;
-  drag.dx = dx;
-  drag.el.classList.add("is-drag");
-  drag.el.style.transform = `translateX(${dx}px) rotate(${dx * 0.02}deg)`;
-});
-const endDrag = () => {
-  if (!drag) return;
-  const { el, dx } = drag; drag = null;
-  el.classList.remove("is-drag");
-  if (Math.abs(dx) > 70) return next(Math.sign(dx));
-  // tha ra chua du xa: card tu tu ve cho cu trong --dur-card-back
-  el.classList.add("is-return");
-  el.style.transform = "";
-  setTimeout(() => el.classList.remove("is-return"), ms("--dur-card-back"));
-};
-deck.addEventListener("pointerup", endDrag);
-deck.addEventListener("pointercancel", endDrag);
-$("[data-next]").addEventListener("click", () => next(-1));
-$("[data-prev]").addEventListener("click", prev);
-deck.tabIndex = 0;
-deck.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") { e.preventDefault(); next(-1); }
-  if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
-});
-layout(false);
+  // Mobile: hang khac dong lai o phia tren se day trang len; giu hang vua bam dung yen trong luc mo / dong
+  function anchor(el) {
+    const top0 = el.getBoundingClientRect().top, t0 = performance.now();
+    const step = () => {
+      const d = el.getBoundingClientRect().top - top0;
+      if (Math.abs(d) > 0.5) scrollBy(0, d);
+      if (performance.now() - t0 < (reduce ? 50 : dur + 100)) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => { if (!desk.matches && i !== cur) { select(i); anchor(t); } else select(i); });
+    t.addEventListener("focus", () => { if (desk.matches || t.matches(":focus-visible")) select(i); });
+    t.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse" && desk.matches) select(i); });
+    t.addEventListener("keydown", (e) => {
+      const n = tabs.length;
+      const to = { ArrowDown: (i + 1) % n, ArrowRight: (i + 1) % n, ArrowUp: (i + n - 1) % n, ArrowLeft: (i + n - 1) % n, Home: 0, End: n - 1 }[e.key];
+      if (to == null) return;
+      e.preventDefault();
+      select(to);
+      tabs[to].focus();
+    });
+  });
+}
 
 /* ================= Reveal khi cuon ================= */
 function split(el, mode) {
@@ -168,18 +114,11 @@ $$('[data-reveal="words"], [data-reveal="chars"]').forEach((el) => split(el, el.
 const groups = $$("[data-reveal-group]");
 if (reduce || !("IntersectionObserver" in window) || document.documentElement.classList.contains("freeze")) {
   groups.forEach((g) => g.classList.add("is-in"));
-  deck.classList.add("is-in");
 } else {
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (!en.isIntersecting) return;
       en.target.classList.add("is-in");
-      const d = en.target.querySelector(".deck");
-      if (d) {
-        d.classList.add("is-in");
-        // het luot xoe lan dau thi bo do tre, de vuot card khong bi cham them
-        setTimeout(() => d.classList.add("is-ready"), ms("--dur-slow") + 4 * ms("--stagger"));
-      }
       io.unobserve(en.target);
     });
   }, { rootMargin: "0px 0px -18% 0px", threshold: 0.05 });

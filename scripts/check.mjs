@@ -1,4 +1,4 @@
-// Kiem tra hanh vi: reveal khi cuon, vuot collection, form. Can dev server dang chay.
+// Kiem tra hanh vi: reveal khi cuon, menu Lash Extension, form. Can dev server dang chay.
 import { chromium } from "playwright";
 const BASE = process.env.BASE || "http://localhost:5173";
 const browser = await chromium.launch();
@@ -9,52 +9,28 @@ page.on("pageerror", (e) => errors.push(e.message));
 await page.goto(BASE + "/", { waitUntil: "networkidle" });
 const ok = (cond, msg) => console.log((cond ? "PASS " : "FAIL ") + msg);
 
-// 1. truoc khi cuon: collection chua hien
-ok(!(await page.$eval("#collection", (e) => e.classList.contains("is-in"))), "collection chua reveal truoc khi cuon");
-// chup giua chung luc reveal
-await page.evaluate(() => document.querySelector("#collection").scrollIntoView());
-await page.waitForTimeout(350);
-await page.screenshot({ path: "shots/check-reveal-mid.png" });
-// cuon het trang tung buoc
+// 1. truoc khi cuon: menu chua hien
+ok(!(await page.$eval("#bang-gia .menu__paper", (e) => e.classList.contains("is-in"))), "menu chua reveal truoc khi cuon");
 for (let y = 0; y < 20000; y += 500) { await page.evaluate((v) => scrollTo(0, v), y); await page.waitForTimeout(60); }
 await page.waitForTimeout(1500);
 const hidden = await page.$$eval("[data-reveal-group]", (gs) => gs.filter((g) => !g.classList.contains("is-in")).length);
 ok(hidden === 0, `tat ca section da reveal (con ${hidden})`);
 
-// 2. vuot collection
-await page.evaluate(() => document.querySelector("#collection").scrollIntoView());
+// 2. menu Lash Extension (mobile: bam hang thi anh mo ngay duoi hang; desktop: hover / phim mui ten)
+await page.evaluate(() => document.querySelector("#bang-gia").scrollIntoView());
 await page.waitForTimeout(300);
-const before = await page.textContent("[data-name]");
-await page.waitForTimeout(3000); // cho luot xoe dau tien xong
-await page.click("[data-next]");
-await page.waitForTimeout(1500);
-const after = await page.textContent("[data-name]");
-ok(before !== after, `next: ${before} -> ${after}`);
-await page.click("[data-prev]");
-await page.waitForTimeout(1500);
-ok((await page.textContent("[data-name]")) === before, "prev quay ve mau cu");
-// keo bang chuot (dua the ve giua man hinh, tranh nav co dinh o tren)
-await page.evaluate(() => document.querySelector(".deck").scrollIntoView({ block: "center" }));
+const sel = () => page.$$eval('[role="tab"]', (t) => t.map((x) => x.getAttribute("aria-selected")).indexOf("true"));
+const openCount = () => page.$$eval(".lx__panel", (p) => p.filter((x) => getComputedStyle(x).visibility === "visible").length);
+ok((await sel()) === 0 && (await openCount()) === 1, "mac dinh chon kieu dau tien, chi 1 anh mo");
+await page.click("#lx-tab-kitten-lash");
+await page.waitForTimeout(1600);
+ok((await sel()) === 3 && (await openCount()) === 1, "bam Kitten Lash: chon hang 4, van chi 1 anh mo");
+const belowRow = await page.$eval("#lx-tab-kitten-lash", (t) => { const p = document.getElementById(t.getAttribute("aria-controls")); return p.getBoundingClientRect().top >= t.getBoundingClientRect().bottom - 1; });
+ok(belowRow, "mobile: anh mo ngay duoi hang duoc bam");
+await page.keyboard.press("ArrowDown");
 await page.waitForTimeout(300);
-const box = await (await page.$(".slide.is-top")).boundingBox();
-await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-await page.mouse.down();
-await page.mouse.move(box.x + box.width / 2 - 160, box.y + box.height / 2, { steps: 8 });
-await page.mouse.up();
-await page.waitForTimeout(1500);
-ok((await page.textContent("[data-name]")) !== before, "keo sang trai doi mau");
-// keo ngan roi tha: card ve cho cu, khong doi mau
-await page.evaluate(() => document.querySelector(".deck").scrollIntoView({ block: "center" }));
-await page.waitForTimeout(300);
-const cur = await page.textContent("[data-name]");
-const b2 = await (await page.$(".slide.is-top")).boundingBox();
-await page.mouse.move(b2.x + b2.width / 2, b2.y + b2.height / 2);
-await page.mouse.down();
-await page.mouse.move(b2.x + b2.width / 2 - 40, b2.y + b2.height / 2, { steps: 4 });
-const rot = await page.$eval(".slide.is-top", (e) => e.style.transform);
-await page.mouse.up();
-await page.waitForTimeout(1200);
-ok((await page.textContent("[data-name]")) === cur && /rotate\(-0\.8deg\)/.test(rot), `keo ngan tra ve cho cu, goc xoay ${rot}`);
+ok((await sel()) === 4, "phim mui ten xuong chuyen sang hang ke tiep");
+ok(errors.length === 0, "khong co loi JS: " + errors.join("; "));
 
 // 3. form
 await page.evaluate(() => document.querySelector("#dat-lich").scrollIntoView());
@@ -71,7 +47,7 @@ const t = new Date(Date.now() + 86400000);
 const ymd = `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, "0")}-${String(t.getDate()).padStart(2, "0")}`;
 // gan gia tri truc tiep: page.fill mo date picker native cua Chromium va nuot click tiep theo
 await page.$eval("#f-date", (e, v) => { e.value = v; e.dispatchEvent(new Event("change", { bubbles: true })); }, ymd);
-await page.fill("#f-note", "Mẫu: Ivory Edge");
+await page.fill("#f-note", "Kiểu mi: Kitten Lash");
 await page.click(".slot >> nth=2");
 await page.click(".form__submit");
 await page.waitForTimeout(300);

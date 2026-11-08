@@ -39,8 +39,6 @@
   --dur-hover: .45s;    /* hover, doi noi dung nho */
   --dur-ui: .3s;        /* phan hoi bam nut, focus input */
   --dur-nacre: 4s;      /* foil xa cu tren tagline hero */
-  --dur-card: .8s;      /* collection: card bay di / card sau hien len */
-  --dur-card-back: .6s; /* collection: card tra ve cho cu */
   --stagger: 100ms;     /* do tre giua cac tu / phan tu */
 
   /* Hero intro 2 nhip. v2 (Ryan: "can nhanh hon"): rut ~40% */

@@ -10,7 +10,7 @@ const E = Object.fromEntries(flat(en));
 const keys = [...new Set([...Object.keys(V), ...Object.keys(E)])];
 
 // Key duoc phep de trong o MOT ben (chi 1 ngon ngu can dung)
-const OPTIONAL_EMPTY = /(^menu\.groups\..+\.note$|^menu\.items\..+\.sub$|^menu\.currencyNote$|^form\.phoneHelp$)/;
+const OPTIONAL_EMPTY = /(.sub$|^menu.currencyNote$|^form.phoneHelp$)/;
 
 const cmd = process.argv[2] || "check";
 

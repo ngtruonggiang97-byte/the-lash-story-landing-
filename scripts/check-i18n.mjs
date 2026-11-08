@@ -81,42 +81,28 @@ for (const [path, tag] of [["/", "vi"], ["/en/", "en"]]) {
   await ctx.close();
 }
 
-/* ============ 3b. Our Services: hang thang nhau, mo ta, tagline giu nguyen ============ */
+/* ============ 3b. Our Services: Lash (trang hien tai, khong nut) trai, Nail (nut Kham pha) phai ============ */
 for (const [path, d, tag] of [["/", vi, "vi"], ["/en/", en, "en"]]) {
-  const m = (page) => page.evaluate(() => {
-    const q = (s) => document.querySelector(s);
-    const r = (el) => el.getBoundingClientRect();
-    const cs = (el) => getComputedStyle(el);
-    const lines = (el) => Math.round(r(el).height / parseFloat(cs(el).lineHeight));
-    const nailDesc = q(".studio--nail .studio__desc"), lashDesc = q(".studio--lash .studio__desc"), line = q(".studio__line");
-    const delay = (el) => parseFloat(cs(el).transitionDelay.split(",")[0]);
-    return {
-      logoTopDiff: Math.abs(r(q(".studio--nail .studio__logo img")).top - r(q(".studio--lash .studio__logo img")).top),
-      actMidDiff: Math.abs((r(q(".studio--nail .studio__cap svg")).top + r(q(".studio--nail .studio__cap svg")).bottom) / 2 - (r(q(".studio--lash .btn")).top + r(q(".studio--lash .btn")).bottom) / 2),
-      nailLines: lines(nailDesc), lashLines: lines(lashDesc), size: parseFloat(cs(nailDesc).fontSize), lh: parseFloat(cs(nailDesc).lineHeight) / parseFloat(cs(nailDesc).fontSize),
-      descColor: cs(lashDesc).color, lineColor: cs(line).color, lineSize: parseFloat(cs(line).fontSize), lineText: line.textContent.trim(), nailText: nailDesc.textContent.trim(), lashText: lashDesc.textContent.trim(),
-      align: [cs(q(".studio--nail")).textAlign, cs(q(".studio--lash")).textAlign],
-      gapLogoBody: r(nailDesc).top - r(q(".studio--nail .studio__logo")).bottom,
-      // chu -> hanh dong: o cot cao hon (Lash) la 26px; mobile do ca mui ten Nail. Cot thap hon o desktop co khoang thua do hang dung chung.
-      gapBodyAct: r(q(".studio--lash .btn")).top - r(lashDesc).bottom, gapNailArrow: r(q(".studio--nail .studio__cap svg")).top - r(nailDesc).bottom,
-      dBody: delay(q(".studio--nail .studio__body")) - delay(q(".studio--nail .studio__logo")),
-      sw: document.documentElement.scrollWidth - innerWidth,
-    };
-  });
   for (const [size, vp, mobile] of [["1440", { width: 1440, height: 900 }, false], ["390", { width: 390, height: 844 }, true]]) {
     const { ctx, page } = await newPage({ viewport: vp, isMobile: mobile, hasTouch: mobile });
     await page.goto(`${BASE}${path}?freeze`, { waitUntil: "networkidle" });
     await page.evaluate(() => document.querySelector(".studios").scrollIntoView());
     await page.waitForTimeout(600);
-    const g = await m(page);
-    ok(g.nailText === d.services.nailDesc && g.lashText === d.services.lashDesc && g.lineText === d.services.lashLine, `[${tag} ${size}] mo ta 2 dich vu + tagline Lash giu nguyen dung chu`);
-    ok(g.size >= 16 && g.size <= 17.5 && Math.abs(g.lh - 1.6) < 0.05 && g.lineSize === 14 && g.descColor !== g.lineColor, `[${tag} ${size}] mo ta ${g.size}px / lh ${g.lh.toFixed(2)}, tagline ${g.lineSize}px, khac mau (${g.descColor} vs ${g.lineColor})`);
-    ok(g.nailLines <= 4 && g.lashLines <= 4, `[${tag} ${size}] mo ta toi da 4 dong (nail ${g.nailLines}, lash ${g.lashLines})`);
-    ok(Math.abs(g.dBody - 0.15) < 0.02, `[${tag} ${size}] mo ta hien sau logo ${g.dBody.toFixed(2)}s`);
-    ok(g.gapLogoBody >= 20 && g.gapLogoBody <= 24 && g.gapBodyAct >= 24 && g.gapBodyAct <= 28 && (mobile ? g.gapNailArrow >= 24 && g.gapNailArrow <= 28 : true), `[${tag} ${size}] khoang cach logo->chu ${g.gapLogoBody | 0}px, chu->nut Lash ${g.gapBodyAct | 0}px${mobile ? `, chu->mui ten Nail ${g.gapNailArrow | 0}px` : ""}`);
-    if (!mobile) ok(g.logoTopDiff <= 4 && g.actMidDiff <= 3 && g.align[0] !== "right" && g.align[1] === "right", `[${tag} ${size}] logo ngang nhau (lech ${g.logoTopDiff.toFixed(1)}px), mui ten / nut cung hang (lech ${g.actMidDiff.toFixed(1)}px), nail trai / lash phai`);
-    else ok(g.align[0] !== "right" && g.align[1] !== "right", `[${tag} ${size}] mobile can trai`);
-    ok(g.sw <= 0, `[${tag} ${size}] khong tran ngang`);
+    const g = await page.evaluate(() => {
+      const q = (s) => document.querySelector(s), r = (el) => el.getBoundingClientRect();
+      const lines = (el) => Math.round(r(el).height / parseFloat(getComputedStyle(el).lineHeight));
+      return {
+        lash: q(".studio--lash .studio__desc").textContent.trim(), nail: q(".studio--nail .studio__desc").textContent.trim(),
+        line: q(".studio__line").textContent.trim(),
+        lashLeft: r(q(".studio--lash")).left < r(q(".studio--nail")).left, lashAbove: r(q(".studio--lash")).top < r(q(".studio--nail")).top,
+        lashBtn: !!q(".studio--lash .btn"), nailBtn: q(".studio--nail .btn")?.textContent.trim(), nailHref: q(".studio--nail .btn")?.getAttribute("href"),
+        lines: [lines(q(".studio--lash .studio__desc")), lines(q(".studio--nail .studio__desc"))],
+      };
+    });
+    ok(g.lash === d.services.lashDesc && g.nail === d.services.nailDesc && g.line === d.services.lashLine, `[${tag} ${size}] mo ta 2 dich vu + tagline Lash giu nguyen dung chu`);
+    ok(!g.lashBtn && g.nailBtn === d.services.nailCta && g.nailHref === "#", `[${tag} ${size}] Lash khong co nut, Nail co nut "${g.nailBtn}" -> ${g.nailHref}`);
+    ok(mobile ? g.lashAbove : g.lashLeft, `[${tag} ${size}] Lash o ${mobile ? "tren" : "ben trai"}`);
+    ok(g.lines.every((n) => n <= 4), `[${tag} ${size}] mo ta toi da 4 dong (${g.lines})`);
     await ctx.close();
   }
 }
@@ -124,14 +110,14 @@ for (const [path, d, tag] of [["/", vi, "vi"], ["/en/", en, "en"]]) {
 /* ============ 4. UTM + truong an ============ */
 {
   const { ctx, page } = await newPage();
-  await page.goto(`${BASE}/en/?utm_source=facebook&utm_medium=paid&utm_campaign=autumn&utm_content=v1&utm_term=nails`, { waitUntil: "networkidle" });
+  await page.goto(`${BASE}/en/?utm_source=facebook&utm_medium=paid&utm_campaign=autumn&utm_content=v1&utm_term=lash`, { waitUntil: "networkidle" });
   const read = () => page.$$eval('input[type="hidden"]', (is) => Object.fromEntries(is.map((i) => [i.name, i.value])));
   let h = await read();
-  ok(h.lang === "en" && h.utm_source === "facebook" && h.utm_medium === "paid" && h.utm_campaign === "autumn" && h.utm_content === "v1" && h.utm_term === "nails", "truong an: lang + 5 utm dien dung");
-  ok(h.page_url.endsWith("/en/?utm_source=facebook&utm_medium=paid&utm_campaign=autumn&utm_content=v1&utm_term=nails"), "truong an: page_url");
+  ok(h.lang === "en" && h.utm_source === "facebook" && h.utm_medium === "paid" && h.utm_campaign === "autumn" && h.utm_content === "v1" && h.utm_term === "lash", "truong an: lang + 5 utm dien dung");
+  ok(h.page_url.endsWith("/en/?utm_source=facebook&utm_medium=paid&utm_campaign=autumn&utm_content=v1&utm_term=lash"), "truong an: page_url");
   await page.goto(`${BASE}/`, { waitUntil: "networkidle" });  // sang trang VI, khong con query
   h = await read();
-  ok(h.lang === "vi" && h.utm_source === "facebook" && h.utm_term === "nails", "UTM con sau khi doi trang (sessionStorage), lang doi sang vi");
+  ok(h.lang === "vi" && h.utm_source === "facebook" && h.utm_term === "lash", "UTM con sau khi doi trang (sessionStorage), lang doi sang vi");
   await page.reload({ waitUntil: "networkidle" });
   ok((await read()).utm_campaign === "autumn", "UTM con sau khi reload");
   await page.goto(`${BASE}/?utm_source=google`, { waitUntil: "networkidle" });
@@ -202,8 +188,8 @@ const tomorrow = (() => { const d = new Date(Date.now() + 86400000); return `${d
 /* ============ 6. HTML tinh (khong can JS) + SEO ============ */
 for (const [path, d, loc, other] of [["/", vi, "vi_VN", "en_US"], ["/en/", en, "en_US", "vi_VN"]]) {
   const raw = await (await fetch(`${BASE}${path}`)).text();   // HTML tho, chua chay JS
-  const must = [d.hero.sub, d.book.title, d.menu.items.apex.name, "Antique Rose", "350K", d.collection.note, d.form.name, d.contact.chatLabel];
-  ok(must.every((s) => raw.includes(s.replace(/&/g, "&amp;"))), `[${path}] chu nam san trong HTML tho (hero, form, menu, collection, lien he)`);
+  const must = [d.hero.sub, d.book.title, d.menu.ext.looks.classic.name, d.menu.ext.title, "350K", "650K", d.story.body, d.form.name, d.contact.chatLabel];
+  ok(must.every((s) => raw.includes(s.replace(/&/g, "&amp;"))), `[${path}] chu nam san trong HTML tho (hero, form, menu, story, lien he)`);
   ok(raw.includes(`<html lang="${d.lang}"`) && raw.includes(`<title>${d.meta.title}</title>`) && raw.includes(`content="${d.meta.description}"`), `[${path}] html lang, title, meta description`);
   ok(raw.includes(`og:locale" content="${loc}"`) && raw.includes(`og:locale:alternate" content="${other}"`) && raw.includes(`og:title" content="${d.meta.title}"`) && /og:url" content="https:\/\/[^"]+"/.test(raw) && /rel="canonical" href="https:\/\/[^"]+"/.test(raw), `[${path}] og:title/locale/url + canonical`);
   ok(/hreflang="vi" href="[^"]+\/"/.test(raw) && /hreflang="en" href="[^"]+\/en\/"/.test(raw) && /hreflang="x-default" href="[^"]+\/"/.test(raw), `[${path}] hreflang vi / en / x-default`);

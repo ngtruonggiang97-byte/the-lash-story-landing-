@@ -4,15 +4,15 @@ export default {
   ogLocale: "en_US",
 
   meta: {
-    title: "The Nail Story · Nail art at 43 Quan Thanh Street, Hanoi",
-    description: "Nail art studio at 43 Quan Thanh Street, Ba Dinh, Hanoi, open since 2018. See the collection and prices, and book your visit.",
+    title: "The Lash Story · Lash extensions, lash lift and brow care at 43 Quan Thanh Street, Hanoi",
+    description: "Lash and brow studio at 43 Quan Thanh Street, Ba Dinh, Hanoi, open since 2018. See the price menu and book your visit.",
     imageAlt: "Storefront of The Story Studio, 43 Quan Thanh Street, Hanoi",
   },
   a11y: { skip: "Skip to the booking form" },
 
   nav: {
-    home: "The Nail Story, back to top",
-    logoAlt: "The Nail Story studio",
+    home: "The Lash Story, back to top",
+    logoAlt: "The Lash Story studio",
     langGroup: "Language",
     viLabel: "Tiếng Việt",
     enLabel: "English",
@@ -23,19 +23,21 @@ export default {
     imgAlt: "Storefront of The Story Studio, 43 Quan Thanh Street",
     line1: "Every set",
     line2: "tells a story",
-    sub: "A small nail art studio on Quan Thanh Street. Every set begins with a conversation, and is made slowly until it fits you just right.",
+    sub: "The lash and brow corner of our studio on Quán Thánh. Every look begins with how you want your eyes to feel.",
     cta: "Book now",
   },
 
   story: {
     title: "Our Story",
     sub: "A quiet corner on Quán Thánh",
-    body: "Founded in December 2018, The Nail Story has made a journey entirely its own in the world of nail art, where beauty is told through subtle colors and careful lines. Here, each set is more than a work of art. It is a personal way of seeing, shaped by style and character.",
+    body: "The Lash Story opened with the studio in late 2018, right next to The Nail Story on Quán Thánh Street. Every look begins with listening: whether you want your eyes soft or striking, and what suits your face and your pace of life. From there, length, curl and thickness are chosen with care, so your lashes look like they have always been yours.",
+    since: "Since 12/2018",
     address: "43 Quan Thanh Street, Ba Dinh, Hanoi",
-    photo1: "Rows of nail stations at The Nail Story",
-    photo2: "A client waiting on the sofa in the studio",
-    photo3: "Polish shelves and design charts",
-    photo4: "A technician doing a client's nails",
+    advice: "Consultation and quote before we begin",
+    photo1: "Rows of work stations in the studio",
+    photo2: "The waiting corner with a sofa",
+    photo3: "A display shelf in the studio",
+    photo4: "A technician caring for a client",
   },
 
   services: {
@@ -43,48 +45,57 @@ export default {
     nailAlt: "The Nail Story",
     lashAlt: "The Lash Story",
     nailDesc: "Turn every set into a small painting that speaks for your personality, from quiet and refined to boldly artistic.",
+    nailCta: "Explore",
     lashLine: "Lash and brow care in the same space.",
     lashDesc: "The eyes are where a story begins. Lashes and brows, cared for so your face glows naturally.",
-    lashCta: "Explore",
-  },
-
-  collection: {
-    title: "Collection",
-    deckLabel: "Collection, swipe to see the next set",
-    prev: "Previous set",
-    next: "Next set",
-    note: "Every set is discussed and priced before we begin. Details can be adjusted to your taste and budget.",
-    slideAlt: "{name} nail set",
-    base: { natural: "On natural nails", gelx: "On Gel X tips" },
-    ext: { yes: "With extension", no: "No extension" },
   },
 
   menu: {
     title: "Menu",
     effective: "Effective from 20 May 2026",
     currencyNote: "Prices in VND. K = 1,000.",
-    groups: {
-      gel: { name: "Gel", note: "Prices include nail cleaning, shaping and gel polish." },
-      design: { name: "Design", note: "" },
-      spa: { name: "Spa", note: "" },
+    ext: {
+      title: "Lash Extension",
+      tabsLabel: "Lash Extension styles, choose one to see its photo",
+      photoAlt: "{name} lash style",
+      groups: { natural: "Natural Look", signature: "Signature Look", glam: "Glam Look" },
+      looks: {
+        classic: { name: "Classic", sub: "" },
+        babyLash: { name: "Baby Lash", sub: "" },
+        classicPlus: { name: "Classic Plus", sub: "" },
+        kittenLash: { name: "Kitten Lash", sub: "" },
+        pixieLash: { name: "Pixie Lash", sub: "" },
+        sunnyLash: { name: "Sunny Lash", sub: "" },
+        medusaLash: { name: "Medusa Lash", sub: "" },
+        animeLash: { name: "Anime Lash", sub: "" },
+      },
+      surchargeTitle: "Add-ons",
+      surcharge: {
+        removal: { name: "Removal", sub: "" },
+        bottom: { name: "Bottom lash", sub: "" },
+        thick: { name: "Extra thickness", sub: "" },
+        special: { name: "Special material", sub: "" },
+      },
     },
-    items: {
-      apex: { name: "Apex Manicure", sub: "" },
-      pedi: { name: "Pedicure", sub: "" },
-      biab: { name: "BIAB", sub: "" },
-      press: { name: "Press-on with Gel", sub: "" },
-      gelx: { name: "Gel X", sub: "Extension" },
-      dual: { name: "Dual Form", sub: "Extension" },
-      removal: { name: "Removal", sub: "" },
-      length: { name: "Extra Length", sub: "" },
-      glitter: { name: "Glitter / Cat-eye", sub: "" },
-      chrome: { name: "Chrome", sub: "" },
-      french: { name: "French", sub: "" },
-      ombre: { name: "Ombre", sub: "" },
-      others: { name: "Other designs", sub: "" },
-      concealer: { name: "Concealer", sub: "" },
-      handSpa: { name: "Hand Spa", sub: "" },
-      footSpa: { name: "Foot Spa", sub: "" },
+    lift: {
+      title: "Lash Lift",
+      alt1: "An eye with lifted lashes",
+      alt2: "Close-up of lifted lashes",
+      items: {
+        lift: { name: "Lash Lift & Tint", sub: "" },
+        liftPremium: { name: "Premium Lash Lift & Tint", sub: "" },
+        treatment: { name: "Lash Treatment", sub: "" },
+      },
+    },
+    brow: {
+      title: "Brow Lift",
+      alt: "Close-up of shaped brows",
+      items: {
+        browLift: { name: "Brow Lift", sub: "" },
+        browPremium: { name: "Premium Brow Lamination", sub: "" },
+        browTint: { name: "Brow Tint", sub: "" },
+        threading: { name: "Threading", sub: "" },
+      },
     },
   },
 
@@ -98,7 +109,7 @@ export default {
 
   book: {
     title: "Book a visit",
-    lead: "Leave your name, phone number and the time you would like to visit. We will message you to confirm the time and choose a design together.",
+    lead: "Leave your name, phone number and the time you would like to visit. We will message you to confirm the time and choose a look together.",
     review: "See our Google reviews",
   },
 
@@ -110,7 +121,7 @@ export default {
     time: "Time",
     note: "Notes",
     optional: "(optional)",
-    noteHelp: "Is there a set from the collection you like, or a photo of your own? Add it here or send it to us on WhatsApp.",
+    noteHelp: "Is there a lash style you like, or a photo of your own? Add it here or send it to us on WhatsApp.",
     submit: "Book now",
     sending: "Sending...",
     sendError: "Something went wrong. Please try again, or message us on WhatsApp.",
@@ -125,7 +136,7 @@ export default {
     },
     done: {
       title: "Thank you, {name}",
-      body: "We have received your request for {date} at {time}. We will message you on {phone} to confirm the time and choose a design together.",
+      body: "We have received your request for {date} at {time}. We will message you on {phone} to confirm the time and choose a look together.",
     },
   },
 
@@ -139,16 +150,16 @@ export default {
 
   insta: {
     title: "Inspiration",
-    handle: "@thenailstory.studio",
+    handle: "@thelashstory.studio",
     tile: "View post {n} on Instagram",
   },
 
   footer: {
-    logoAlt: "The Nail Story studio",
+    logoAlt: "The Lash Story studio",
     tagline: "Every set tells a story",
     address: "43 Quan Thanh Street, Ba Dinh, Hanoi",
     social: "Social media",
-    copy: "© 2026 The Nail Story",
+    copy: "© 2026 The Lash Story",
   },
 
   sticky: { cta: "Book now" },

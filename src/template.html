@@ -22,7 +22,7 @@
   <link rel="alternate" hreflang="en" href="{{url.en}}" />
   <link rel="alternate" hreflang="x-default" href="{{url.vi}}" />
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="The Nail Story" />
+  <meta property="og:site_name" content="The Lash Story" />
   <meta property="og:title" content="{{meta.title}}" />
   <meta property="og:description" content="{{meta.description}}" />
   <meta property="og:locale" content="{{ogLocale}}" />
@@ -46,8 +46,8 @@
   <!-- ========== NAV: logo trai, switch ngon ngu phai ========== -->
   <header class="nav" data-nav>
     <a href="#" class="nav__logo" aria-label="{{nav.home}}">
-      <img class="nav__logo-light" src="/img/logo/logo-tns-pearl.png" alt="{{nav.logoAlt}}" width="786" height="140" />
-      <img class="nav__logo-dark" src="/img/logo/logo-tns-ink.png" alt="" width="786" height="140" />
+      <img class="nav__logo-light" src="/img/logo/logo-tls-pearl.png" alt="{{nav.logoAlt}}" width="668" height="120" />
+      <img class="nav__logo-dark" src="/img/logo/logo-tls-ink.png" alt="" width="668" height="120" />
     </a>
     <!-- Link that sang URL ngon ngu kia, cung tab. JS chi gan them ?query va #hash (UTM) vao href. -->
     <div class="lang" role="group" aria-label="{{nav.langGroup}}">
@@ -79,7 +79,7 @@
 
     <!-- ========== OUR STORY ========== -->
     <section class="story" aria-labelledby="story-title" data-reveal-group>
-      <!-- Tieu de dung chung class voi Collection de khop font, co, le, khoang cach -->
+      <!-- Tieu de dung class .coll__* (giu lai tu Collection cu) de khop font, co, le, khoang cach -->
       <div class="coll__head story__head">
         <h2 id="story-title" class="coll__title" data-reveal="chars">{{story.title}}</h2>
         <span class="mask mask--bf2 coll__bf story__bf" aria-hidden="true" data-reveal="fade"></span>
@@ -92,7 +92,9 @@
           <div class="story__text">
             <p class="story__body" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">{{story.body}}</p>
             <p class="story__facts" data-reveal="fade" style="--delay: calc(var(--stagger) * 3)">
+              <span>{{story.since}}</span>
               <a href="https://www.google.com/maps/search/?api=1&amp;query=43+Qu%C3%A1n+Th%C3%A1nh+Ba+%C4%90%C3%ACnh+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener"><i>{{icon:map-pin}}</i>{{story.address}}</a>
+              <span>{{story.advice}}</span>
             </p>
           </div>
           <figure class="story__ph story__ph--2" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">
@@ -120,55 +122,28 @@
            voi logo, nut / mui ten thang hang voi nhau o day; hang giua tu co theo noi dung.
            Chu hien sau logo 0.15s, mui ten / nut hien sau them 0.15s. -->
       <div class="studios__grid">
-        <a class="studio studio--nail" href="#collection">
-          <span class="studio__logo" data-reveal="fade"><img src="/img/logo/logo-tns-ink.png" alt="{{services.nailAlt}}" width="786" height="140" loading="lazy" /></span>
-          <div class="studio__body" data-reveal="fade" style="--delay: .15s">
-            <p class="studio__desc">{{services.nailDesc}}</p>
-          </div>
-          <span class="studio__act studio__cap" aria-hidden="true" data-reveal="fade" style="--delay: .3s"><i>{{icon:arrow-right}}</i></span>
-        </a>
-        <span class="studios__amp" aria-hidden="true" data-reveal="fade"><span class="mask mask--ring"></span></span>
         <div class="studio studio--lash">
-          <span class="studio__logo" data-reveal="fade" style="--delay: var(--stagger)"><img src="/img/logo/logo-tls-ink.png" alt="{{services.lashAlt}}" width="668" height="120" loading="lazy" /></span>
-          <div class="studio__body" data-reveal="fade" style="--delay: calc(var(--stagger) + .15s)">
+          <span class="studio__logo" data-reveal="fade"><img src="/img/logo/logo-tls-ink.png" alt="{{services.lashAlt}}" width="668" height="120" loading="lazy" /></span>
+          <div class="studio__body" data-reveal="fade" style="--delay: .15s">
             <p class="studio__line">{{services.lashLine}}</p>
             <p class="studio__desc">{{services.lashDesc}}</p>
           </div>
+        </div>
+        <span class="studios__amp" aria-hidden="true" data-reveal="fade"><span class="mask mask--ring"></span></span>
+        <div class="studio studio--nail">
+          <span class="studio__logo" data-reveal="fade" style="--delay: var(--stagger)"><img src="/img/logo/logo-tns-ink.png" alt="{{services.nailAlt}}" width="786" height="140" loading="lazy" /></span>
+          <div class="studio__body" data-reveal="fade" style="--delay: calc(var(--stagger) + .15s)">
+            <p class="studio__desc">{{services.nailDesc}}</p>
+          </div>
           <div class="studio__act" data-reveal="fade" style="--delay: calc(var(--stagger) + .3s)">
-            <!-- TODO: link tam, sau nay dan sang trang The Lash Story -->
-            <a class="btn btn--line btn--sm" href="#">{{services.lashCta}} <i>{{icon:arrow-right}}</i></a>
+            <!-- TODO Ryan: dien URL landing The Nail Story vao NAIL_URL trong src/config/site.js (tam la "#") -->
+            <a class="btn btn--line btn--sm" href="{{nailUrl}}">{{services.nailCta}} <i>{{icon:arrow-right}}</i></a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ========== COLLECTION ========== -->
-    <section class="coll" id="collection" aria-labelledby="coll-title" data-reveal-group>
-      <div class="coll__head">
-        <h2 id="coll-title" class="coll__title" data-reveal="chars">{{collection.title}}</h2>
-        <span class="mask mask--bf1 coll__bf" aria-hidden="true" data-reveal="fade"></span>
-      </div>
-
-      <div class="coll__stage">
-        <div class="deck" data-deck aria-roledescription="carousel" aria-label="{{collection.deckLabel}}">
-          {{@slides}}
-        </div>
-
-        <div class="info" aria-live="polite" data-reveal="fade">
-          <p class="info__idx"><span data-idx>{{@infoIdx}}</span> <span class="info__of">/ {{@total}}</span></p>
-          <h3 class="info__name" data-name>{{@infoName}}</h3>
-          <p class="info__meta" data-meta>{{@infoMeta}}</p>
-          <p class="info__price" data-price>{{@infoPrice}}</p>
-          <div class="arrows">
-            <button class="arrow" type="button" data-prev aria-label="{{collection.prev}}"><i>{{icon:arrow-left}}</i></button>
-            <button class="arrow" type="button" data-next aria-label="{{collection.next}}"><i>{{icon:arrow-right}}</i></button>
-          </div>
-          <p class="info__note">{{collection.note}}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== BANG GIA ========== -->
+    <!-- ========== MENU GIA (vi tri cu cua Collection) ========== -->
     <section class="menu" id="bang-gia" aria-labelledby="menu-title">
       <div class="menu__paper" data-reveal-group>
         <div class="menu__head">
@@ -176,8 +151,10 @@
           <p class="menu__date" data-reveal="fade">{{menu.effective}}</p>
           {{@currencyNote}}
         </div>
-        <div class="menu__groups">
-        {{@menu}}
+        <div class="menu__parts">
+        {{@menuExt}}
+        {{@menuLift}}
+        {{@menuBrow}}
         </div>
       </div>
     </section>
@@ -191,7 +168,7 @@
 
         <div class="book__links" data-reveal="fade">
           <!-- TODO: thay bang link Google Maps chinh thuc cua tiem -->
-          <a class="g-review" href="https://www.google.com/maps/search/?api=1&amp;query=The+Nail+Story+43+Qu%C3%A1n+Th%C3%A1nh+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener">
+          <a class="g-review" href="https://www.google.com/maps/search/?api=1&amp;query=The+Lash+Story+43+Qu%C3%A1n+Th%C3%A1nh+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener">
             <span class="g-review__logo"><i>{{icon:google}}</i></span>
             <span class="g-review__stars" aria-hidden="true"><i>{{icon:star}}</i><i>{{icon:star}}</i><i>{{icon:star}}</i><i>{{icon:star}}</i><i>{{icon:star}}</i></span>
             <span class="g-review__txt">{{book.review}}</span>
@@ -248,7 +225,7 @@
     <section class="insta" aria-labelledby="insta-title" data-reveal-group>
       <div class="insta__head">
         <h2 id="insta-title" class="insta__title" data-reveal="chars">{{insta.title}}</h2>
-        <a class="insta__handle" href="https://www.instagram.com/thenailstory.studio/" target="_blank" rel="noopener" data-reveal="fade">{{insta.handle}}</a>
+        <a class="insta__handle" href="{{social.instagram}}" target="_blank" rel="noopener" data-reveal="fade">{{insta.handle}}</a>
       </div>
       <div class="insta__row">
         {{@insta}}
@@ -257,7 +234,7 @@
 
     <div class="foot__base">
       <div class="foot__brand">
-        <img src="/img/logo/logo-tns-pearl.png" alt="{{footer.logoAlt}}" width="786" height="140" loading="lazy" />
+        <img src="/img/logo/logo-tls-pearl.png" alt="{{footer.logoAlt}}" width="668" height="120" loading="lazy" />
         <p class="foot__tag">{{footer.tagline}}</p>
       </div>
       <ul class="foot__info">
@@ -265,10 +242,10 @@
         <li><i>{{icon:phone}}</i><a href="{{contact.tel}}" data-contact="hotline">{{contact.phone}}</a></li>
       </ul>
       <ul class="foot__social" aria-label="{{footer.social}}">
-        <li><a href="https://www.instagram.com/thenailstory.studio/" target="_blank" rel="noopener" aria-label="Instagram"><i>{{icon:instagram}}</i></a></li>
-        <li><a href="https://www.threads.com/@thenailstory.studio" target="_blank" rel="noopener" aria-label="Threads"><i>{{icon:threads}}</i></a></li>
-        <li><a href="https://www.facebook.com/thenailstory2018" target="_blank" rel="noopener" aria-label="Facebook"><i>{{icon:facebook}}</i></a></li>
-        <li><a href="https://www.tiktok.com/@thenailstory" target="_blank" rel="noopener" aria-label="TikTok"><i>{{icon:tiktok}}</i></a></li>
+        <li><a href="{{social.instagram}}" target="_blank" rel="noopener" aria-label="Instagram"><i>{{icon:instagram}}</i></a></li>
+        <li><a href="{{social.threads}}" target="_blank" rel="noopener" aria-label="Threads"><i>{{icon:threads}}</i></a></li>
+        <li><a href="{{social.facebook}}" target="_blank" rel="noopener" aria-label="Facebook"><i>{{icon:facebook}}</i></a></li>
+        <li><a href="{{social.tiktok}}" target="_blank" rel="noopener" aria-label="TikTok"><i>{{icon:tiktok}}</i></a></li>
       </ul>
       <p class="foot__copy">{{footer.copy}}</p>
     </div>

@@ -2,12 +2,25 @@
 // Cach dung: mo Sheet > Extensions > Apps Script > dan file nay > Deploy > New deployment > Web app
 // (Execute as: Me, Who has access: Anyone). Copy URL /exec vao src/config/form.js (FORM_ENDPOINT).
 
-const SHEET_NAME = "The nail story";
+// Mot script phuc vu ca 2 landing. Form gui kem truong "brand": "lash" -> tab The Lash Story (theo gid),
+// khong co brand (landing Nail cu) -> tab "The nail story". Sua code thi Deploy > Manage deployments > New version (giu URL).
+const NAIL_SHEET_NAME = "The nail story";
+const LASH_SHEET_GID = 357999824;
+
+function pickSheet(brand) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (brand === "lash") {
+    const s = ss.getSheets().filter((x) => x.getSheetId() === LASH_SHEET_GID)[0];
+    if (!s) throw new Error("Khong tim thay tab Lash (gid " + LASH_SHEET_GID + ")");
+    return s;
+  }
+  return ss.getSheetByName(NAIL_SHEET_NAME);
+}
 
 function doPost(e) {
   try {
     const d = JSON.parse(e.postData.contents);
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+    const sheet = pickSheet(d.brand);
     const row = sheet.getLastRow() + 1;
     const text = (v) => (v == null ? "" : String(v));
     const vals = [
@@ -27,5 +40,5 @@ function doPost(e) {
 }
 
 function doGet() {
-  return ContentService.createTextOutput("The Nail Story form endpoint OK");
+  return ContentService.createTextOutput("Nail + Lash Story form endpoint OK");
 }

@@ -21,7 +21,7 @@ export default function pagesPlugin() {
   }
 
   return {
-    name: "nail-story-pages",
+    name: "lash-story-pages",
     enforce: "pre",
 
     config(cfg) {

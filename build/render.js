@@ -4,9 +4,9 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import vi from "../src/i18n/vi.js";
 import en from "../src/i18n/en.js";
-import { COLLECTION, INSTA_POSTS, img } from "../src/data/collection.js";
-import { PRICES, TIME_SLOTS } from "../src/data/prices.js";
-import { SITE_URL, PATHS, OG_IMAGE } from "../src/config/site.js";
+import { INSTA_POSTS } from "../src/data/insta.js";
+import { EXTENSION, SURCHARGE, LASH_LIFT, BROW_LIFT, TIME_SLOTS } from "../src/data/prices.js";
+import { SITE_URL, PATHS, OG_IMAGE, SOCIAL, NAIL_URL } from "../src/config/site.js";
 import { ICONS } from "./icons.js";
 
 export const DICTS = { vi, en };
@@ -23,31 +23,67 @@ const fmtTime = (t, style) => {
 
 /* ---------- Cac khoi HTML tinh (danh sach lap) ---------- */
 function blocks(t) {
-  const price = (n) => thousands(n, t.fmt.thousands) + t.fmt.currency;
-  const meta = (c) => `${t.collection.base[c.base]} · ${t.collection.ext[c.ext ? "yes" : "no"]}`;
+  // Danh sach co 2 dong chu: ten (tieu de tieng Anh) + ten phu (tieng Viet, font co dau) + gia
+  const plist = (items, dict) => `<ul class="plist">${items.map((it) => {
+    const n = dict[it.id];
+    return `<li class="prow"><span class="prow__name">${esc(n.name)}</span>${n.sub ? `<span class="prow__sub">${esc(n.sub)}</span>` : ""}<span class="prow__price">${esc(it.price)}</span></li>`;
+  }).join("")}</ul>`;
+  const partTitle = (id, text) => `<h3 id="${id}" class="mpart__title">${esc(text)}</h3>`;
 
-  const menu = PRICES.map((g, gi) => {
-    const grp = t.menu.groups[g.id];
-    const rows = g.items.map((it) => {
-      const n = t.menu.items[it.id];
-      return `<li class="mrow"><span class="mrow__name">${esc(n.name)}</span>${n.sub ? `<span class="mrow__sub">${esc(n.sub)}</span>` : ""}<span class="mrow__price">${esc(it.price)}</span></li>`;
-    }).join("");
-    return `<div class="mgroup mgroup--${g.id}" data-reveal="fade" style="--delay: calc(var(--stagger) * ${gi + 1})">
-          <h3 class="mgroup__name"><span class="mask mask--star" aria-hidden="true"></span>${esc(grp.name)}</h3>
-          <ul class="mgroup__list">${rows}</ul>
-          ${grp.note ? `<p class="mgroup__note">${esc(grp.note)}</p>` : ""}
-        </div>`;
-  }).join("\n        ");
+  /* 1. Lash Extension: danh sach (tablist) + khung anh. Mot DOM duy nhat:
+     desktop = danh sach cot 1-5, cac panel chong len nhau o cot 6-12; mobile = panel mo ngay duoi hang (accordion).
+     --o la thu tu hien thi tren mobile (nhan nhom, nut, panel cua nut do). */
+  const E = t.menu.ext;
+  let o = 0, idx = 0;
+  const tabs = [], panels = [];
+  EXTENSION.forEach((g) => {
+    tabs.push(`<p class="lx__group" role="presentation" style="--o:${++o}">${esc(E.groups[g.id])}</p>`);
+    g.looks.forEach((l) => {
+      const n = E.looks[l.id];
+      const on = idx === 0;
+      tabs.push(`<button class="lx__row${on ? " is-on" : ""}" type="button" role="tab" id="lx-tab-${l.img}" aria-selected="${on}" aria-controls="lx-panel-${l.img}" tabindex="${on ? 0 : -1}" style="--o:${++o}"><span class="lx__name">${esc(n.name)}</span><span class="lx__price">${esc(l.price)}</span></button>`);
+      panels.push(`<div class="lx__panel${on ? " is-on" : ""}" role="tabpanel" id="lx-panel-${l.img}" aria-labelledby="lx-tab-${l.img}" style="--o:${++o}"><div class="lx__clip"><figure class="lx__frame"><img src="/img/lash-looks/${l.img}.webp" alt="${esc(fill(E.photoAlt, { name: n.name }))}" width="390" height="300" loading="${on ? "eager" : "lazy"}" decoding="async" /></figure></div></div>`);
+      idx++;
+    });
+  });
+  const extra = `<div class="lx__extra" style="--o:${++o}"><p class="lx__extra-title">${esc(E.surchargeTitle)}</p><ul class="lx__extra-list">${SURCHARGE.map((it) => {
+    const n = E.surcharge[it.id];
+    return `<li><span class="lx__extra-name">${esc(n.name)}</span>${n.sub ? `<span class="lx__extra-sub">${esc(n.sub)}</span>` : ""}<span class="lx__extra-price">${esc(it.price)}</span></li>`;
+  }).join("")}</ul></div>`;
+  const menuExt = `<section class="mpart mpart--ext" aria-labelledby="mp-ext" data-reveal="fade">
+          ${partTitle("mp-ext", E.title)}
+          <div class="lx" data-lx>
+            <div class="lx__tabs" role="tablist" aria-orientation="vertical" aria-label="${esc(E.tabsLabel)}">${tabs.join("")}</div>
+            <div class="lx__panels">${panels.join("")}</div>
+            ${extra}
+          </div>
+        </section>`;
 
-  // Trang thai ban dau cua chong the (khong cho JS): the 1 o tren cung, the 2-3 lo ra, con lai an
-  const slides = COLLECTION.map((c, i) => {
-    const cls = ["slide", i === 0 ? "is-top" : "", i > 2 ? "is-hidden" : ""].filter(Boolean).join(" ");
-    const pos = c.pos ? ` style="object-position:${c.pos}"` : "";
-    return `<figure class="${cls}" style="--k:${Math.min(i, 3)};z-index:${COLLECTION.length - i}" data-i="${i}" data-c-name="${esc(c.name)}" data-c-meta="${esc(meta(c))}" data-c-price="${esc(price(c.price))}" aria-label="${esc(c.name)}"><img src="${img(c.slug)}" alt="${esc(fill(t.collection.slideAlt, { name: c.name }))}" width="${c.w}" height="${c.h}"${pos} loading="${i < 3 ? "eager" : "lazy"}" decoding="async" /></figure>`;
-  }).join("\n          ");
+  /* 2. Lash Lift: cap anh lech (trai) + danh sach (phai) */
+  const L = t.menu.lift;
+  const menuLift = `<section class="mpart mpart--lift" aria-labelledby="mp-lift" data-reveal="fade">
+          <div class="ll">
+            <div class="ll__imgs">
+              <figure class="ll__ph ll__ph--1"><img src="/img/lash-lift/lash-lift-1.webp" alt="${esc(L.alt1)}" width="660" height="276" loading="lazy" decoding="async" /></figure>
+              <figure class="ll__ph ll__ph--2"><img src="/img/lash-lift/lash-lift-2.webp" alt="${esc(L.alt2)}" width="632" height="276" loading="lazy" decoding="async" /></figure>
+            </div>
+            <div class="ll__body">
+              ${partTitle("mp-lift", L.title)}
+              ${plist(LASH_LIFT, L.items)}
+            </div>
+          </div>
+        </section>`;
 
-  const first = COLLECTION[0];
-  const insta = INSTA_POSTS.map((code, i) => `<a class="itile" style="--i:${i}" href="https://www.instagram.com/p/${code}/" target="_blank" rel="noopener" aria-label="${esc(fill(t.insta.tile, { n: i + 1 }))}"><img src="/images/insta/insta-${i + 1}.webp" alt="" width="640" height="640" loading="lazy" decoding="async" /><span class="itile__ic">${ICONS.instagram}</span></a>`).join("\n        ");
+  /* 3. Brow Lift: dai anh ngang + danh sach 2 cot */
+  const B = t.menu.brow;
+  const menuBrow = `<section class="mpart mpart--brow" aria-labelledby="mp-brow" data-reveal="fade">
+          ${partTitle("mp-brow", B.title)}
+          <figure class="bl__strip"><img src="/img/lash-lift/brow-lift.webp" alt="${esc(B.alt)}" width="1292" height="270" loading="lazy" decoding="async" /></figure>
+          ${plist(BROW_LIFT, B.items).replace('class="plist"', 'class="plist plist--2"')}
+        </section>`;
+
+  const instaHref = (code) => (code ? `https://www.instagram.com/p/${code}/` : SOCIAL.instagram);
+  const insta = INSTA_POSTS.map((code, i) => `<a class="itile" style="--i:${i}" href="${instaHref(code)}" target="_blank" rel="noopener" aria-label="${esc(fill(t.insta.tile, { n: i + 1 }))}"><img src="/images/insta/insta-${i + 1}.webp" alt="" width="640" height="640" loading="lazy" decoding="async" /><span class="itile__ic">${ICONS.instagram}</span></a>`).join("\n        ");
 
   const slots = TIME_SLOTS.map((s) => `<label class="slot"><input type="radio" name="time" value="${s}" data-label="${esc(fmtTime(s, t.fmt.timeStyle))}" /><span>${esc(fmtTime(s, t.fmt.timeStyle))}</span></label>`).join("");
 
@@ -64,18 +100,14 @@ function blocks(t) {
   };
 
   return {
-    menu,
-    slides,
+    menuExt,
+    menuLift,
+    menuBrow,
     currencyNote: t.menu.currencyNote ? `<p class="menu__note" data-reveal="fade">${esc(t.menu.currencyNote)}</p>` : "",
     phoneHelp: t.form.phoneHelp ? `<p class="field__help" id="h-phone">${esc(t.form.phoneHelp)}</p>` : "",
     phoneDesc: t.form.phoneHelp ? "e-phone h-phone" : "e-phone",
     insta,
     slots,
-    infoIdx: "01",
-    infoName: esc(first.name),
-    infoMeta: esc(meta(first)),
-    infoPrice: esc(price(first.price)),
-    total: String(COLLECTION.length),
     clientJson: JSON.stringify(client).replace(/</g, "\\u003c"),
   };
 }
@@ -94,6 +126,8 @@ export function renderPage(lang) {
     path: { vi: PATHS.vi, en: PATHS.en },
     cur: { vi: lang === "vi" ? ' aria-current="true"' : "", en: lang === "en" ? ' aria-current="true"' : "" },
     ogLocaleAlt: DICTS[other].ogLocale,
+    social: SOCIAL,
+    nailUrl: NAIL_URL,
   };
   const b = blocks(t);
 

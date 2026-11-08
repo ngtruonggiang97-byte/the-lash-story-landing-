@@ -34,7 +34,7 @@ for (const p of pages) {
       if (top) { top.style.setProperty("--mx", ".35"); top.style.setProperty("--my", ".3"); }
     });
     // chup tung man hinh theo section (fullPage cua Chromium loi voi clip-path + will-change)
-    const secs = ["section.story", "section.studios", "#collection", "#bang-gia", "#dat-lich", ".insta", ".foot__base"];
+    const secs = ["section.story", "section.studios", "#bang-gia", "#dat-lich", ".insta", ".foot__base"];
     for (const [k, sel] of secs.entries()) {
       if (!(await page.$(sel))) continue;
       await page.evaluate((q) => document.querySelector(q).scrollIntoView({ block: "start" }), sel);
