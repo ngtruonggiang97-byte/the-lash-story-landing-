@@ -66,9 +66,8 @@
   }
 }
 
-.nav { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 var(--gutter); }
+.nav { display: flex; align-items: center; justify-content: center; height: 64px; padding: 0 var(--gutter); } /* logo o giua, khong co nut */
 .nav__logo img { width: 132px; height: auto; }
-.nav__cta { font-size: 13px; font-weight: 500; letter-spacing: .03em; text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid rgba(250, 249, 244, .7); }
 
 .hero__copy { padding: 0 var(--gutter) 28px; }
 .hero__title {
