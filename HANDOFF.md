@@ -25,7 +25,8 @@ node scripts/check.mjs            # kiểm tra cuộn, collection, form (cần d
 
 ## Ảnh
 - Hero: `public/images/hero/hero-mobile.webp` (dọc) + `hero-desktop.webp` (16:9). Gốc 713×854 ở `assets/space/storefront-original.webp`, hơi mềm trên desktop, cần bản gốc lớn hơn.
-- Our Story: `public/images/story/story-1..4.webp`, đều dọc 4:5. File hiện tại là ảnh tạm trong suốt, chép đè ảnh thật là nhãn tự ẩn. Cách chụp: `SHOTLIST.md`.
+- Our Story: `public/images/story/story-1..4.webp` (900×1125, 4:5) đã là ảnh thật, gốc 1080×1350 ở `assets/space/1-4.png`. Khớp: story-1 = 4.png (dãy bàn), story-2 = 1.png (sofa chờ), story-3 = 2.png (kệ màu), story-4 = 3.png (đang làm móng).
+- Collection: ảnh thật của Ryan ở `assets/collection/<Tên mẫu>.png` -> `public/img/collection/<slug>.webp`.
 
 ## Deploy
 - Vercel, team `vietnamdee`, project `the-nail-story-landing`: https://the-nail-story-landing.vercel.app
@@ -35,5 +36,4 @@ node scripts/check.mjs            # kiểm tra cuộn, collection, form (cần d
 1. Form đặt lịch mới validate + hiện cảm ơn, **chưa gửi dữ liệu**. Bước tiếp: Google Apps Script -> Google Sheets (payload đã gom sẵn trong `src/main.js`).
 2. Link tạm: Facebook, TikTok (`#`), nút "Khám phá" The Lash Story (`#`), Google Maps (đang là link tìm kiếm).
 3. Giờ mở cửa thật để chỉnh khung giờ (`src/data/prices.js`, `TIME_SLOTS`).
-4. Ảnh thật cho Our Story, ảnh hero độ phân giải cao, ảnh collection lớn hơn 640px.
-5. SHOTLIST.md chưa cập nhật: Our Story giờ là 4 ảnh 4:5 (ảnh 4: khoảnh khắc làm móng).
+4. Ảnh hero độ phân giải cao hơn (bản hiện tại 713px, hơi mềm trên desktop).
