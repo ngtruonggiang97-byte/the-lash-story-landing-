@@ -451,7 +451,6 @@ a.studio:hover img { opacity: .75; }
 .foot__social a:hover { background: rgba(250, 249, 244, .1); border-color: rgba(250, 249, 244, .6); }
 .foot__social i { display: grid; place-items: center; line-height: 0; } /* <i> inline lam lech icon theo baseline */
 .foot__social svg { display: block; width: 17px; height: 17px; }
-.foot__social a[aria-label="Zalo"] svg { width: 28px; height: 28px; } /* logo Zalo la wordmark, can to hon */
 .foot__copy { margin: 8px 0 0; padding-top: 24px; border-top: 1px solid rgba(250, 249, 244, .18); font-size: 12px; opacity: .75; }
 :where(.foot__base) :focus-visible { outline-color: var(--pearl); }
 @media (min-width: 1024px) {
