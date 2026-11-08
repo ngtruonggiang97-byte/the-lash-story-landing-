@@ -8,17 +8,36 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (new URLSearchParams(location.search).has("freeze")) document.documentElement.classList.add("freeze");
 
 /* ================= Hero intro 2 nhip ================= */
-// Chuyen dong nam het trong CSS. JS chi gan .is-done de hien ngay trang thai cuoi khi:
-// reduced motion, ?freeze (chup man hinh), khach cuon truoc khi intro xong, hoac intro da chay het.
+// Chuyen dong nam het trong CSS. JS lo 2 viec:
+// 1. .is-done = trang thai cuoi tinh: reduced motion, ?freeze (chup man hinh), vao trang da o giua trang,
+//    hoac intro da chay het.
+// 2. Khach cuon / vuot / bam phim khi intro chua xong: KHONG nhay cong, ma tua nhanh phan con lai
+//    cua moi animation (Web Animations API) de tat ca cung ket thuc sau --intro-skip (.7s).
 {
   const hero = $(".hero");
+  const tok = (v) => { const s = getComputedStyle(document.documentElement).getPropertyValue(v).trim(); return s.endsWith("ms") ? parseFloat(s) : parseFloat(s) * 1000; };
   const done = () => hero.classList.add("is-done");
   if (reduce || document.documentElement.classList.contains("freeze") || scrollY > 0) done();
   else {
-    addEventListener("scroll", done, { once: true, passive: true });
-    // intro ket thuc khi anh sang dong 2 luot xong: p2 + line2 + sheen
-    const t = (v) => { const s = getComputedStyle(document.documentElement).getPropertyValue(v).trim(); return s.endsWith("ms") ? parseFloat(s) : parseFloat(s) * 1000; };
-    setTimeout(done, t("--intro-p2") + t("--intro-line2") + t("--intro-sheen") + 100);
+    let skipped = false;
+    const fastForward = () => {
+      if (skipped || hero.classList.contains("is-done")) return;
+      skipped = true;
+      off();
+      const anims = hero.getAnimations ? hero.getAnimations({ subtree: true }) : [];
+      if (!anims.length) return done();
+      const target = tok("--intro-skip");
+      anims.forEach((a) => {
+        const remain = a.effect.getComputedTiming().endTime - (a.currentTime || 0);
+        if (remain > target) a.playbackRate = remain / target;   // ngan hon thi cu de chay tiep
+      });
+      Promise.all(anims.map((a) => a.finished.catch(() => {}))).then(done);
+    };
+    const evs = ["wheel", "touchmove", "keydown", "scroll"];
+    const off = () => evs.forEach((e) => removeEventListener(e, fastForward));
+    evs.forEach((e) => addEventListener(e, fastForward, { passive: true }));
+    // intro tu ket thuc khi anh sang dong 2 luot xong
+    setTimeout(() => { off(); done(); }, tok("--intro-p2") + tok("--intro-line2") + tok("--intro-sheen") + 100);
   }
 }
 

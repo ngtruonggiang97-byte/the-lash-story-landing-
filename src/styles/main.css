@@ -76,7 +76,7 @@
 }
 
 .nav { display: flex; align-items: center; justify-content: center; height: 64px; padding: 0 var(--gutter); } /* logo o giua, khong co nut */
-.nav__logo img { width: 132px; height: auto; }
+.nav__logo img { width: 168px; height: auto; }
 
 .hero__copy { padding: 0 var(--gutter) 28px; }
 .hero__title {
@@ -126,7 +126,7 @@
 }
 
 @media (min-width: 1024px) {
-  .nav { height: 72px; } .nav__logo img { width: 168px; }
+  .nav { height: 80px; } .nav__logo img { width: 224px; }
   .hero__copy { padding-bottom: 48px; }
   .hero__title { font-size: clamp(88px, 9.6vw, 160px); }
   .hero__row { flex-direction: row; align-items: flex-end; justify-content: space-between; margin-top: 28px; }

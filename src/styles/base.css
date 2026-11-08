@@ -40,14 +40,15 @@
   --dur-card-back: .6s; /* collection: card tra ve cho cu */
   --stagger: 100ms;     /* do tre giua cac tu / phan tu */
 
-  /* Hero intro 2 nhip (Ryan chot) */
-  --intro-zoom: 7s;       /* nhip 1: anh scale 1.07 -> 1 */
-  --intro-p2: 1.8s;       /* luc bat dau nhip 2 */
-  --intro-p2-dur: 2.6s;   /* anh mo + toi, lop gradient hien */
-  --intro-title: 2s;      /* moi dong tieu de hien trong 2s */
-  --intro-line2: .25s;    /* dong 2 tre hon dong 1 */
-  --intro-sheen: 6s;      /* anh sang luot qua chu 1 lan */
-  --intro-rest: 4s;       /* doan phu + nut Dat lich hien */
+  /* Hero intro 2 nhip. v2 (Ryan: "can nhanh hon"): rut ~40% */
+  --intro-zoom: 4.5s;     /* nhip 1: anh scale 1.07 -> 1 */
+  --intro-p2: 1s;         /* luc bat dau nhip 2 */
+  --intro-p2-dur: 1.6s;   /* anh mo + toi, lop gradient hien */
+  --intro-title: 1.3s;    /* moi dong tieu de hien */
+  --intro-line2: .18s;    /* dong 2 tre hon dong 1 */
+  --intro-sheen: 3.6s;    /* anh sang luot qua chu 1 lan */
+  --intro-rest: 2.3s;     /* doan phu + nut Dat lich hien */
+  --intro-skip: .7s;      /* khach cuon som: tua nhanh phan con lai trong .7s (khong nhay cong) */
   --rise: 14px;         /* quang dich chuyen toi da khi hien ra */
   --blur-in: 4px;
   --gutter: 20px;
