@@ -7,7 +7,7 @@
 - Bỏ Collection. Menu giá Lash đặt ở vị trí cũ, 3 bố cục: Lash Extension (tablist + khung ảnh 4:3, vệt Nacre khi đổi ảnh), Lash Lift (cặp ảnh lệch + danh sách), Brow Lift (dải ảnh + 2 cột). Code: `build/render.js` (khối HTML), `src/main.js` (phần Lash Extension), `src/styles/main.css` (`.lx`, `.ll`, `.bl`, `.plist`).
 - Our Services: Lash (trang hiện tại) bên trái, Nail bên phải với nút Khám phá (URL tạm "#", sửa `NAIL_URL` trong `src/config/site.js`).
 - Ảnh menu là **ảnh tạm** cắt từ `assets/brand/lash-bang-gia-1.jpg`, `lash-bang-gia-2.jpg` bằng `python scripts/crop-lash-images.py` (có chữ đè, ~390px). Ảnh Our Story / hero / Instagram / og-share vẫn là ảnh Nail. Xem `SHOTLIST.md`.
-- Our Story hiện 3 mục thông tin (Từ 12/2018, địa chỉ, Tư vấn và báo giá) và vẫn 4 ô ảnh.
+- Our Story hiện 1 mục thông tin (địa chỉ) và vẫn 4 ô ảnh. Our Services: logo Lash mờ (trang hiện tại), logo Nail đậm, dòng "Nail art trong cùng không gian" dưới logo Nail. Menu Lash Extension desktop: ảnh nhỏ 30%, hover thì ảnh trượt tới cạnh dòng và gạch chân dòng kéo dài tới ảnh (--ext tính trong place() ở src/main.js).
 
 ## Chạy dự án
 ```bash
@@ -40,5 +40,5 @@ npm run i18n:table                # tạo lại I18N-REVIEW.md
 2. Tài khoản Instagram / Threads / Facebook / TikTok của Lash (placeholder), 6 post Instagram và ảnh thumb.
 3. Google Maps chính thức (đang là link tìm kiếm), Pixel ID / Google tag ID.
 4. Ảnh thật: hero, Our Story, ảnh từng kiểu mi (ảnh tạm cắt từ bảng giá, có chữ đè và độ phân giải thấp), og-share.
-5. Apps Script / Sheet riêng cho Lash. Tên Vercel project và domain mới (hiện `src/config/site.js` vẫn trỏ vercel của Nail).
+5. Nối form (xem mục Chạy ads) và gắn tên miền riêng nếu có (`SITE_URL` trong `src/config/site.js`, đang là the-lash-story-landing.vercel.app).
 6. Giờ mở cửa thật (`src/data/prices.js`, `TIME_SLOTS`), duyệt chữ EN trong `I18N-REVIEW.md`.

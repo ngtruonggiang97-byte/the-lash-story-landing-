@@ -51,6 +51,18 @@ if (lx) {
   const dur = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--dur-reveal")) * 1000 || 1100;
   let cur = 0;
 
+  // Desktop: dat anh canh hang dang chon (can giua theo hang, khong tran ra ngoai khung)
+  function place(i) {
+    if (!desk.matches) return;
+    const row = tabs[i], p = panels[i];
+    const h = p.offsetHeight || (p.offsetWidth * 3) / 4;
+    const max = Math.max(0, lx.clientHeight - h);
+    const y = row.offsetTop + row.offsetHeight / 2 - h / 2;
+    const top = Math.min(max, Math.max(0, y));
+    p.style.setProperty("--y", top + "px");
+    // Gach chan hang dang chon keo dai (them --ext) toi dung mep trai cua anh
+    row.style.setProperty("--ext", Math.max(0, p.offsetLeft - (row.offsetLeft + row.offsetWidth)) + "px");
+  }
   function select(i) {
     if (i === cur) return false;
     cur = i;
@@ -62,6 +74,7 @@ if (lx) {
       panels[k].classList.toggle("is-on", on);
       panels[k].classList.remove("is-sheen");
     });
+    place(i);
     if (!reduce) {
       const p = panels[i];
       void p.offsetWidth;                       // chay lai animation moi lan doi anh
@@ -80,6 +93,8 @@ if (lx) {
     requestAnimationFrame(step);
   }
 
+  place(0);
+  addEventListener("resize", () => place(cur));
   tabs.forEach((t, i) => {
     t.addEventListener("click", () => { if (!desk.matches && i !== cur) { select(i); anchor(t); } else select(i); });
     t.addEventListener("focus", () => { if (desk.matches || t.matches(":focus-visible")) select(i); });

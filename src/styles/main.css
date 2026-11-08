@@ -253,6 +253,9 @@
 .studio__logo { display: block; width: min(76%, 360px); }
 .studio__logo img { display: block; width: 100%; height: auto; transition: opacity var(--dur-hover) var(--ease-soft); }
 a.studio:hover .studio__logo img { opacity: .75; }
+/* Dang o trang Lash: logo Lash mo (trang hien tai), logo Nail dam (link di noi khac) */
+.studio--lash .studio__logo img { opacity: .5; }
+.studio--nail .studio__logo img { opacity: 1; }
 .studio__body { margin-top: 22px; }                       /* logo -> chu: 20-24px */
 .studio__act { margin-top: 26px; }                        /* chu -> hanh dong: 24-28px */
 /* Tagline cua Lash (nho, dam mau) khac ro voi mo ta (to hon, nhat hon) */
@@ -402,8 +405,10 @@ a.studio:hover .studio__cap svg { transform: translateX(4px); }
   .lx { grid-template-columns: repeat(12, 1fr); column-gap: 24px; }
   .lx__group, .lx__row, .lx__extra { order: 0; grid-column: 1 / 6; }
   .lx__row::after { width: 88%; }
-  .lx__row.is-on::after { width: calc(100% + 24px); }
-  .lx__panel { order: 0; grid-column: 6 / 13; grid-row: 1 / span 12; align-self: start; display: block; opacity: 0; transition: opacity var(--dur-reveal) var(--ease-soft), visibility 0s linear var(--dur-reveal); }
+  /* gach chan cua hang dang chon tu keo dai toi mep trai cua anh (--ext do JS tinh) */
+  .lx__row.is-on::after { width: calc(100% + var(--ext, 24px)); }
+  /* Anh nho (~30% rong), nam canh hang dang hover: JS dat --y theo vi tri hang */
+  .lx__panel { order: 0; position: absolute; right: 12%; top: var(--y, 0px); width: 30%; display: block; opacity: 0; transition: opacity var(--dur-reveal) var(--ease-soft), top var(--dur-reveal) var(--ease-soft), visibility 0s linear var(--dur-reveal); }
   .lx__panel.is-on { opacity: 1; }
   .lx__clip { overflow: visible; }
   .lx__frame { margin: 0; }

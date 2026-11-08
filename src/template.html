@@ -92,9 +92,7 @@
           <div class="story__text">
             <p class="story__body" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">{{story.body}}</p>
             <p class="story__facts" data-reveal="fade" style="--delay: calc(var(--stagger) * 3)">
-              <span>{{story.since}}</span>
               <a href="https://www.google.com/maps/search/?api=1&amp;query=43+Qu%C3%A1n+Th%C3%A1nh+Ba+%C4%90%C3%ACnh+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener"><i>{{icon:map-pin}}</i>{{story.address}}</a>
-              <span>{{story.advice}}</span>
             </p>
           </div>
           <figure class="story__ph story__ph--2" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">
@@ -125,7 +123,6 @@
         <div class="studio studio--lash">
           <span class="studio__logo" data-reveal="fade"><img src="/img/logo/logo-tls-ink.png" alt="{{services.lashAlt}}" width="668" height="120" loading="lazy" /></span>
           <div class="studio__body" data-reveal="fade" style="--delay: .15s">
-            <p class="studio__line">{{services.lashLine}}</p>
             <p class="studio__desc">{{services.lashDesc}}</p>
           </div>
         </div>
@@ -133,6 +130,7 @@
         <div class="studio studio--nail">
           <span class="studio__logo" data-reveal="fade" style="--delay: var(--stagger)"><img src="/img/logo/logo-tns-ink.png" alt="{{services.nailAlt}}" width="786" height="140" loading="lazy" /></span>
           <div class="studio__body" data-reveal="fade" style="--delay: calc(var(--stagger) + .15s)">
+            <p class="studio__line">{{services.nailLine}}</p>
             <p class="studio__desc">{{services.nailDesc}}</p>
           </div>
           <div class="studio__act" data-reveal="fade" style="--delay: calc(var(--stagger) + .3s)">

@@ -24,17 +24,15 @@ export default {
     imgAlt: "Mặt tiền The Story Studio, 43 Quán Thánh",
     line1: "Every set",
     line2: "tells a story",
-    sub: "Góc chăm sóc mi và lông mày của studio trên phố Quán Thánh. Mỗi kiểu mi bắt đầu từ đôi mắt bạn muốn trông như thế nào.",
+    sub: "Góc nhỏ dành cho mi và lông mày trên phố Quán Thánh. Mỗi bộ mi bắt đầu từ một cuộc trò chuyện về đôi mắt bạn muốn có.",
     cta: "Đặt lịch",
   },
 
   story: {
     title: "Our Story",
     sub: "A quiet corner on Quán Thánh",
-    body: "The Lash Story mở cửa cùng studio từ cuối năm 2018, ngay cạnh The Nail Story trên phố Quán Thánh. Mỗi kiểu mi bắt đầu từ việc lắng nghe: bạn thích đôi mắt nhẹ nhàng hay cuốn hút, hợp với gương mặt và nhịp sống của bạn. Từ đó độ dài, độ cong và độ dày được chọn kỹ, để bộ mi trông như của riêng bạn.",
-    since: "Từ 12/2018",
+    body: "The Lash Story có mặt từ cuối năm 2018, chung không gian với The Nail Story trên phố Quán Thánh. Mỗi bộ mi bắt đầu từ việc lắng nghe: bạn thích đôi mắt nhẹ nhàng hay cuốn hút, hợp với gương mặt và nhịp sống của bạn. Từ đó độ dài, độ cong và độ dày được chọn kỹ, để bộ mi trông như của riêng bạn.",
     address: "43 Quán Thánh, Ba Đình",
-    advice: "Tư vấn và báo giá trước khi làm",
     photo1: "Dãy bàn làm việc trong studio",
     photo2: "Góc chờ với sofa trong studio",
     photo3: "Kệ trưng bày trong studio",
@@ -47,7 +45,7 @@ export default {
     lashAlt: "The Lash Story",
     nailDesc: "Biến mỗi bộ móng thành một bức tranh nhỏ thể hiện cá tính của riêng bạn, từ nét nhẹ nhàng tinh tế đến những thiết kế đầy nghệ thuật.",
     nailCta: "Khám phá",
-    lashLine: "Chăm sóc mi, lông mày trong cùng không gian.",
+    nailLine: "Nail art trong cùng không gian.",
     lashDesc: "Đôi mắt là nơi câu chuyện bắt đầu. Mi và lông mày được chăm chút để gương mặt bạn rạng rỡ một cách tự nhiên.",
   },
 

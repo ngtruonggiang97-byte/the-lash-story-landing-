@@ -23,17 +23,15 @@ export default {
     imgAlt: "Storefront of The Story Studio, 43 Quan Thanh Street",
     line1: "Every set",
     line2: "tells a story",
-    sub: "The lash and brow corner of our studio on Quán Thánh. Every look begins with how you want your eyes to feel.",
+    sub: "A small corner for lashes and brows on Quán Thánh. Every set begins with a conversation about the eyes you want.",
     cta: "Book now",
   },
 
   story: {
     title: "Our Story",
     sub: "A quiet corner on Quán Thánh",
-    body: "The Lash Story opened with the studio in late 2018, right next to The Nail Story on Quán Thánh Street. Every look begins with listening: whether you want your eyes soft or striking, and what suits your face and your pace of life. From there, length, curl and thickness are chosen with care, so your lashes look like they have always been yours.",
-    since: "Since 12/2018",
+    body: "The Lash Story has been here since late 2018, sharing the space with The Nail Story on Quán Thánh Street. Every look begins with listening: whether you want your eyes soft or striking, and what suits your face and your pace of life. From there, length, curl and thickness are chosen with care, so your lashes look like they have always been yours.",
     address: "43 Quan Thanh Street, Ba Dinh, Hanoi",
-    advice: "Consultation and quote before we begin",
     photo1: "Rows of work stations in the studio",
     photo2: "The waiting corner with a sofa",
     photo3: "A display shelf in the studio",
@@ -46,7 +44,7 @@ export default {
     lashAlt: "The Lash Story",
     nailDesc: "Turn every set into a small painting that speaks for your personality, from quiet and refined to boldly artistic.",
     nailCta: "Explore",
-    lashLine: "Lash and brow care in the same space.",
+    nailLine: "Nail art in the same space.",
     lashDesc: "The eyes are where a story begins. Lashes and brows, cared for so your face glows naturally.",
   },
 
