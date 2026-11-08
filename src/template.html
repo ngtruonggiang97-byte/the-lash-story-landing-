@@ -201,9 +201,10 @@
           <input id="f-date" name="date" type="date" required aria-describedby="e-date" />
           <p class="field__err" id="e-date"></p>
         </div>
-        <fieldset class="field field--slots" aria-describedby="e-time">
+        <fieldset class="field field--slots" aria-describedby="h-time e-time">
           <legend>{{form.time}}</legend>
           <div class="slots">{{@slots}}</div>
+          <p class="field__help" id="h-time">{{form.timeHelp}}</p>
           <p class="field__err" id="e-time"></p>
         </fieldset>
         <div class="field">

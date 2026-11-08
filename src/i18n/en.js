@@ -119,6 +119,7 @@ export default {
     time: "Time",
     note: "Notes",
     optional: "(optional)",
+    timeHelp: "We will message you to confirm and agree on the exact time.",
     noteHelp: "Is there a lash style you like, or a photo of your own? Add it here or send it to us on WhatsApp.",
     submit: "Book now",
     sending: "Sending...",

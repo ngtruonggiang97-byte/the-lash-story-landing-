@@ -120,6 +120,7 @@ export default {
     time: "Khung giờ",
     note: "Ghi chú",
     optional: "(không bắt buộc)",
+    timeHelp: "Studio sẽ nhắn lại để xác nhận và trao đổi thời gian chi tiết.",
     noteHelp: "Bạn thích kiểu mi nào, hay có ảnh mẫu riêng? Ghi vào đây hoặc gửi qua Zalo.",
     submit: "Đặt lịch",
     sending: "Đang gửi...",
