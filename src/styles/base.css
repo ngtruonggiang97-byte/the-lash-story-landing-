@@ -39,6 +39,15 @@
   --dur-card: .8s;      /* collection: card bay di / card sau hien len */
   --dur-card-back: .6s; /* collection: card tra ve cho cu */
   --stagger: 100ms;     /* do tre giua cac tu / phan tu */
+
+  /* Hero intro 2 nhip (Ryan chot) */
+  --intro-zoom: 7s;       /* nhip 1: anh scale 1.07 -> 1 */
+  --intro-p2: 1.8s;       /* luc bat dau nhip 2 */
+  --intro-p2-dur: 2.6s;   /* anh mo + toi, lop gradient hien */
+  --intro-title: 2s;      /* moi dong tieu de hien trong 2s */
+  --intro-line2: .25s;    /* dong 2 tre hon dong 1 */
+  --intro-sheen: 6s;      /* anh sang luot qua chu 1 lan */
+  --intro-rest: 4s;       /* doan phu + nut Dat lich hien */
   --rise: 14px;         /* quang dich chuyen toi da khi hien ra */
   --blur-in: 4px;
   --gutter: 20px;

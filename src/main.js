@@ -7,6 +7,21 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (new URLSearchParams(location.search).has("freeze")) document.documentElement.classList.add("freeze");
 
+/* ================= Hero intro 2 nhip ================= */
+// Chuyen dong nam het trong CSS. JS chi gan .is-done de hien ngay trang thai cuoi khi:
+// reduced motion, ?freeze (chup man hinh), khach cuon truoc khi intro xong, hoac intro da chay het.
+{
+  const hero = $(".hero");
+  const done = () => hero.classList.add("is-done");
+  if (reduce || document.documentElement.classList.contains("freeze") || scrollY > 0) done();
+  else {
+    addEventListener("scroll", done, { once: true, passive: true });
+    // intro ket thuc khi anh sang dong 2 luot xong: p2 + line2 + sheen
+    const t = (v) => { const s = getComputedStyle(document.documentElement).getPropertyValue(v).trim(); return s.endsWith("ms") ? parseFloat(s) : parseFloat(s) * 1000; };
+    setTimeout(done, t("--intro-p2") + t("--intro-line2") + t("--intro-sheen") + 100);
+  }
+}
+
 /* ================= Bang gia ================= */
 $("[data-price-date]").textContent = PRICE_DATE;
 $("[data-menu]").innerHTML = PRICES.map((g, gi) => `

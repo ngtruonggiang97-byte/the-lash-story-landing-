@@ -43,27 +43,36 @@
 .btn--line:hover { background: rgba(95, 88, 70, .06); }
 
 /* ================= HERO ================= */
+/* Hero = intro 2 nhip, anh mat tien tran 100svh tren moi man hinh.
+   Nhip 1 (0 - 1.8s): chi anh + nav, anh scale 1.07 -> 1 trong 7s.
+   Nhip 2 (tu 1.8s, 2.6s): anh mo + toi, lop gradient #1f1b15 hien, tieu de hien tung dong,
+   anh sang luot qua chu 1 lan. Doan phu + nut hien o 4s.
+   .is-done (cuon truoc khi xong / reduced motion / ?freeze): hien ngay trang thai cuoi. */
 .hero {
   position: relative; isolation: isolate;
   min-height: 100svh;
   display: flex; flex-direction: column; justify-content: space-between;
   color: var(--pearl); overflow: hidden;
 }
-.hero__bg { position: absolute; inset: 0; z-index: -1; background: #5f5846; }
-.hero__bg picture { position: absolute; inset: 0; }
-.hero__bg img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
-/* lop toi tren/duoi de logo, tagline va nut doc duoc tren anh mat tien */
-.hero__bg::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(40, 36, 28, .45) 0%, rgba(40, 36, 28, .1) 22%, rgba(40, 36, 28, .15) 45%, rgba(40, 36, 28, .82) 100%);
+.hero__bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; background: #2b2620; }
+/* tran ra ngoai 16px de mep anh khong bi vien sang khi blur */
+.hero__bg picture { position: absolute; inset: -16px; }
+.hero__bg img {
+  display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%;
+  transform-origin: 50% 40%;
+  filter: blur(5px) brightness(.62) saturate(.85);           /* trang thai cuoi */
 }
-@media (min-width: 1024px) {
-  /* desktop: chu nam de len mai hien sang mau, them lop toi o goc trai duoi */
-  .hero__bg::after {
-    background:
-      radial-gradient(70% 75% at 15% 100%, rgba(40, 36, 28, .7) 0%, transparent 70%),
-      linear-gradient(180deg, rgba(40, 36, 28, .45) 0%, rgba(40, 36, 28, .1) 22%, rgba(40, 36, 28, .25) 50%, rgba(40, 36, 28, .85) 100%);
-  }
+/* lop toi mong o tren de logo doc duoc ngay tu nhip 1 */
+.hero__bg::before {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgba(31, 27, 21, .45) 0%, rgba(31, 27, 21, 0) 22%);
+}
+/* nhip 2: gradient toi tu trai sang va tu duoi len (#1f1b15, 72% -> 10%) */
+.hero__bg::after {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(31, 27, 21, .72) 0%, rgba(31, 27, 21, .1) 70%),
+    linear-gradient(0deg, rgba(31, 27, 21, .72) 0%, rgba(31, 27, 21, .1) 60%);
 }
 
 .nav { display: flex; align-items: center; justify-content: center; height: 64px; padding: 0 var(--gutter); } /* logo o giua, khong co nut */
@@ -72,37 +81,53 @@
 .hero__copy { padding: 0 var(--gutter) 28px; }
 .hero__title {
   margin: 0; font-family: var(--f-en); font-weight: 400;
-  font-size: clamp(48px, 14vw, 176px); line-height: 1; letter-spacing: -.035em;
-  padding-bottom: .08em;
+  font-size: clamp(44px, 12.5vw, 176px); line-height: 1.02; letter-spacing: -.035em;
 }
+.hero__line { display: block; padding-bottom: .08em; }   /* chua cho chan chu y */
 .hero__row { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; margin-top: 20px; }
 .hero__sub { margin: 0; font-size: 15px; max-width: 36ch; color: rgba(250, 249, 244, .92); }
-.br-d { display: none; }
 
-/* hero vao trang: troi len cham, tan tu mo sang ro */
-.js .hero__title { animation: rise var(--dur-slow) var(--ease-soft) var(--stagger) both, nacre-text var(--dur-nacre) var(--ease-soft) calc(var(--stagger) * 4) 1 both; }
-.js .hero__row { animation: rise var(--dur-slow) var(--ease-soft) calc(var(--stagger) * 5) both; }
-@keyframes rise { from { opacity: 0; transform: translateY(var(--rise)); filter: blur(var(--blur-in)); } }
-
-/* Nacre 1: tagline phu foil xa cu, chay 1 lan */
+/* Chu anh xa cu: lop anh sang (luot 1 lan) phu tren lop gradient ngoc trai tinh,
+   ca hai cat theo chu. Trang thai cuoi: anh sang da luot qua, chi con mau ngoc trai. */
 .nacre-text {
-  color: var(--pearl);
-  background: linear-gradient(100deg,
-    var(--pearl) 0%, var(--pearl) 34%,
-    #f7dbe6 41%, #d6efe7 47%, #e2dcfa 53%, #ffffff 57%, #f5e6cc 61%,
-    var(--pearl) 68%, var(--pearl) 100%);
-  background-size: 320% 100%; background-position: 100% 0;
+  color: #f7f2e8;
+  background-image:
+    linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, .95) 50%, transparent 60%),
+    linear-gradient(100deg, #f7f2e8 0%, #f3d9e0 28%, #f7f2e8 46%, #d3ece6 66%, #f3e6c4 86%, #f7f2e8 100%);
+  background-size: 300% 100%, 100% 100%;
+  background-position: 0% 0, 0 0;
+  background-repeat: no-repeat;
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
-@keyframes nacre-text { from { background-position: 100% 0; } to { background-position: 0% 0; } }
-.freeze .hero__title { animation: none; background-position: 58% 0; }
-.freeze .hero__row { animation: none; }
+
+/* ---- Chuyen dong (chi khi co JS, khong reduced motion, chua .is-done) ---- */
+.js .hero:not(.is-done) .hero__bg img {
+  animation:
+    hero-zoom var(--intro-zoom) var(--ease-soft) both,
+    hero-dim var(--intro-p2-dur) var(--ease-soft) var(--intro-p2) both;
+}
+.js .hero:not(.is-done) .hero__bg::after { animation: hero-fade-in var(--intro-p2-dur) var(--ease-soft) var(--intro-p2) both; }
+.js .hero:not(.is-done) .hero__line {
+  animation:
+    hero-line var(--intro-title) var(--ease-soft) var(--intro-p2) both,
+    hero-sheen var(--intro-sheen) var(--ease-soft) var(--intro-p2) both;
+}
+.js .hero:not(.is-done) .hero__line + .hero__line { animation-delay: calc(var(--intro-p2) + var(--intro-line2)), calc(var(--intro-p2) + var(--intro-line2)); }
+.js .hero:not(.is-done) .hero__row { animation: hero-line var(--intro-title) var(--ease-soft) var(--intro-rest) both; }
+
+@keyframes hero-zoom { from { transform: scale(1.07); } to { transform: scale(1); } }
+@keyframes hero-dim { from { filter: blur(0) brightness(1) saturate(1); } to { filter: blur(5px) brightness(.62) saturate(.85); } }
+@keyframes hero-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes hero-line { from { opacity: 0; transform: translateY(14px); filter: blur(10px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes hero-sheen { from { background-position: 100% 0, 0 0; } to { background-position: 0% 0, 0 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .hero .hero__bg img, .js .hero .hero__bg::after, .js .hero .hero__line, .js .hero .hero__row { animation: none !important; }
+}
 
 @media (min-width: 1024px) {
-  .br-m { display: none; } .br-d { display: inline; }
-  .hero { min-height: min(100svh, 1000px); }
   .nav { height: 72px; } .nav__logo img { width: 168px; }
-  .hero__copy { padding-bottom: 40px; }
+  .hero__copy { padding-bottom: 48px; }
   .hero__title { font-size: clamp(88px, 9.6vw, 160px); }
   .hero__row { flex-direction: row; align-items: flex-end; justify-content: space-between; margin-top: 28px; }
   .hero__sub { font-size: 16px; }
@@ -473,8 +498,6 @@ a.studio:hover img { opacity: .75; }
 .js .is-in .itile { clip-path: inset(0 0 0 0); }
 
 @media (prefers-reduced-motion: reduce) {
-  .js .hero__title, .js .hero__row { animation: none; }
-  .nacre-text { background-position: 0 0; }
   .js [data-reveal="fade"], .js .rv-i, .js .itile { opacity: 1; transform: none; filter: none; clip-path: none; transition: none; }
   .story__ph--2, .story__ph--3 { animation: none; translate: none; }
   .slide::after { display: none; }
