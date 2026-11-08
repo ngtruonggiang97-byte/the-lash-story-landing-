@@ -1,4 +1,4 @@
-import { COLLECTION, fmtPrice, extLabel, img } from "./data/collection.js";
+import { COLLECTION, fmtPrice, extLabel, img, bySlug } from "./data/collection.js";
 import { PRICES, PRICE_DATE, TIME_SLOTS } from "./data/prices.js";
 import { mountIcons, ICONS } from "./icons.js";
 
@@ -27,7 +27,7 @@ $("[data-menu]").innerHTML = PRICES.map((g, gi) => `
 const INSTA = ["mighty-mirror", "milky-french-tip", "sepia-victorian", "leopard-luxe-french", "bow-tiful", "teal-marble-gem"];
 $("[data-insta]").innerHTML = INSTA.map((s, i) => `
   <a class="itile" style="--i:${i}" href="https://www.instagram.com/thenailstory.studio/" target="_blank" rel="noopener" aria-label="Xem trên Instagram">
-    <img src="${img(s)}" alt="" width="640" height="640" loading="lazy" decoding="async" />
+    <img src="${img(s)}" alt="" width="${bySlug(s).w}" height="${bySlug(s).h}"${bySlug(s).pos ? ` style="object-position:${bySlug(s).pos}"` : ""} loading="lazy" decoding="async" />
     <span class="itile__ic">${ICONS.instagram}</span>
   </a>`).join("");
 
@@ -49,7 +49,7 @@ const deck = $("[data-deck]");
 const info = $(".info");
 deck.innerHTML = COLLECTION.map((c, i) => `
   <figure class="slide" data-i="${i}" aria-label="${c.name}">
-    <img src="${img(c.slug)}" alt="Mẫu ${c.name}" width="640" height="640" loading="${i < 3 ? "eager" : "lazy"}" decoding="async" />
+    <img src="${img(c.slug)}" alt="Mẫu ${c.name}" width="${c.w}" height="${c.h}"${c.pos ? ` style="object-position:${c.pos}"` : ""} loading="${i < 3 ? "eager" : "lazy"}" decoding="async" />
   </figure>`).join("");
 const slides = $$(".slide", deck);
 let order = slides.map((_, i) => i);
