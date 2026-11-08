@@ -1,6 +1,6 @@
-import { COLLECTION, fmtPrice, extLabel, img } from "./data/collection.js";
-import { PRICES, PRICE_DATE, TIME_SLOTS } from "./data/prices.js";
-import { mountIcons, ICONS } from "./icons.js";
+import { initNav } from "./nav.js";
+import { initForm } from "./form.js";
+import { initTracking, initContactTracking } from "./tracking.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -41,51 +41,10 @@ if (new URLSearchParams(location.search).has("freeze")) document.documentElement
   }
 }
 
-/* ================= Bang gia ================= */
-$("[data-price-date]").textContent = PRICE_DATE;
-$("[data-menu]").innerHTML = PRICES.map((g, gi) => `
-  <div class="mgroup mgroup--${g.group.toLowerCase()}" data-reveal="fade" style="--delay: calc(var(--stagger) * ${gi + 1})">
-    <h3 class="mgroup__name"><span class="mask mask--star" aria-hidden="true"></span>${g.group}</h3>
-    <ul class="mgroup__list">
-      ${g.items.map((i) => `
-        <li class="mrow">
-          <span class="mrow__vi">${i.vi}</span>
-          ${i.en ? `<span class="mrow__en">${i.en}</span>` : ""}
-          <span class="mrow__price">${i.price}</span>
-        </li>`).join("")}
-    </ul>
-    ${g.note ? `<p class="mgroup__note">${g.note}</p>` : ""}
-  </div>`).join("");
-
-/* ================= Inspiration: 6 post Instagram moi nhat ================= */
-// Cap nhat: doi ma post (phan sau /p/ trong link) va chep de anh public/images/insta/insta-N.webp (640x640).
-const INSTA = ["DfJdflUvk1R", "De9i8zlvewD", "DfBvlF6vR19", "DGqEjRSv_9O", "DeUBd2iva9-", "DcNUfeQj_sL"];
-$("[data-insta]").innerHTML = INSTA.map((code, i) => `
-  <a class="itile" style="--i:${i}" href="https://www.instagram.com/p/${code}/" target="_blank" rel="noopener" aria-label="Xem bài đăng ${i + 1} trên Instagram">
-    <img src="/images/insta/insta-${i + 1}.webp" alt="" width="640" height="640" loading="lazy" decoding="async" />
-    <span class="itile__ic">${ICONS.instagram}</span>
-  </a>`).join("");
-
-/* ================= Form: khung gio ================= */
-$("[data-slots]").innerHTML = TIME_SLOTS.map((t) => `
-  <label class="slot"><input type="radio" name="time" value="${t}" /><span>${t}</span></label>`).join("");
-
-mountIcons();
-
-/* ================= Our Story: nhan anh tam ================= */
-// File tam trong public/images/story/ la anh trong suot vai pixel. Khi chep de anh that, nhan tu an.
-$$(".story__ph img").forEach((im) => {
-  const mark = () => im.closest(".story__ph").classList.toggle("is-ph", im.naturalWidth > 0 && im.naturalWidth < 64);
-  im.complete ? mark() : im.addEventListener("load", mark, { once: true });
-});
-
 /* ================= Collection: chong the ================= */
 const deck = $("[data-deck]");
 const info = $(".info");
-deck.innerHTML = COLLECTION.map((c, i) => `
-  <figure class="slide" data-i="${i}" aria-label="${c.name}">
-    <img src="${img(c.slug)}" alt="Mẫu ${c.name}" width="${c.w}" height="${c.h}"${c.pos ? ` style="object-position:${c.pos}"` : ""} loading="${i < 3 ? "eager" : "lazy"}" decoding="async" />
-  </figure>`).join("");
+// Slide va thong tin mau da nam san trong HTML tinh (build/render.js); JS chi lo chuyen dong.
 const slides = $$(".slide", deck);
 let order = slides.map((_, i) => i);
 
@@ -100,13 +59,12 @@ function layout(swap = true) {
   renderInfo(swap);
 }
 function renderInfo(swap) {
-  const c = COLLECTION[order[0]];
+  const c = slides[order[0]].dataset;   // data-c-name / data-c-meta / data-c-price tren tung slide
   const write = () => {
-    $("[data-idx]").textContent = String(order[0] + 1).padStart(2, "0");
-    $("[data-name]").textContent = c.name;
-    $("[data-base]").textContent = c.base;
-    $("[data-ext]").textContent = extLabel(c.ext);
-    $("[data-price]").textContent = fmtPrice(c.price);
+    $("[data-idx]", info).textContent = String(order[0] + 1).padStart(2, "0");
+    $("[data-name]", info).textContent = c.cName;
+    $("[data-meta]", info).textContent = c.cMeta;
+    $("[data-price]", info).textContent = c.cPrice;
     info.classList.remove("is-swap");
   };
   if (!swap || reduce) return write();
@@ -240,67 +198,8 @@ const io2 = new IntersectionObserver((entries) => {
 });
 [$(".hero"), $("#dat-lich"), $(".foot")].forEach((el) => io2.observe(el));
 
-/* ================= Form ================= */
-const form = $("[data-form]");
-const dateInput = $("#f-date");
-const pad = (n) => String(n).padStart(2, "0");
-const today = new Date();
-const todayStr = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
-dateInput.min = todayStr;
-
-const rules = {
-  name: (v) => (v.trim().length >= 2 ? "" : "Bạn cho studio xin tên nhé."),
-  phone: (v) => (/^(0|\+?84)(3|5|7|8|9)\d{8}$/.test(v.replace(/[\s.\-]/g, "")) ? "" : "Số điện thoại chưa đúng, ví dụ 086 656 6819."),
-  date: (v) => (!v ? "Chọn ngày bạn muốn đến." : v < todayStr ? "Ngày này đã qua." : ""),
-  time: (v) => {
-    if (!v) return "Chọn một khung giờ.";
-    const now = new Date();
-    const isToday = form.elements.date.value === todayStr;
-    const [h, m] = v.split(":").map(Number);
-    return isToday && h * 60 + m <= now.getHours() * 60 + now.getMinutes() ? "Khung giờ này hôm nay đã qua." : "";
-  },
-};
-const errIds = { name: "e-name", phone: "e-phone", date: "e-date", time: "e-time" };
-
-function check(name) {
-  const v = name === "time" ? (form.querySelector('input[name="time"]:checked')?.value || "") : form.elements[name].value;
-  const msg = rules[name](v);
-  const err = document.getElementById(errIds[name]);
-  err.textContent = msg;
-  const field = err.closest(".field");
-  field.classList.toggle("is-invalid", !!msg);
-  if (name !== "time") form.elements[name].setAttribute("aria-invalid", String(!!msg));
-  return !msg;
-}
-["name", "phone", "date"].forEach((n) => form.elements[n].addEventListener("blur", () => form.elements[n].value && check(n)));
-form.addEventListener("change", (e) => { if (e.target.name === "time") check("time"); });
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const bad = Object.keys(rules).filter((n) => !check(n));
-  if (bad.length) {
-    const first = bad[0] === "time" ? form.querySelector('input[name="time"]') : form.elements[bad[0]];
-    first.focus();
-    return;
-  }
-  const f = new FormData(form);
-  // Du lieu gui di (giai doan 2: POST toi Google Apps Script -> Google Sheets)
-  const payload = {
-    name: f.get("name").trim(),
-    phone: f.get("phone").replace(/[\s.\-]/g, ""),
-    date: f.get("date"),
-    time: f.get("time"),
-    note: (f.get("note") || "").trim(),
-    createdAt: new Date().toISOString(),
-  };
-  const [y, m, d] = payload.date.split("-");
-  const done = $("[data-done]");
-  done.innerHTML = `
-    <h3>Cảm ơn ${escapeHtml(payload.name)}</h3>
-    <p>Studio đã nhận lịch ngày ${d}/${m}/${y} lúc ${payload.time}.
-    Studio sẽ nhắn số ${escapeHtml(f.get("phone").trim())} để xác nhận giờ và cùng bạn chọn mẫu.</p>`;
-  form.classList.add("is-sent");
-  done.hidden = false;
-  done.focus();
-});
-function escapeHtml(s) { return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]); }
+/* ================= Nav (switch ngon ngu, doi mau), form, tracking ================= */
+initNav();
+initForm();
+initTracking();
+initContactTracking();

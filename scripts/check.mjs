@@ -33,7 +33,9 @@ ok(before !== after, `next: ${before} -> ${after}`);
 await page.click("[data-prev]");
 await page.waitForTimeout(1500);
 ok((await page.textContent("[data-name]")) === before, "prev quay ve mau cu");
-// keo bang chuot
+// keo bang chuot (dua the ve giua man hinh, tranh nav co dinh o tren)
+await page.evaluate(() => document.querySelector(".deck").scrollIntoView({ block: "center" }));
+await page.waitForTimeout(300);
 const box = await (await page.$(".slide.is-top")).boundingBox();
 await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
 await page.mouse.down();
@@ -42,6 +44,8 @@ await page.mouse.up();
 await page.waitForTimeout(1500);
 ok((await page.textContent("[data-name]")) !== before, "keo sang trai doi mau");
 // keo ngan roi tha: card ve cho cu, khong doi mau
+await page.evaluate(() => document.querySelector(".deck").scrollIntoView({ block: "center" }));
+await page.waitForTimeout(300);
 const cur = await page.textContent("[data-name]");
 const b2 = await (await page.$(".slide.is-top")).boundingBox();
 await page.mouse.move(b2.x + b2.width / 2, b2.y + b2.height / 2);

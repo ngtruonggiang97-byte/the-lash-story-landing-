@@ -1,0 +1,267 @@
+<!doctype html>
+<!--
+  MOT template cho ca 2 ngon ngu. build/render.js dien chu tu src/i18n/vi.js / en.js luc build,
+  nen dist/index.html (vi) va dist/en/index.html (en) la HTML tinh day du.
+  Cu phap: 2 ngoac nhon quanh duong dan key = chu da escape; 3 ngoac = HTML tho;
+  "icon:" + ten = SVG; "@" + ten = khoi danh sach dung san trong build/render.js.
+-->
+<html lang="{{lang}}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{{meta.title}}</title>
+  <meta name="description" content="{{meta.description}}" />
+  <meta name="theme-color" content="#5f5846" />
+  <link rel="canonical" href="{{url.self}}" />
+  <link rel="alternate" hreflang="vi" href="{{url.vi}}" />
+  <link rel="alternate" hreflang="en" href="{{url.en}}" />
+  <link rel="alternate" hreflang="x-default" href="{{url.vi}}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="The Nail Story" />
+  <meta property="og:title" content="{{meta.title}}" />
+  <meta property="og:description" content="{{meta.description}}" />
+  <meta property="og:locale" content="{{ogLocale}}" />
+  <meta property="og:locale:alternate" content="{{ogLocaleAlt}}" />
+  <meta property="og:url" content="{{url.self}}" />
+  <meta property="og:image" content="{{url.og}}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="{{meta.imageAlt}}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preload" href="/fonts/LibreBaskerville.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/CormorantGaramond.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/JosefinSans.woff2" as="font" type="font/woff2" crossorigin />
+  <script>document.documentElement.classList.add("js")</script>
+  <link rel="stylesheet" href="/src/styles/base.css" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+  <a class="skip" href="#dat-lich">{{a11y.skip}}</a>
+
+  <!-- ========== NAV: logo trai, switch ngon ngu phai ========== -->
+  <header class="nav" data-nav>
+    <a href="#" class="nav__logo" aria-label="{{nav.home}}">
+      <img class="nav__logo-light" src="/img/logo/logo-tns-pearl.png" alt="{{nav.logoAlt}}" width="786" height="140" />
+      <img class="nav__logo-dark" src="/img/logo/logo-tns-ink.png" alt="" width="786" height="140" />
+    </a>
+    <!-- Link that sang URL ngon ngu kia, cung tab. JS chi gan them ?query va #hash (UTM) vao href. -->
+    <div class="lang" role="group" aria-label="{{nav.langGroup}}">
+      <a href="{{path.vi}}" data-lang-link data-base="{{path.vi}}" lang="vi" hreflang="vi" aria-label="{{nav.viLabel}}"{{{cur.vi}}}>VI</a>
+      <a href="{{path.en}}" data-lang-link data-base="{{path.en}}" lang="en" hreflang="en" aria-label="{{nav.enLabel}}"{{{cur.en}}}>EN</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========== HERO ========== -->
+    <section class="hero" aria-label="{{hero.label}}">
+      <!-- Anh mat tien 43 Quan Thanh. Goc: assets/space/Outside-v2.webp (1145x1373).
+           Thay anh: chep de public/images/hero/hero-mobile.webp (doc) va hero-desktop.webp (ngang 16:9). -->
+      <div class="hero__bg">
+        <picture>
+          <source media="(min-width: 1024px)" srcset="/images/hero/hero-desktop.webp" width="1145" height="644" />
+          <img src="/images/hero/hero-mobile.webp" alt="{{hero.imgAlt}}" width="915" height="1373" fetchpriority="high" decoding="async" />
+        </picture>
+      </div>
+
+      <div class="hero__copy">
+        <h1 class="hero__title"><span class="hero__line nacre-text">{{hero.line1}}</span> <span class="hero__line nacre-text">{{hero.line2}}</span></h1>
+        <div class="hero__row">
+          <p class="hero__sub">{{hero.sub}}</p>
+          <a href="#dat-lich" class="btn btn--pearl">{{hero.cta}}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== OUR STORY ========== -->
+    <section class="story" aria-labelledby="story-title" data-reveal-group>
+      <!-- Tieu de dung chung class voi Collection de khop font, co, le, khoang cach -->
+      <div class="coll__head story__head">
+        <h2 id="story-title" class="coll__title" data-reveal="chars">{{story.title}}</h2>
+        <span class="mask mask--bf2 coll__bf story__bf" aria-hidden="true" data-reveal="fade"></span>
+      </div>
+      <p class="story__sub" data-reveal="fade">{{story.sub}}</p>
+
+      <!-- 4 anh doc 4:5 (>= 1200x1500): chep de public/images/story/story-1..4.webp. Cach chup: SHOTLIST.md -->
+      <div class="story__grid">
+        <div class="story__left">
+          <div class="story__text">
+            <p class="story__body" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">{{story.body}}</p>
+            <p class="story__facts" data-reveal="fade" style="--delay: calc(var(--stagger) * 3)">
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=43+Qu%C3%A1n+Th%C3%A1nh+Ba+%C4%90%C3%ACnh+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener"><i>{{icon:map-pin}}</i>{{story.address}}</a>
+            </p>
+          </div>
+          <figure class="story__ph story__ph--2" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">
+            <img src="/images/story/story-2.webp" alt="{{story.photo2}}" width="900" height="1125" loading="lazy" decoding="async" />
+          </figure>
+        </div>
+        <div class="story__mid">
+          <figure class="story__ph story__ph--1" data-reveal="fade" style="--delay: var(--stagger)">
+            <img src="/images/story/story-1.webp" alt="{{story.photo1}}" width="900" height="1125" loading="lazy" decoding="async" />
+          </figure>
+          <figure class="story__ph story__ph--4" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">
+            <img src="/images/story/story-4.webp" alt="{{story.photo4}}" width="900" height="1125" loading="lazy" decoding="async" />
+          </figure>
+        </div>
+        <figure class="story__ph story__ph--3" data-reveal="fade" style="--delay: calc(var(--stagger) * 3)">
+          <img src="/images/story/story-3.webp" alt="{{story.photo3}}" width="900" height="1125" loading="lazy" decoding="async" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- ========== OUR SERVICES: 2 STUDIO ========== -->
+    <section class="studios" aria-labelledby="studios-title" data-reveal-group>
+      <h2 id="studios-title" class="studios__title" data-reveal="words">{{services.title}}</h2>
+      <div class="studios__grid">
+        <a class="studio" href="#collection" data-reveal="fade">
+          <img src="/img/logo/logo-tns-ink.png" alt="{{services.nailAlt}}" width="786" height="140" loading="lazy" />
+          <span class="studio__cap" aria-hidden="true"><i>{{icon:arrow-right}}</i></span>
+        </a>
+        <span class="studios__amp" aria-hidden="true" data-reveal="fade"><span class="mask mask--ring"></span></span>
+        <div class="studio studio--lash" data-reveal="fade" style="--delay: var(--stagger)">
+          <img src="/img/logo/logo-tls-ink.png" alt="{{services.lashAlt}}" width="668" height="120" loading="lazy" />
+          <p class="studio__line">{{services.lashLine}}</p>
+          <!-- TODO: link tam, sau nay dan sang trang The Lash Story -->
+          <a class="btn btn--line btn--sm" href="#">{{services.lashCta}} <i>{{icon:arrow-right}}</i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== COLLECTION ========== -->
+    <section class="coll" id="collection" aria-labelledby="coll-title" data-reveal-group>
+      <div class="coll__head">
+        <h2 id="coll-title" class="coll__title" data-reveal="chars">{{collection.title}}</h2>
+        <span class="mask mask--bf1 coll__bf" aria-hidden="true" data-reveal="fade"></span>
+      </div>
+
+      <div class="coll__stage">
+        <div class="deck" data-deck aria-roledescription="carousel" aria-label="{{collection.deckLabel}}">
+          {{@slides}}
+        </div>
+
+        <div class="info" aria-live="polite" data-reveal="fade">
+          <p class="info__idx"><span data-idx>{{@infoIdx}}</span> <span class="info__of">/ {{@total}}</span></p>
+          <h3 class="info__name" data-name>{{@infoName}}</h3>
+          <p class="info__meta" data-meta>{{@infoMeta}}</p>
+          <p class="info__price" data-price>{{@infoPrice}}</p>
+          <div class="arrows">
+            <button class="arrow" type="button" data-prev aria-label="{{collection.prev}}"><i>{{icon:arrow-left}}</i></button>
+            <button class="arrow" type="button" data-next aria-label="{{collection.next}}"><i>{{icon:arrow-right}}</i></button>
+          </div>
+          <p class="info__note">{{collection.note}}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== BANG GIA ========== -->
+    <section class="menu" id="bang-gia" aria-labelledby="menu-title">
+      <div class="menu__paper" data-reveal-group>
+        <div class="menu__head">
+          <h2 id="menu-title" class="menu__title" data-reveal="chars">{{menu.title}}</h2>
+          <p class="menu__date" data-reveal="fade">{{menu.effective}}</p>
+          {{@currencyNote}}
+        </div>
+        <div class="menu__groups">
+        {{@menu}}
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FORM DAT LICH ========== -->
+    <section class="book" id="dat-lich" aria-labelledby="book-title" data-reveal-group>
+      <div class="book__intro">
+        <span class="mask mask--bf3 book__bf" aria-hidden="true" data-reveal="fade"></span>
+        <h2 id="book-title" class="book__title" data-reveal="words">{{book.title}}</h2>
+        <p class="book__lead" data-reveal="fade">{{book.lead}}</p>
+
+        <div class="book__links" data-reveal="fade">
+          <!-- TODO: thay bang link Google Maps chinh thuc cua tiem -->
+          <a class="g-review" href="https://www.google.com/maps/search/?api=1&amp;query=The+Nail+Story+43+Qu%C3%A1n+Th%C3%A1nh+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener">
+            <span class="g-review__logo"><i>{{icon:google}}</i></span>
+            <span class="g-review__stars" aria-hidden="true"><i>{{icon:star}}</i><i>{{icon:star}}</i><i>{{icon:star}}</i><i>{{icon:star}}</i><i>{{icon:star}}</i></span>
+            <span class="g-review__txt">{{book.review}}</span>
+          </a>
+          <a class="btn btn--line" href="{{contact.chatHref}}" target="_blank" rel="noopener" data-contact="{{contact.chatMethod}}">{{contact.chatLabel}}</a>
+        </div>
+      </div>
+
+      <form class="form" data-form novalidate data-reveal="fade">
+        <!-- Truong an cho ads: JS dien lang, page_url va utm_* (luu sessionStorage) -->
+        <input type="hidden" name="lang" value="{{lang}}" />
+        <input type="hidden" name="page_url" value="" />
+        <input type="hidden" name="utm_source" value="" />
+        <input type="hidden" name="utm_medium" value="" />
+        <input type="hidden" name="utm_campaign" value="" />
+        <input type="hidden" name="utm_content" value="" />
+        <input type="hidden" name="utm_term" value="" />
+
+        <div class="field">
+          <label for="f-name">{{form.name}}</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name" />
+          <p class="field__err" id="e-name"></p>
+        </div>
+        <div class="field">
+          <label for="f-phone">{{form.phone}}</label>
+          <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="{{@phoneDesc}}" />
+          {{@phoneHelp}}
+          <p class="field__err" id="e-phone"></p>
+        </div>
+        <div class="field field--half">
+          <label for="f-date">{{form.date}}</label>
+          <input id="f-date" name="date" type="date" required aria-describedby="e-date" />
+          <p class="field__err" id="e-date"></p>
+        </div>
+        <fieldset class="field field--slots" aria-describedby="e-time">
+          <legend>{{form.time}}</legend>
+          <div class="slots">{{@slots}}</div>
+          <p class="field__err" id="e-time"></p>
+        </fieldset>
+        <div class="field">
+          <label for="f-note">{{form.note}} <span class="opt">{{form.optional}}</span></label>
+          <textarea id="f-note" name="note" rows="3" aria-describedby="h-note"></textarea>
+          <p class="field__help" id="h-note">{{form.noteHelp}}</p>
+        </div>
+        <button class="btn btn--moss form__submit" type="submit">{{form.submit}}</button>
+        <p class="form__error" data-form-error role="alert" hidden></p>
+        <div class="form__done" data-done hidden tabindex="-1"></div>
+      </form>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="foot">
+    <section class="insta" aria-labelledby="insta-title" data-reveal-group>
+      <div class="insta__head">
+        <h2 id="insta-title" class="insta__title" data-reveal="chars">{{insta.title}}</h2>
+        <a class="insta__handle" href="https://www.instagram.com/thenailstory.studio/" target="_blank" rel="noopener" data-reveal="fade">{{insta.handle}}</a>
+      </div>
+      <div class="insta__row">
+        {{@insta}}
+      </div>
+    </section>
+
+    <div class="foot__base">
+      <div class="foot__brand">
+        <img src="/img/logo/logo-tns-pearl.png" alt="{{footer.logoAlt}}" width="786" height="140" loading="lazy" />
+        <p class="foot__tag">{{footer.tagline}}</p>
+      </div>
+      <ul class="foot__info">
+        <li><i>{{icon:map-pin}}</i><a href="https://www.google.com/maps/search/?api=1&amp;query=43+Qu%C3%A1n+Th%C3%A1nh+Ba+%C4%90%C3%ACnh+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener">{{footer.address}}</a></li>
+        <li><i>{{icon:phone}}</i><a href="{{contact.tel}}" data-contact="hotline">{{contact.phone}}</a></li>
+      </ul>
+      <ul class="foot__social" aria-label="{{footer.social}}">
+        <li><a href="https://www.instagram.com/thenailstory.studio/" target="_blank" rel="noopener" aria-label="Instagram"><i>{{icon:instagram}}</i></a></li>
+        <li><a href="https://www.threads.com/@thenailstory.studio" target="_blank" rel="noopener" aria-label="Threads"><i>{{icon:threads}}</i></a></li>
+        <li><a href="https://www.facebook.com/thenailstory2018" target="_blank" rel="noopener" aria-label="Facebook"><i>{{icon:facebook}}</i></a></li>
+        <li><a href="https://www.tiktok.com/@thenailstory" target="_blank" rel="noopener" aria-label="TikTok"><i>{{icon:tiktok}}</i></a></li>
+      </ul>
+      <p class="foot__copy">{{footer.copy}}</p>
+    </div>
+  </footer>
+
+  <a href="#dat-lich" class="sticky-cta" data-sticky aria-hidden="true" tabindex="-1">{{sticky.cta}}</a>
+
+  <!-- Chu cho JS (thong bao loi form, dinh dang ngay): cung nguon i18n voi phan HTML tinh -->
+  <script type="application/json" id="i18n-data">{{@clientJson}}</script>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

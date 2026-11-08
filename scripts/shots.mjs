@@ -1,5 +1,5 @@
 // Chup screenshot 390px va 1440px. Can dev server dang chay (npm run dev).
-// Dung: node scripts/shots.mjs [page ...]   vd: node scripts/shots.mjs index mockups/b
+// Dung: node scripts/shots.mjs [page ...]   vd: node scripts/shots.mjs index en   ("index" = ban Viet "/", "en" = ban Anh "/en/")
 import { chromium } from "playwright";
 import { mkdirSync } from "node:fs";
 
@@ -23,7 +23,8 @@ for (const p of pages) {
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
     page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
-    await page.goto(`${BASE}/${p === "index" ? "" : p + ".html"}?freeze`, { waitUntil: "networkidle" });
+    const path = p === "index" ? "/" : p === "en" ? "/en/" : `/${p}.html`;
+    await page.goto(`${BASE}${path}?freeze`, { waitUntil: "networkidle" });
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(4000); // cho transition reveal (1.6s + stagger) chay xong
     const slug = p.replace(/\W+/g, "-");

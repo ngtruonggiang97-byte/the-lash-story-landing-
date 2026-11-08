@@ -1,37 +1,35 @@
-// Nguon: assets/brand/bang-gia.png (ap dung tu 20/05/2026)
-export const PRICE_DATE = "20/05/2026";
-
+// Bang gia: chi giu id + gia (VND, ghi "K" = nghin). Ten dich vu o src/i18n -> menu.items.<id>.
+// Nguon: assets/brand/bang-gia.png (ap dung tu 20/05/2026 - ngay hien thi nam trong i18n menu.effective).
 export const PRICES = [
   {
-    group: "Gel",
-    note: "Giá đã bao gồm làm sạch móng, cắt dũa form và sơn gel.",
+    id: "gel",
     items: [
-      { vi: "Nail tay tạo cầu", en: "Apex Manicure", price: "350K" },
-      { vi: "Nail chân", en: "Pedicure", price: "250K" },
-      { vi: "BIAB", en: "", price: "400K" },
-      { vi: "Úp gel", en: "Press-on w Gel", price: "450K" },
-      { vi: "Gel X", en: "Extension", price: "500K" },
-      { vi: "Dual form", en: "Extension", price: "650K" },
-      { vi: "Tháo", en: "Removal", price: "40 - 100K" },
-      { vi: "Extra độ dài", en: "Extra Length", price: "100 - 200K" },
+      { id: "apex", price: "350K" },
+      { id: "pedi", price: "250K" },
+      { id: "biab", price: "400K" },
+      { id: "press", price: "450K" },
+      { id: "gelx", price: "500K" },
+      { id: "dual", price: "650K" },
+      { id: "removal", price: "40 - 100K" },
+      { id: "length", price: "100 - 200K" },
     ],
   },
   {
-    group: "Design",
+    id: "design",
     items: [
-      { vi: "Nhũ / mắt mèo", en: "Glitter", price: "100K" },
-      { vi: "Tráng gương", en: "Chrome", price: "130K" },
-      { vi: "French", en: "", price: "150K" },
-      { vi: "Ombre", en: "", price: "150K" },
-      { vi: "Design khác", en: "Others", price: "15 - 300K" },
-      { vi: "Che khuyết điểm", en: "Concealer", price: "50K" },
+      { id: "glitter", price: "100K" },
+      { id: "chrome", price: "130K" },
+      { id: "french", price: "150K" },
+      { id: "ombre", price: "150K" },
+      { id: "others", price: "15 - 300K" },
+      { id: "concealer", price: "50K" },
     ],
   },
   {
-    group: "Spa",
+    id: "spa",
     items: [
-      { vi: "Spa tay", en: "Hand Spa", price: "400K" },
-      { vi: "Spa chân", en: "Foot Spa", price: "400K" },
+      { id: "handSpa", price: "400K" },
+      { id: "footSpa", price: "400K" },
     ],
   },
 ];

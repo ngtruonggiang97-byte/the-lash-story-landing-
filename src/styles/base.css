@@ -8,6 +8,8 @@
 @font-face { font-family: "Libre Caslon Display"; src: url("/fonts/LibreCaslonDisplay.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Cormorant Garamond"; src: url("/fonts/CormorantGaramond.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
 @font-face { font-family: "Cormorant Garamond"; src: url("/fonts/CormorantGaramond-Italic.woff2") format("woff2"); font-weight: 300 700; font-style: italic; font-display: swap; }
+/* Josefin Sans: CHI cho nut doi ngon ngu VI | EN (Ryan chi dinh; khong nam trong guideline typography). Da cat con ASCII. */
+@font-face { font-family: "Josefin Sans"; src: url("/fonts/JosefinSans.woff2") format("woff2"); font-weight: 100 700; font-display: swap; }
 @font-face { font-family: "Body Temp"; src: url("/fonts/BeVietnamPro-Light.woff2") format("woff2"); font-weight: 300; font-display: swap; }
 @font-face { font-family: "Body Temp"; src: url("/fonts/BeVietnamPro-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Body Temp"; src: url("/fonts/BeVietnamPro-Medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
@@ -25,6 +27,7 @@
   --f-caslon: "Libre Caslon Display", "Libre Baskerville", serif;
   --f-vi: "Cormorant Garamond", "Times New Roman", serif;
   --f-body: "Body Temp", system-ui, sans-serif;
+  --f-lang: "Josefin Sans", system-ui, sans-serif;
 
   --ease-out: cubic-bezier(.16, 1, .3, 1); /* chi con dung trong /mockups */
 
