@@ -110,6 +110,12 @@ export default {
     title: "Đặt lịch",
     lead: "Để lại tên, số điện thoại và thời gian bạn muốn ghé. Studio sẽ nhắn lại để xác nhận giờ và cùng bạn chọn kiểu mi.",
     review: "Xem đánh giá trên Google",
+    reviews: {
+      label: "Đánh giá của khách trên Google",
+      view: "Xem trên Google Maps",
+      prev: "Review trước",
+      next: "Review tiếp theo",
+    },
   },
 
   form: {

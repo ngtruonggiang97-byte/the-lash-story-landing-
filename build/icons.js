@@ -13,6 +13,7 @@ const brand = (si) => `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden=
 export const ICONS = {
   "arrow-left": phosphor("light", "arrow-left-light"),
   "arrow-right": phosphor("light", "arrow-right-light"),
+  "arrow-up-right": phosphor("light", "arrow-up-right-light"),
   "map-pin": phosphor("light", "map-pin-light"),
   phone: phosphor("light", "phone-light"),
   star: phosphor("fill", "star-fill"),

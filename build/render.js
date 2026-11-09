@@ -4,9 +4,10 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import vi from "../src/i18n/vi.js";
 import en from "../src/i18n/en.js";
+import { REVIEWS } from "../src/data/reviews.js";
 import { INSTA_POSTS } from "../src/data/insta.js";
 import { EXTENSION, SURCHARGE, LASH_LIFT, BROW_LIFT, TIME_SLOTS } from "../src/data/prices.js";
-import { SITE_URL, PATHS, OG_IMAGE, SOCIAL, NAIL_URL } from "../src/config/site.js";
+import { SITE_URL, PATHS, OG_IMAGE, SOCIAL, NAIL_URL, MAPS_URL } from "../src/config/site.js";
 import { ICONS } from "./icons.js";
 
 export const DICTS = { vi, en };
@@ -42,7 +43,7 @@ function blocks(t) {
       const n = E.looks[l.id];
       const on = idx === 0;
       tabs.push(`<button class="lx__row${on ? " is-on" : ""}" type="button" role="tab" id="lx-tab-${l.img}" aria-selected="${on}" aria-controls="lx-panel-${l.img}" tabindex="${on ? 0 : -1}" style="--o:${++o}"><span class="lx__name">${esc(n.name)}</span><span class="lx__price">${esc(l.price)}</span></button>`);
-      panels.push(`<div class="lx__panel${on ? " is-on" : ""}" role="tabpanel" id="lx-panel-${l.img}" aria-labelledby="lx-tab-${l.img}" style="--o:${++o}"><div class="lx__clip"><figure class="lx__frame"><img src="/img/lash-looks/${l.img}.webp" alt="${esc(fill(E.photoAlt, { name: n.name }))}" width="390" height="300" loading="${on ? "eager" : "lazy"}" decoding="async" /></figure></div></div>`);
+      panels.push(`<div class="lx__panel${on ? " is-on" : ""}" role="tabpanel" id="lx-panel-${l.img}" aria-labelledby="lx-tab-${l.img}" style="--o:${++o}"><div class="lx__clip"><figure class="lx__frame"><img src="/img/lash-looks/${l.img}.webp" alt="${esc(fill(E.photoAlt, { name: n.name }))}" width="1000" height="1000" loading="${on ? "eager" : "lazy"}" decoding="async" /></figure></div></div>`);
       idx++;
     });
   });
@@ -64,8 +65,8 @@ function blocks(t) {
   const menuLift = `<section class="mpart mpart--lift" aria-labelledby="mp-lift" data-reveal="fade">
           <div class="ll">
             <div class="ll__imgs">
-              <figure class="ll__ph ll__ph--1"><img src="/img/lash-lift/lash-lift-1.webp" alt="${esc(L.alt1)}" width="660" height="276" loading="lazy" decoding="async" /></figure>
-              <figure class="ll__ph ll__ph--2"><img src="/img/lash-lift/lash-lift-2.webp" alt="${esc(L.alt2)}" width="632" height="276" loading="lazy" decoding="async" /></figure>
+              <figure class="ll__ph ll__ph--1"><img src="/img/lash-lift/lash-lift-1.webp" alt="${esc(L.alt1)}" width="800" height="800" loading="lazy" decoding="async" /></figure>
+              <figure class="ll__ph ll__ph--2"><img src="/img/lash-lift/lash-lift-2.webp" alt="${esc(L.alt2)}" width="800" height="800" loading="lazy" decoding="async" /></figure>
             </div>
             <div class="ll__body">
               ${partTitle("mp-lift", L.title)}
@@ -78,12 +79,16 @@ function blocks(t) {
   const B = t.menu.brow;
   const menuBrow = `<section class="mpart mpart--brow" aria-labelledby="mp-brow" data-reveal="fade">
           ${partTitle("mp-brow", B.title)}
-          <figure class="bl__strip"><img src="/img/lash-lift/brow-lift.webp" alt="${esc(B.alt)}" width="1292" height="270" loading="lazy" decoding="async" /></figure>
+          <figure class="bl__strip"><img src="/img/lash-lift/brow-lift.webp" alt="${esc(B.alt)}" width="1600" height="352" loading="lazy" decoding="async" /></figure>
           ${plist(BROW_LIFT, B.items).replace('class="plist"', 'class="plist plist--2"')}
         </section>`;
 
   const instaHref = (code) => (code ? `https://www.instagram.com/p/${code}/` : SOCIAL.instagram);
   const insta = INSTA_POSTS.map((code, i) => `<a class="itile" style="--i:${i}" href="${instaHref(code)}" target="_blank" rel="noopener" aria-label="${esc(fill(t.insta.tile, { n: i + 1 }))}"><img src="/images/insta/insta-${i + 1}.webp" alt="" width="640" height="640" loading="lazy" decoding="async" /><span class="itile__ic">${ICONS.instagram}</span></a>`).join("\n        ");
+
+  const R = t.book.reviews;
+  const reviews = (REVIEWS[t.lang] || []).map((r, i) => `<a class="rv" id="rv-${i}" href="${esc(r.url)}" target="_blank" rel="noopener" aria-label="${esc(r.name)} - ${esc(R.view)}"><span class="rv__ph rv__ph--${r.photos.length}">${r.photos.map((p) => `<img src="${p.src}" alt="" width="${p.w}" height="${p.h}" loading="lazy" decoding="async" />`).join("")}</span><span class="rv__body"><span class="rv__stars" aria-hidden="true"><i>${ICONS.star}</i><i>${ICONS.star}</i><i>${ICONS.star}</i><i>${ICONS.star}</i><i>${ICONS.star}</i></span><span class="rv__text">${esc(r.text)}</span><span class="rv__foot"><span class="rv__name">${esc(r.name)}</span><span class="rv__src"><i class="rv__g">${ICONS.google}</i><i class="rv__go">${ICONS["arrow-up-right"]}</i></span></span></span></a>`).join("");
+  const reviewDots = (REVIEWS[t.lang] || []).map((_, i) => `<span class="rvs__dot${i === 0 ? " is-on" : ""}"></span>`).join("");
 
   const slots = TIME_SLOTS.map((s) => `<label class="slot"><input type="radio" name="time" value="${s}" data-label="${esc(fmtTime(s, t.fmt.timeStyle))}" /><span>${esc(fmtTime(s, t.fmt.timeStyle))}</span></label>`).join("");
 
@@ -107,6 +112,8 @@ function blocks(t) {
     phoneHelp: t.form.phoneHelp ? `<p class="field__help" id="h-phone">${esc(t.form.phoneHelp)}</p>` : "",
     phoneDesc: t.form.phoneHelp ? "e-phone h-phone" : "e-phone",
     insta,
+    reviews,
+    reviewDots,
     slots,
     clientJson: JSON.stringify(client).replace(/</g, "\\u003c"),
   };
@@ -128,6 +135,7 @@ export function renderPage(lang) {
     ogLocaleAlt: DICTS[other].ogLocale,
     social: SOCIAL,
     nailUrl: NAIL_URL,
+    mapsUrl: MAPS_URL,
   };
   const b = blocks(t);
 

@@ -346,11 +346,11 @@ a.studio:hover .studio__cap svg { transform: translateX(4px); }
 .lx__panel.is-on { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
 .lx__clip { min-height: 0; overflow: hidden; }
 .lx__frame {
-  position: relative; margin: 14px 0 8px; aspect-ratio: 4 / 3; overflow: hidden;
+  position: relative; margin: 14px 0 8px; aspect-ratio: 1 / 1; overflow: hidden;
   background: linear-gradient(160deg, #a2957f, #5f5846);
 }
-/* anh tam cat tu bang gia: phong 8% de giau goc bo va vien nen */
-.lx__frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; scale: 1.08; }
+/* anh vuong nguyen ban, khong cat / khong phong */
+.lx__frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 /* Nacre cua trang nay: MOT vet anh xa cu luot qua anh moi duoc chon (dung lai gradient foil cua hero / the Collection cu) */
 .lx__frame::after {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
@@ -373,13 +373,13 @@ a.studio:hover .studio__cap svg { transform: translateX(4px); }
 .lx__extra-sub { font-family: var(--f-en); font-style: italic; font-size: 12.5px; color: var(--moss); opacity: .8; }
 .lx__extra-price { grid-column: 3; font-family: var(--f-en); font-size: 14px; color: var(--moss); white-space: nowrap; }
 
-/* 2. Lash Lift: cap anh lech nhau (kich thuoc + do cao khac nhau) ben trai, danh sach ben phai */
+/* 2. Lash Lift: 2 anh vuong bang nhau, xep cheo (anh 2 thap hon) ben trai, danh sach ben phai */
 .ll { display: grid; gap: 36px; }
-.ll__imgs { display: grid; grid-template-columns: 1.3fr 1fr; gap: 12px; align-items: start; padding-bottom: 8px; }
+.ll__imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; padding-bottom: 8px; }
 .ll__ph { margin: 0; position: relative; overflow: hidden; background: linear-gradient(160deg, #a2957f, #5f5846); }
 .ll__ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.ll__ph--1 { aspect-ratio: 4 / 5; }
-.ll__ph--2 { aspect-ratio: 1 / 1; margin-top: 44%; }
+.ll__ph--1 { aspect-ratio: 1 / 1; }
+.ll__ph--2 { aspect-ratio: 1 / 1; margin-top: 30%; }
 @supports (animation-timeline: view()) {
   .ll__ph { animation: story-drift linear both; animation-timeline: view(); animation-range: cover; }
   .ll__ph--1 { --drift: 14px; }
@@ -387,7 +387,7 @@ a.studio:hover .studio__cap svg { transform: translateX(4px); }
 }
 
 /* 3. Brow Lift: dai anh ngang rong het khung noi dung, danh sach 2 cot ben duoi */
-.bl__strip { margin: 0 0 8px; aspect-ratio: 16 / 9; overflow: hidden; position: relative; background: linear-gradient(160deg, #a2957f, #5f5846); }
+.bl__strip { margin: 0 0 8px; aspect-ratio: 1600 / 352; overflow: hidden; position: relative; background: linear-gradient(160deg, #a2957f, #5f5846); }
 .bl__strip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
 .plist--2 { display: grid; }
 
@@ -417,17 +417,17 @@ a.studio:hover .studio__cap svg { transform: translateX(4px); }
   .ll__imgs { grid-column: 1 / 8; gap: 20px; }
   .ll__body { grid-column: 9 / 13; }
   /* 3. Brow Lift: dai anh thap hon, danh sach 2 cot */
-  .bl__strip { aspect-ratio: 16 / 5; margin-bottom: 16px; }
+  .bl__strip { margin-bottom: 16px; }
   .plist--2 { grid-template-columns: 1fr 1fr; column-gap: 10%; }
   .menu__head { margin-bottom: 64px; }
 }
 
 /* ================= FORM ================= */
-.book { padding: var(--sec) var(--gutter) 0; display: grid; gap: 40px; }
-.book__intro { position: relative; }
+.book { padding: var(--sec) var(--gutter) 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+.book__intro { position: relative; min-width: 0; }
 .book__bf { width: 48px; margin-bottom: 16px; }
 .book__title { margin: 0; font-family: var(--f-vi); font-weight: 500; font-size: calc(var(--h2) * 1.1); /* Cormorant nho hon Baskerville cung co */ line-height: 1.05; color: var(--moss); padding-bottom: .05em; }
-.book__lead { margin: 14px 0 28px; max-width: 34ch; font-size: 15px; }
+.book__lead { margin: 14px 0 24px; max-width: none; font-size: 15px; }
 .book__links { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
 
 .g-review { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-size: 13px; }
@@ -436,6 +436,42 @@ a.studio:hover .studio__cap svg { transform: translateX(4px); }
 .g-review__stars svg { width: 15px; height: 15px; }
 .g-review__txt { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(74, 68, 54, .35); }
 .g-review:hover .g-review__txt { text-decoration-color: currentColor; }
+
+/* Dai review Google canh form: moi lan 1 the, scroll-snap, goc vuong, vien manh */
+.rvs { margin: 0 0 28px; min-width: 0; }
+.rvs__track { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.rvs__track::-webkit-scrollbar { display: none; }
+.rvs__track:focus-visible { outline: 1.5px solid var(--moss); outline-offset: 4px; }
+.rv { flex: 0 0 100%; scroll-snap-align: start; display: grid; grid-template-columns: 112px minmax(0, 1fr); min-width: 0; text-decoration: none; color: var(--ink); background: #fffefb; border: 1px solid rgba(95, 88, 70, .12); transition: border-color var(--dur-hover) var(--ease-soft); }
+.rv:hover, .rv:focus-visible { border-color: rgba(95, 88, 70, .45); }
+.rv:focus-visible { outline: 1.5px solid var(--moss); outline-offset: 2px; }
+.rv__ph { contain: size; min-height: 150px; display: grid; grid-auto-rows: minmax(0, 1fr); gap: 2px; overflow: hidden; background: var(--mist); }
+.rv__ph img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rv__body { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px 12px; min-width: 0; }
+.rv__stars { display: inline-flex; gap: 2px; color: #b8975f; }
+.rv__stars svg { width: 13px; height: 13px; }
+.rv__text { font-family: var(--f-vi); font-size: 18px; line-height: 1.3; color: var(--ink); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden; }
+.rv__foot { margin-top: auto; padding-top: 8px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12.5px; }
+.rv__name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rv__src { display: inline-flex; align-items: center; gap: 4px; flex: none; color: var(--moss); }
+.rv__src i { display: inline-flex; }
+.rv__g svg { width: 14px; height: 14px; }
+.rv__go svg { width: 12px; height: 12px; transition: transform var(--dur-hover) var(--ease-soft); }
+.rv:hover .rv__go svg { transform: translate(1px, -1px); }
+html[lang="en"] .rv__text { font-family: var(--f-en); font-size: 13px; line-height: 1.5; }
+
+.rvs__ctl { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+.rvs__dots { display: flex; align-items: center; gap: 6px; }
+.rvs__dot { display: block; width: 8px; height: 2px; background: var(--moss); opacity: .3; transition: width var(--dur-ui) var(--ease-soft), opacity var(--dur-ui) var(--ease-soft); }
+.rvs__dot.is-on { width: 24px; opacity: 1; }
+.rvs__btns { display: flex; gap: 8px; }
+.rvs__btn { width: 40px; height: 40px; display: grid; place-items: center; padding: 0; background: transparent; color: var(--ink); border: 1px solid rgba(95, 88, 70, .35); border-radius: 0; cursor: pointer; transition: background-color var(--dur-ui) var(--ease-soft), color var(--dur-ui) var(--ease-soft), opacity var(--dur-ui) var(--ease-soft); }
+.rvs__btn svg { width: 18px; height: 18px; }
+.rvs__btn:hover:not(:disabled) { background: var(--ink); color: var(--pearl); }
+.rvs__btn:focus-visible { outline: 1.5px solid var(--moss); outline-offset: 2px; }
+.rvs__btn:disabled { opacity: .3; cursor: default; }
+@media (max-width: 400px) { .rv { grid-template-columns: 96px minmax(0, 1fr); } .rv__body { padding: 12px 12px 10px; } }
+@media (min-width: 1024px) and (max-height: 920px) { .book__intro { position: static; } }
 
 .form { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 16px; }
 .field { grid-column: 1 / -1; display: grid; gap: 8px; margin: 0; padding: 0; border: 0; min-width: 0; }

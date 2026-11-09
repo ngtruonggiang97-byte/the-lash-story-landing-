@@ -1,41 +1,25 @@
-# Cat anh TAM tu 2 bang gia Lash. Chay: python scripts/crop-lash-images.py
-# Nguon: assets/brand/lash-bang-gia-1.jpg, lash-bang-gia-2.jpg
-# Ra: assets/lash-looks/*.webp, assets/lash-lift/*.webp (ban goc) va public/img/lash-looks, public/img/lash-lift (de trang dung).
-# Toa do = ty le (x0, y0, x1, y1) tren chieu rong / cao cua anh, da co vao ~1% moi canh.
-# Anh kieu mi co CHU TEN de len va phan giai thap (~390px): chi la anh tam, se thay bang anh that.
+# Cat anh menu tu anh nguon 1254x1254 (assets/lash-extension/*.png, assets/lash-lift/lash-lift-{1,2}.png, assets/brow-lift/brow-lift.png).
+# Chay: python scripts/crop-lash-images.py   (can: pip install pillow)
+# Ra: public/img/lash-looks/*.webp (1000x1000, nguyen anh vuong), public/img/lash-lift/*.webp.
+# eye(): (cx, cy) = tam mat, W = chieu rong khung cat, tinh theo px anh nguon.
 import os
-from PIL import Image
+from PIL import Image, ImageFilter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-B = os.path.join(ROOT, "assets", "brand")
-SHEETS = {
-    "lash-bang-gia-1.jpg": ("lash-looks", {
-        "classic": (0.054, 0.190, 0.328, 0.340),
-        "baby-lash": (0.366, 0.190, 0.639, 0.341),
-        "classic-plus": (0.054, 0.396, 0.332, 0.545),
-        "kitten-lash": (0.370, 0.394, 0.645, 0.549),
-        "pixie-lash": (0.682, 0.395, 0.958, 0.545),
-        "sunny-lash": (0.376, 0.583, 0.651, 0.733),
-        "medusa-lash": (0.054, 0.793, 0.328, 0.944),
-        "anime-lash": (0.366, 0.793, 0.644, 0.944),
-    }),
-    "lash-bang-gia-2.jpg": ("lash-lift", {
-        "lash-lift-1": (0.043, 0.149, 0.510, 0.287),
-        "lash-lift-2": (0.515, 0.149, 0.962, 0.287),
-        "brow-lift": (0.043, 0.564, 0.957, 0.699),
-    }),
-}
+A = os.path.join(ROOT, "assets")
+OUT = os.path.join(ROOT, "public", "img")
 
-for fn, (folder, crops) in SHEETS.items():
-    path = os.path.join(B, fn)
-    if not os.path.exists(path):
-        raise SystemExit(f"Thieu file {path}")
-    im = Image.open(path).convert("RGB")
-    W, H = im.size
-    for name, (x0, y0, x1, y1) in crops.items():
-        c = im.crop((round(x0 * W), round(y0 * H), round(x1 * W), round(y1 * H)))
-        for base in (os.path.join(ROOT, "assets"), os.path.join(ROOT, "public", "img")):
-            d = os.path.join(base, folder)
-            os.makedirs(d, exist_ok=True)
-            c.save(os.path.join(d, name + ".webp"), "WEBP", quality=88)
-        print(name, c.size)
+def save(c, name, folder, size):
+    c = c.resize(size, Image.LANCZOS).filter(ImageFilter.UnsharpMask(radius=1.0, percent=35, threshold=2))
+    d = os.path.join(OUT, folder); os.makedirs(d, exist_ok=True)
+    c.save(os.path.join(d, name + ".webp"), "WEBP", quality=90, method=6)
+    print(name, size)
+
+# 8 anh Lash Extension: giu nguyen anh vuong, chi thu ve 1000x1000
+for n in ("classic", "baby-lash", "classic-plus", "kitten-lash", "pixie-lash", "sunny-lash", "medusa-lash", "anime-lash"):
+    save(Image.open(os.path.join(A, "lash-extension", n + ".png")).convert("RGB"), n, "lash-looks", (1000, 1000))
+for n in ("lash-lift-1", "lash-lift-2"):
+    save(Image.open(os.path.join(A, "lash-lift", n + ".png")).convert("RGB"), n, "lash-lift", (800, 800))
+# Brow Lift: cat bo vien trang tren / duoi (anh nguon co 2 dai trang, noi dung nam o y 111-589)
+bl = Image.open(os.path.join(A, "brow-lift", "brow-lift.png")).convert("RGB")
+save(bl.crop((0, 116, bl.width, 584)), "brow-lift", "lash-lift", (1600, 352))

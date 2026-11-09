@@ -1,5 +1,6 @@
 import { initNav } from "./nav.js";
 import { initForm } from "./form.js";
+import { initReviews } from "./reviews.js";
 import { initTracking, initContactTracking } from "./tracking.js";
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -155,5 +156,6 @@ const io2 = new IntersectionObserver((entries) => {
 /* ================= Nav (switch ngon ngu, doi mau), form, tracking ================= */
 initNav();
 initForm();
+initReviews();
 initTracking();
 initContactTracking();

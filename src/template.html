@@ -92,7 +92,7 @@
           <div class="story__text">
             <p class="story__body" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">{{story.body}}</p>
             <p class="story__facts" data-reveal="fade" style="--delay: calc(var(--stagger) * 3)">
-              <a href="https://www.google.com/maps/search/?api=1&amp;query=43+Qu%C3%A1n+Th%C3%A1nh+Ba+%C4%90%C3%ACnh+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener"><i>{{icon:map-pin}}</i>{{story.address}}</a>
+              <a href="{{mapsUrl}}" target="_blank" rel="noopener"><i>{{icon:map-pin}}</i>{{story.address}}</a>
             </p>
           </div>
           <figure class="story__ph story__ph--2" data-reveal="fade" style="--delay: calc(var(--stagger) * 2)">
@@ -164,9 +164,19 @@
         <h2 id="book-title" class="book__title" data-reveal="words">{{book.title}}</h2>
         <p class="book__lead" data-reveal="fade">{{book.lead}}</p>
 
+        <div class="rvs" data-rvs data-reveal="fade" role="region" aria-roledescription="carousel" aria-label="{{book.reviews.label}}">
+          <div class="rvs__track" data-rvs-track tabindex="0">{{@reviews}}</div>
+          <div class="rvs__ctl">
+            <div class="rvs__dots" aria-hidden="true">{{@reviewDots}}</div>
+            <div class="rvs__btns">
+              <button class="rvs__btn" type="button" data-rvs-prev aria-label="{{book.reviews.prev}}">{{icon:arrow-left}}</button>
+              <button class="rvs__btn" type="button" data-rvs-next aria-label="{{book.reviews.next}}">{{icon:arrow-right}}</button>
+            </div>
+          </div>
+        </div>
+
         <div class="book__links" data-reveal="fade">
-          <!-- TODO: thay bang link Google Maps chinh thuc cua tiem -->
-          <a class="g-review" href="https://www.google.com/maps/search/?api=1&amp;query=The+Lash+Story+43+Qu%C3%A1n+Th%C3%A1nh+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener">
+          <a class="g-review" href="{{mapsUrl}}" target="_blank" rel="noopener">
             <span class="g-review__logo"><i>{{icon:google}}</i></span>
             <span class="g-review__stars" aria-hidden="true"><i>{{icon:star}}</i><i>{{icon:star}}</i><i>{{icon:star}}</i><i>{{icon:star}}</i><i>{{icon:star}}</i></span>
             <span class="g-review__txt">{{book.review}}</span>
@@ -237,7 +247,7 @@
         <p class="foot__tag">{{footer.tagline}}</p>
       </div>
       <ul class="foot__info">
-        <li><i>{{icon:map-pin}}</i><a href="https://www.google.com/maps/search/?api=1&amp;query=43+Qu%C3%A1n+Th%C3%A1nh+Ba+%C4%90%C3%ACnh+H%C3%A0+N%E1%BB%99i" target="_blank" rel="noopener">{{footer.address}}</a></li>
+        <li><i>{{icon:map-pin}}</i><a href="{{mapsUrl}}" target="_blank" rel="noopener">{{footer.address}}</a></li>
         <li><i>{{icon:phone}}</i><a href="{{contact.tel}}" data-contact="hotline">{{contact.phone}}</a></li>
       </ul>
       <ul class="foot__social" aria-label="{{footer.social}}">

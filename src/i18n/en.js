@@ -109,6 +109,12 @@ export default {
     title: "Book a visit",
     lead: "Leave your name, phone number and the time you would like to visit. We will message you to confirm the time and choose a look together.",
     review: "See our Google reviews",
+    reviews: {
+      label: "What guests say on Google",
+      view: "View on Google Maps",
+      prev: "Previous review",
+      next: "Next review",
+    },
   },
 
   form: {
