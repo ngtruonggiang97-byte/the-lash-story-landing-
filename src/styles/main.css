@@ -85,21 +85,22 @@
   --lang-on-fg: var(--ink);
   position: fixed; inset: 0 0 auto 0; z-index: 40;
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  height: 64px; padding: 0 var(--gutter);
+  --nav-h: 64px;
+  height: var(--nav-h); padding: 0 var(--gutter);
   color: var(--nav-fg);
 }
-.nav.is-light { --nav-fg: var(--moss); --nav-line: rgba(95, 88, 70, .5); --lang-on-bg: var(--moss); --lang-on-fg: var(--pearl); }
+.nav.is-light, .nav.is-open { --nav-fg: var(--moss); --nav-line: rgba(95, 88, 70, .5); --lang-on-bg: var(--moss); --lang-on-fg: var(--pearl); }
 .nav::before, .nav::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; transition: opacity var(--dur-hover) var(--ease-soft); }
 .nav::before { bottom: -36px; background: linear-gradient(180deg, rgba(31, 27, 21, .55) 0%, rgba(31, 27, 21, 0) 100%); }   /* tren hero */
 .nav::after { background: rgba(250, 249, 244, .92); box-shadow: 0 1px 0 var(--line); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); opacity: 0; } /* tren nen be */
-.nav.is-light::before { opacity: 0; }
-.nav.is-light::after { opacity: 1; }
+.nav.is-light::before, .nav.is-open::before { opacity: 0; }
+.nav.is-light::after, .nav.is-open::after { opacity: 1; }
 
-.nav__logo { position: relative; display: block; flex: 0 0 auto; width: 168px; aspect-ratio: 786 / 140; }
+.nav__logo { position: relative; z-index: 2; display: block; flex: 0 0 auto; width: 168px; aspect-ratio: 786 / 140; }
 .nav__logo img { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity var(--dur-hover) var(--ease-soft); }
 .nav__logo-dark { opacity: 0; }
-.nav.is-light .nav__logo-light { opacity: 0; }
-.nav.is-light .nav__logo-dark { opacity: 1; }
+.nav.is-light .nav__logo-light, .nav.is-open .nav__logo-light { opacity: 0; }
+.nav.is-light .nav__logo-dark, .nav.is-open .nav__logo-dark { opacity: 1; }
 
 /* Switch: vien thuoc nho, vien manh. Nua dang xem = nen be chu toi; nua con lai trong suot chu sang.
    Moi nua cao 28px nhung vung bam ::before cao 44px. Hinh pill la ngoai le co chu y so voi quy tac goc vuong. */
@@ -119,6 +120,76 @@
 .lang a[aria-current="true"] { background: var(--lang-on-bg); color: var(--lang-on-fg); }
 .lang a:not([aria-current="true"]):hover { background: color-mix(in srgb, var(--nav-fg) 14%, transparent); }
 .nav :focus-visible { outline: 2px solid var(--nav-fg); outline-offset: 2px; }
+
+/* ---------- NAV: menu cuon nhanh ----------
+   Mobile first: thanh tren = logo + switch + nut hai gach; bam mo panel phu kin man hinh (nen pearl, nav doi sang .is-open = mau toi).
+   Tu 1100px: link section + CTA nam ngay trong nav (1 dong), nut hai gach va panel an. Mau theo --nav-fg / --nav-line.
+   Link nao dang xem co aria-current="location" (scroll-spy trong src/nav.js). Chi dung transform / opacity. */
+html.nav-open { overflow: hidden; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+.menu { scroll-margin-top: 64px; } .insta { scroll-margin-top: 88px; }
+
+.nav__end { position: relative; z-index: 2; display: flex; align-items: center; gap: 4px; }
+.nav__menu, .nav__cta { display: none; }
+.nav__toggle {
+  position: relative; width: 44px; height: 44px; margin-right: -11px; padding: 0; border: 0; background: none; color: var(--nav-fg);
+}
+.nav__toggle span {
+  position: absolute; left: 11px; top: 50%; width: 22px; height: 1px; background: currentColor;
+  transition: transform var(--dur-hover) var(--ease-soft);
+}
+.nav__toggle span:first-child { transform: translateY(-4px); }
+.nav__toggle span:last-child { transform: translateY(3px); }
+.nav.is-open .nav__toggle span:first-child { transform: rotate(45deg); }
+.nav.is-open .nav__toggle span:last-child { transform: rotate(-45deg); }
+
+.nav__panel {
+  position: fixed; inset: 0; z-index: 1; display: flex; flex-direction: column;
+  padding: calc(var(--nav-h) + 28px) var(--gutter) calc(20px + env(safe-area-inset-bottom));
+  background: var(--pearl); overflow-y: auto; overscroll-behavior: contain;
+  visibility: hidden; opacity: 0;
+  transition: opacity var(--dur-hover) var(--ease-soft), visibility 0s linear var(--dur-hover);
+}
+.nav.is-open .nav__panel { visibility: visible; opacity: 1; transition-delay: 0s; }
+.nav__plist { margin: 0; padding: 0; list-style: none; }
+.nav__plist li, .nav__pcta { opacity: 0; transform: translateY(10px); }
+.nav.is-open .nav__plist li, .nav.is-open .nav__pcta {
+  opacity: 1; transform: none;
+  transition: opacity var(--dur-hover) var(--ease-soft), transform var(--dur-hover) var(--ease-soft);
+  transition-delay: calc(var(--i, 4) * 60ms + 120ms);
+}
+.nav__plink {
+  display: block; padding: 12px 0; color: var(--moss); text-decoration: none;
+  font-family: var(--f-en); font-size: 30px; line-height: 1.2; letter-spacing: -.02em;
+}
+.nav__plink[aria-current="location"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 8px; }
+.nav__pcta {
+  margin-top: auto; display: grid; place-items: center; flex: 0 0 auto; height: 52px;
+  background: var(--moss); color: var(--pearl); text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .03em;
+}
+.nav__panel :focus-visible { outline-color: var(--moss); }
+
+@media (max-width: 359px) { .nav__logo { width: 116px; } }
+
+@media (min-width: 1100px) {
+  .nav__toggle, .nav__panel { display: none; }
+  .nav__end { gap: 28px; }
+  .nav__menu, .nav__cta { display: block; }
+  .nav__links { display: flex; align-items: center; gap: 28px; margin: 0; padding: 0; list-style: none; }
+  .nav__link { position: relative; display: block; padding: 8px 0; font-size: 13px; line-height: 1.2; color: var(--nav-fg); text-decoration: none; white-space: nowrap; }
+  .nav__link::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 3px; height: 1px; background: currentColor;
+    transform: scaleX(0); transform-origin: left; transition: transform var(--dur-hover) var(--ease-soft);
+  }
+  .nav__link:hover::after, .nav__link[aria-current="location"]::after { transform: scaleX(1); }
+  .nav__cta {
+    display: grid; place-items: center; height: 40px; padding: 0 22px; border: 1px solid var(--nav-line); border-radius: 0;
+    font-size: 13px; font-weight: 500; letter-spacing: .03em; color: var(--nav-fg); text-decoration: none; white-space: nowrap;
+    transition: background-color var(--dur-hover) var(--ease-soft), color var(--dur-hover) var(--ease-soft), border-color var(--dur-hover) var(--ease-soft);
+  }
+  .nav__cta:hover { background: var(--lang-on-bg); border-color: var(--lang-on-bg); color: var(--lang-on-fg); }
+  .menu { scroll-margin-top: 80px; } .insta { scroll-margin-top: 104px; }
+}
 
 .hero__copy { padding: 0 var(--gutter) 28px; }
 .hero__title {
@@ -168,7 +239,7 @@
 }
 
 @media (min-width: 1024px) {
-  .nav { height: 80px; } .nav__logo { width: 224px; }
+  .nav { --nav-h: 80px; } .nav__logo { width: 224px; }
   .lang { font-size: 12px; } .lang a { height: 30px; min-width: 38px; }
   .hero__copy { padding-bottom: 48px; }
   .hero__title { font-size: clamp(88px, 9.6vw, 160px); }

@@ -49,10 +49,20 @@
       <img class="nav__logo-light" src="/img/logo/logo-tls-pearl.png" alt="{{nav.logoAlt}}" width="668" height="120" />
       <img class="nav__logo-dark" src="/img/logo/logo-tls-ink.png" alt="" width="668" height="120" />
     </a>
-    <!-- Link that sang URL ngon ngu kia, cung tab. JS chi gan them ?query va #hash (UTM) vao href. -->
-    <div class="lang" role="group" aria-label="{{nav.langGroup}}">
-      <a href="{{path.vi}}" data-lang-link data-base="{{path.vi}}" lang="vi" hreflang="vi" aria-label="{{nav.viLabel}}"{{{cur.vi}}}>VI</a>
-      <a href="{{path.en}}" data-lang-link data-base="{{path.en}}" lang="en" hreflang="en" aria-label="{{nav.enLabel}}"{{{cur.en}}}>EN</a>
+    <div class="nav__end">
+      <!-- Menu cuon nhanh: desktop (>= 1100px) hien link + CTA; mobile hien nut hai gach mo panel. Nhan lay tu nav.items -->
+      <nav class="nav__menu" aria-label="{{nav.label}}"><ul class="nav__links">{{@navLinks}}</ul></nav>
+      <!-- Link that sang URL ngon ngu kia, cung tab. JS chi gan them ?query va #hash (UTM) vao href. -->
+      <div class="lang" role="group" aria-label="{{nav.langGroup}}">
+        <a href="{{path.vi}}" data-lang-link data-base="{{path.vi}}" lang="vi" hreflang="vi" aria-label="{{nav.viLabel}}"{{{cur.vi}}}>VI</a>
+        <a href="{{path.en}}" data-lang-link data-base="{{path.en}}" lang="en" hreflang="en" aria-label="{{nav.enLabel}}"{{{cur.en}}}>EN</a>
+      </div>
+      <a class="nav__cta" href="#dat-lich">{{book.title}}</a>
+      <button class="nav__toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-panel" aria-label="{{nav.open}}" data-label-open="{{nav.open}}" data-label-close="{{nav.close}}"><span></span><span></span></button>
+    </div>
+    <div class="nav__panel" id="nav-panel" data-nav-panel>
+      <ul class="nav__plist">{{@navPanel}}</ul>
+      <a class="nav__pcta" href="#dat-lich" data-nav-link-cta>{{book.title}}</a>
     </div>
   </header>
 
@@ -78,7 +88,7 @@
     </section>
 
     <!-- ========== OUR STORY ========== -->
-    <section class="story" aria-labelledby="story-title" data-reveal-group>
+    <section class="story" id="story" aria-labelledby="story-title" data-reveal-group>
       <!-- Tieu de dung class .coll__* (giu lai tu Collection cu) de khop font, co, le, khoang cach -->
       <div class="coll__head story__head">
         <h2 id="story-title" class="coll__title" data-reveal="chars">{{story.title}}</h2>
@@ -114,7 +124,7 @@
     </section>
 
     <!-- ========== OUR SERVICES: 2 STUDIO ========== -->
-    <section class="studios" aria-labelledby="studios-title" data-reveal-group>
+    <section class="studios" id="services" aria-labelledby="studios-title" data-reveal-group>
       <h2 id="studios-title" class="studios__title" data-reveal="words">{{services.title}}</h2>
       <!-- Moi the = 3 hang (logo / noi dung / hanh dong). Desktop: 2 the dung chung 3 hang (subgrid) nen logo thang hang
            voi logo, nut / mui ten thang hang voi nhau o day; hang giua tu co theo noi dung.
@@ -231,7 +241,7 @@
 
   <!-- ========== FOOTER ========== -->
   <footer class="foot">
-    <section class="insta" aria-labelledby="insta-title" data-reveal-group>
+    <section class="insta" id="insta" aria-labelledby="insta-title" data-reveal-group>
       <div class="insta__head">
         <h2 id="insta-title" class="insta__title" data-reveal="chars">{{insta.title}}</h2>
         <a class="insta__handle" href="{{social.instagram}}" target="_blank" rel="noopener" data-reveal="fade">{{insta.handle}}</a>

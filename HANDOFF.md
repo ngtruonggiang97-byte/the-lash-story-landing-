@@ -9,6 +9,12 @@
 - Ảnh menu là **ảnh tạm** cắt từ `assets/brand/lash-bang-gia-1.jpg`, `lash-bang-gia-2.jpg` bằng `python scripts/crop-lash-images.py` (có chữ đè, ~390px). Ảnh Our Story / hero / Instagram / og-share vẫn là ảnh Nail. Xem `SHOTLIST.md`.
 - Our Story hiện 1 mục thông tin (địa chỉ) và vẫn 4 ô ảnh. Our Services: logo Lash mờ (trang hiện tại), logo Nail đậm, dòng "Nail art trong cùng không gian" dưới logo Nail. Menu Lash Extension desktop: ảnh nhỏ 30%, hover thì ảnh trượt tới cạnh dòng và gạch chân dòng kéo dài tới ảnh (--ext tính trong place() ở src/main.js).
 
+## Menu cuộn nhanh (nav)
+- Desktop từ 1100px: link section + switch + CTA trong nav, 1 dòng. Dưới 1100px: nút hai gạch mở panel full màn hình (khóa cuộn, `inert` main / footer / sticky CTA, Esc / link / resize đóng).
+- Code: `src/nav.js` (`initQuickNav`, gồm scroll-spy IntersectionObserver `aria-current="location"`), khối CSS "NAV: menu cuon nhanh" trong `src/styles/main.css`, markup trong `src/template.html` (`.nav__end`, `.nav__panel`), danh sách `NAV_ITEMS` ở `build/render.js`, nhãn ở `nav.items / label / open / close` trong i18n.
+- Id section: `story`, `services`, `bang-gia` (cũ), `insta`, `dat-lich` (cũ, theo dõi nhưng không có link nào sáng). CTA tái dùng `book.title`.
+- Lỗi có sẵn từ trước (so bằng git stash): `npm run check` 2 FAIL form (không ra mạng), `check:i18n` 4 FAIL còn chữ Nail ở mô tả Our Services. Chưa sửa.
+
 ## Chạy dự án
 ```bash
 npm install

@@ -12,6 +12,9 @@ import { ICONS } from "./icons.js";
 
 export const DICTS = { vi, en };
 
+// Menu cuon nhanh: [id section, khoa nhan trong nav.items]. Dung chung cho desktop va panel mobile.
+export const NAV_ITEMS = [["story", "story"], ["services", "services"], ["bang-gia", "menu"], ["insta", "insta"]];
+
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const fill = (s, vars) => s.replace(/\{(\w+)\}/g, (_, k) => (k in vars ? vars[k] : `{${k}}`));
 const get = (obj, path) => path.split(".").reduce((o, k) => (o == null ? o : o[k]), obj);
@@ -83,6 +86,10 @@ function blocks(t) {
           ${plist(BROW_LIFT, B.items).replace('class="plist"', 'class="plist plist--2"')}
         </section>`;
 
+  const navLink = ([id, key], cls) => `<a class="${cls}" href="#${id}" data-nav-link>${esc(t.nav.items[key])}</a>`;
+  const navLinks = NAV_ITEMS.map((it) => `<li>${navLink(it, "nav__link")}</li>`).join("");
+  const navPanel = NAV_ITEMS.map((it, i) => `<li style="--i:${i}">${navLink(it, "nav__plink")}</li>`).join("");
+
   const instaHref = (code) => (code ? `https://www.instagram.com/p/${code}/` : SOCIAL.instagram);
   const insta = INSTA_POSTS.map((code, i) => `<a class="itile" style="--i:${i}" href="${instaHref(code)}" target="_blank" rel="noopener" aria-label="${esc(fill(t.insta.tile, { n: i + 1 }))}"><img src="/images/insta/insta-${i + 1}.webp" alt="" width="640" height="640" loading="lazy" decoding="async" /><span class="itile__ic">${ICONS.instagram}</span></a>`).join("\n        ");
 
@@ -105,6 +112,8 @@ function blocks(t) {
   };
 
   return {
+    navLinks,
+    navPanel,
     menuExt,
     menuLift,
     menuBrow,

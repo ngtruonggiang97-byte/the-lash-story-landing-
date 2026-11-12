@@ -57,7 +57,7 @@ for (const [path, tag] of [["/", "vi"], ["/en/", "en"]]) {
     const hit = (dy) => document.elementFromPoint(half.x + half.width / 2, half.y + half.height / 2 + dy)?.closest("a")?.lang;
     return { logo: r(".nav__logo"), lang: r(".lang"), hitTop: hit(-21), hitBottom: hit(21), w: innerWidth, sw: document.documentElement.scrollWidth };
   });
-  ok(g.logo.right <= g.lang.left - 8 && g.logo.left < 40 && g.lang.right > g.w - 40, `[${tag}] 390px: logo trai, switch phai, khong de nhau (logo.right ${g.logo.right | 0} < lang.left ${g.lang.left | 0})`);
+  ok(g.logo.right <= g.lang.left - 8 && g.logo.left < 40 && g.lang.right > g.w - 100, `[${tag}] 390px: logo trai, switch canh nut hai gach (phai), khong de nhau (logo.right ${g.logo.right | 0} < lang.left ${g.lang.left | 0})`);
   ok(Math.abs((g.logo.top + g.logo.bottom) / 2 - (g.lang.top + g.lang.bottom) / 2) < 3, `[${tag}] 390px: cung 1 hang`);
   ok(g.hitTop === "en" && g.hitBottom === "en", `[${tag}] vung bam nua EN cao >= 44px (cham +-21px van trung)`);
   ok(g.sw <= g.w, `[${tag}] 390px khong tran ngang`);

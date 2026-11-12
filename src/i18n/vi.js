@@ -17,6 +17,10 @@ export default {
     langGroup: "Ngôn ngữ",
     viLabel: "Tiếng Việt",
     enLabel: "English",
+    label: "Điều hướng nhanh",
+    open: "Mở menu",
+    close: "Đóng menu",
+    items: { story: "Our Story", services: "Our Services", menu: "Menu", insta: "Inspiration" },
   },
 
   hero: {
