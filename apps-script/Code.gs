@@ -30,8 +30,8 @@ function doPost(e) {
       text(d.utm_source), text(d.utm_medium), text(d.utm_campaign), text(d.utm_content), text(d.utm_term),
       "Mới",
     ];
-    // Click ID quang cao: chi tab Lash (cot sau "Trang thai"). Tab Nail giu nguyen.
-    if (d.brand === "lash") vals.push(text(d.gclid), text(d.gbraid), text(d.wbraid));
+    // Cot O, P, Q: ma click Google Ads, ghi cho ca Nail va Lash (sau cot "Trang thai")
+    vals.push(text(d.gclid), text(d.gbraid), text(d.wbraid));
     const range = sheet.getRange(row, 1, 1, vals.length);
     range.setNumberFormat("@");            // giu so 0 dau cua SDT, khong bi doi ngay/gio
     range.setValues([vals]);
