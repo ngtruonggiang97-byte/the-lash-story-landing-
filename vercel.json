@@ -1,5 +1,13 @@
 {
   "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "the-lash-story-landing.vercel.app" }],
+      "destination": "https://thelashstory.studio/$1",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/fonts/(.*)",

@@ -20,4 +20,6 @@ export const BUSINESS = {
   addressRegion: "Hà Nội",
   addressCountry: "VN",
   telephone: "+84866566819",
+  // Toa do tu link Google Maps cua Ryan (khop Plus Code 2RRV+RC Ba Dinh). Chua co gio mo cua nen khong khai openingHours.
+  geo: { latitude: 21.0421203, longitude: 105.8435925 },
 };

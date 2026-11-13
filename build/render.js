@@ -129,6 +129,7 @@ function blocks(t) {
     description: t.meta.description,
     telephone: BUSINESS.telephone,
     address: { "@type": "PostalAddress", streetAddress: BUSINESS.streetAddress, addressLocality: BUSINESS.addressLocality, addressRegion: BUSINESS.addressRegion, addressCountry: BUSINESS.addressCountry },
+    geo: { "@type": "GeoCoordinates", latitude: BUSINESS.geo.latitude, longitude: BUSINESS.geo.longitude },
     hasMap: MAPS_URL,
     sameAs: Object.values(SOCIAL).filter((u) => /^https:\/\//.test(u)),
   };
