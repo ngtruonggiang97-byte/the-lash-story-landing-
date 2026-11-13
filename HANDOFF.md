@@ -58,3 +58,12 @@ npm run i18n:table                # tạo lại I18N-REVIEW.md
 - `vercel.json`: header cache (fonts 1 năm immutable; images, img 1 ngày + SWR). CHƯA có redirect vercel.app -> domain chính (chờ Ryan xác nhận domain đã gắn).
 - Preload ảnh hero mobile/desktop theo media, fetchpriority high.
 - Còn chờ Ryan: GA4 Measurement ID (cấu hình trong GTM, không vào code), Ads chung hay riêng với Nail, giờ mở cửa/toạ độ, domain đã gắn Vercel chưa, www redirect, URL nút Nail (`NAIL_URL` đang "#").
+
+### Cập nhật 13/11/2026 (đã deploy main)
+- Domain thelashstory.studio đã gắn Vercel. `vercel.json` có redirect 301 từ the-lash-story-landing.vercel.app. Ryan xác nhận www đã redirect về apex.
+- JSON-LD có `geo` (21.0421203, 105.8435925, từ link Maps của Ryan). Chưa khai openingHours (Ryan chưa cần).
+- `NAIL_URL` = https://thenailstory.studio/ (nút Khám phá ở Our Services).
+- `Code.gs` ghi gclid, gbraid, wbraid vào O, P, Q cho CẢ Nail và Lash (bản live trước đó chỉ ghi cho Nail; không được đổi thành chỉ Lash). Tab Lash đã có tiêu đề O1:Q1.
+- GA4 Lash: G-4DZ28MX4VL, cấu hình trong GTM (tag đã nổ trong Preview). Ryan chưa Publish GTM, chưa link GA4 - Ads, chưa tạo conversion trong Ads.
+- Đang debug: Sheet chưa nhận gclid (dòng test có page_url chứa gclid nhưng O trống => deployment Apps Script chưa chạy code mới; kiểm tra bằng doGet trả "v2-gclid").
+- Chung tài khoản Ads với Nail: đặt tên conversion "Lash Story - ...", goal cấp campaign chỉ gồm conversion Lash.
