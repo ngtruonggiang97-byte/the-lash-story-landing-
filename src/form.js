@@ -1,4 +1,4 @@
-// Form dat lich: validate, truong an cho ads (lang, page_url, utm_*), gui di (neu da co endpoint), su kien Lead.
+// Form dat lich: validate, truong an cho ads (lang, page_url, utm_*, gclid / gbraid / wbraid), gui di (neu da co endpoint), su kien Lead.
 // Moi chu hien thi lay tu <script id="i18n-data"> (cung nguon voi HTML tinh, xem src/i18n).
 import { FORM_ENDPOINT, FORM_BRAND } from "./config/form.js";
 import { track } from "./tracking.js";
@@ -17,6 +17,21 @@ export function captureUtm() {
     return fromUrl;
   }
   return readStore();
+}
+
+/* ---------- Click ID quang cao (gclid / gbraid / wbraid): key rieng, tach khoi utm de doi utm khong mat ---------- */
+const CLICK_KEYS = ["gclid", "gbraid", "wbraid"];
+const CLICK_STORE_KEY = "ns_clickids";
+export function captureClickIds() {
+  const params = new URLSearchParams(location.search);
+  let saved = {};
+  try { saved = JSON.parse(sessionStorage.getItem(CLICK_STORE_KEY) || "{}"); } catch { /* private mode */ }
+  const fromUrl = {};
+  CLICK_KEYS.forEach((k) => { if (params.get(k)) fromUrl[k] = params.get(k); });
+  if (!Object.keys(fromUrl).length) return saved;
+  // Co click ID moi tren URL = lan click quang cao moi, thay bo cu (3 ma khong di chung nhau)
+  try { sessionStorage.setItem(CLICK_STORE_KEY, JSON.stringify(fromUrl)); } catch { /* private mode */ }
+  return fromUrl;
 }
 
 const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -39,6 +54,8 @@ export function initForm() {
     form.elements.lang.value = I.lang;
     form.elements.page_url.value = location.origin + location.pathname + location.search;
     UTM_KEYS.forEach((k) => { form.elements[k].value = utm[k] || ""; });
+    const ids = captureClickIds();
+    CLICK_KEYS.forEach((k) => { form.elements[k].value = ids[k] || ""; });
   };
   fillHidden();
 
@@ -113,6 +130,7 @@ export function initForm() {
       lang: f.get("lang"),
       page_url: f.get("page_url"),
       ...Object.fromEntries(UTM_KEYS.map((k) => [k, f.get(k) || ""])),
+      ...Object.fromEntries(CLICK_KEYS.map((k) => [k, f.get(k) || ""])),
       createdAt: new Date().toISOString(),
     };
 

@@ -7,7 +7,8 @@ import en from "../src/i18n/en.js";
 import { REVIEWS } from "../src/data/reviews.js";
 import { INSTA_POSTS } from "../src/data/insta.js";
 import { EXTENSION, SURCHARGE, LASH_LIFT, BROW_LIFT, TIME_SLOTS } from "../src/data/prices.js";
-import { SITE_URL, PATHS, OG_IMAGE, SOCIAL, NAIL_URL, MAPS_URL } from "../src/config/site.js";
+import { SITE_URL, PATHS, OG_IMAGE, SOCIAL, NAIL_URL, MAPS_URL, BUSINESS } from "../src/config/site.js";
+import { GTM_ID } from "../src/config/tracking.js";
 import { ICONS } from "./icons.js";
 
 export const DICTS = { vi, en };
@@ -111,7 +112,32 @@ function blocks(t) {
     done: t.form.done,
   };
 
+  // GTM: snippet chuan cua Google. <script> dat dau <head>, <noscript> ngay sau <body>. Trong ID thi khong in gi.
+  const gtmHead = GTM_ID ? `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');</script>` : "";
+  const gtmBody = GTM_ID ? `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>` : "";
+
+  // JSON-LD BeautySalon: chi du lieu that. Chua co gio mo cua / toa do / rating thi KHONG them.
+  const abs = (p) => SITE_URL + p;
+  const ld = {
+    "@context": "https://schema.org",
+    "@type": "BeautySalon",
+    "@id": SITE_URL + "/#salon",
+    name: BUSINESS.name,
+    url: abs(PATHS[t.lang]),
+    image: abs(OG_IMAGE),
+    logo: abs("/img/logo/logo-tls-ink.png"),
+    description: t.meta.description,
+    telephone: BUSINESS.telephone,
+    address: { "@type": "PostalAddress", streetAddress: BUSINESS.streetAddress, addressLocality: BUSINESS.addressLocality, addressRegion: BUSINESS.addressRegion, addressCountry: BUSINESS.addressCountry },
+    hasMap: MAPS_URL,
+    sameAs: Object.values(SOCIAL).filter((u) => /^https:\/\//.test(u)),
+  };
+  const jsonLd = `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>`;
+
   return {
+    gtmHead,
+    gtmBody,
+    jsonLd,
     navLinks,
     navPanel,
     menuExt,

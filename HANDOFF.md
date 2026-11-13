@@ -48,3 +48,13 @@ npm run i18n:table                # tạo lại I18N-REVIEW.md
 4. Ảnh thật: hero, Our Story, ảnh từng kiểu mi (ảnh tạm cắt từ bảng giá, có chữ đè và độ phân giải thấp), og-share.
 5. Nối form (xem mục Chạy ads) và gắn tên miền riêng nếu có (`SITE_URL` trong `src/config/site.js`, đang là the-lash-story-landing.vercel.app).
 6. Giờ mở cửa thật (`src/data/prices.js`, `TIME_SLOTS`), duyệt chữ EN trong `I18N-REVIEW.md`.
+
+## Chuẩn bị Google Ads (phiên 13/11/2026)
+- GTM `GTM-PWKFLDJX` (`GTM_ID` trong `src/config/tracking.js`): snippet chuẩn, in bởi `build/render.js` (gtmHead sau charset, gtmBody ngay sau `<body>`). Đã gỡ gtag trực tiếp. Không dùng đoạn "gtm.js async + gtag" thiếu `gtm.start` (GTM không khởi tạo đúng, đo thiếu/sai).
+- dataLayer: `generate_lead` {lang} khi form gửi OK; `contact` {lang, method} khi bấm Zalo/WhatsApp/hotline (`src/tracking.js`). Meta Pixel giữ nguyên (ID trống).
+- Form: ẩn `gclid`, `gbraid`, `wbraid`, lưu sessionStorage key `ns_clickids` (tách khỏi `ns_utm`), gửi trong payload (`captureClickIds` ở `src/form.js`).
+- Apps Script: tab Lash 14 cột A-N ("Trạng thái" = N). `Code.gs` ghi thêm gclid, gbraid, wbraid vào O, P, Q chỉ khi brand = lash. Ryan cần: thêm tiêu đề O1:Q1, dán code, cập nhật ĐÚNG deployment có ID khớp URL /exec trong `FORM_ENDPOINT` (New version, không New deployment).
+- SEO: `SITE_URL` = https://thelashstory.studio (`src/config/site.js`). Canonical, hreflang, og:url, og:image đã trỏ apex. JSON-LD BeautySalon (tên, địa chỉ, SĐT, sameAs, url, image, hasMap), CHƯA có openingHours/geo/rating vì chưa có dữ liệu thật.
+- `vercel.json`: header cache (fonts 1 năm immutable; images, img 1 ngày + SWR). CHƯA có redirect vercel.app -> domain chính (chờ Ryan xác nhận domain đã gắn).
+- Preload ảnh hero mobile/desktop theo media, fetchpriority high.
+- Còn chờ Ryan: GA4 Measurement ID (cấu hình trong GTM, không vào code), Ads chung hay riêng với Nail, giờ mở cửa/toạ độ, domain đã gắn Vercel chưa, www redirect, URL nút Nail (`NAIL_URL` đang "#").

@@ -8,6 +8,7 @@
 <html lang="{{lang}}">
 <head>
   <meta charset="utf-8" />
+  {{@gtmHead}}
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>{{meta.title}}</title>
   <meta name="description" content="{{meta.description}}" />
@@ -33,21 +34,26 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="{{meta.imageAlt}}" />
   <meta name="twitter:card" content="summary_large_image" />
+  <!-- Preload anh hero dung theo man hinh (khop <picture> o hero) -->
+  <link rel="preload" as="image" href="/images/hero/hero-mobile.webp" media="(max-width: 1023px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="/images/hero/hero-desktop.webp" media="(min-width: 1024px)" fetchpriority="high" />
   <link rel="preload" href="/fonts/LibreBaskerville.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/CormorantGaramond.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/JosefinSans.woff2" as="font" type="font/woff2" crossorigin />
   <script>document.documentElement.classList.add("js")</script>
+  {{@jsonLd}}
   <link rel="stylesheet" href="/src/styles/base.css" />
   <link rel="stylesheet" href="/src/styles/main.css" />
 </head>
 <body>
+  {{@gtmBody}}
   <a class="skip" href="#dat-lich">{{a11y.skip}}</a>
 
   <!-- ========== NAV: logo trai, switch ngon ngu phai ========== -->
   <header class="nav" data-nav>
     <a href="#" class="nav__logo" aria-label="{{nav.home}}">
       <img class="nav__logo-light" src="/img/logo/logo-tls-pearl.png" alt="{{nav.logoAlt}}" width="668" height="120" />
-      <img class="nav__logo-dark" src="/img/logo/logo-tls-ink.png" alt="" width="668" height="120" />
+      <img class="nav__logo-dark" src="/img/logo/logo-tls-ink.png" alt="" aria-hidden="true" width="668" height="120" />
     </a>
     <div class="nav__end">
       <!-- Menu cuon nhanh: desktop (>= 1100px) hien link + CTA; mobile hien nut hai gach mo panel. Nhan lay tu nav.items -->
@@ -204,6 +210,9 @@
         <input type="hidden" name="utm_campaign" value="" />
         <input type="hidden" name="utm_content" value="" />
         <input type="hidden" name="utm_term" value="" />
+        <input type="hidden" name="gclid" value="" />
+        <input type="hidden" name="gbraid" value="" />
+        <input type="hidden" name="wbraid" value="" />
 
         <div class="field">
           <label for="f-name">{{form.name}}</label>
