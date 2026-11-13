@@ -127,7 +127,7 @@ for (const [path, d, tag] of [["/", vi, "vi"], ["/en/", en, "en"]]) {
 }
 
 /* ============ 5. Form + su kien ads ============ */
-const stubs = () => { window.__ev = []; window.fbq = (...a) => window.__ev.push(["fbq", ...a]); window.gtag = (...a) => window.__ev.push(["gtag", ...a]); document.addEventListener("click", (e) => { if (e.target.closest("a")) e.preventDefault(); }, true); };
+const stubs = () => { window.__ev = []; window.fbq = (...a) => window.__ev.push(["fbq", ...a]); document.addEventListener("click", (e) => { if (e.target.closest("a")) e.preventDefault(); }, true); };
 const fillForm = async (page, { phone, date }) => {
   await page.fill("#f-name", "Emma");
   await page.fill("#f-phone", phone);
@@ -154,10 +154,10 @@ const tomorrow = (() => { const d = new Date(Date.now() + 86400000); return `${d
   ok(/^Thank you, Emma/.test(done) && /\d{1,2} [A-Z][a-z]+ \d{4} at 1:00 PM/.test(done) && done.includes("+1 415 555 2671"), `EN: thong bao thanh cong: ${done}`);
   const ev = await page.evaluate(() => window.__ev);
   const lead = ev.filter((e) => e[0] === "fbq" && e[2] === "Lead");
-  if (PROD) ok(lead.length === 0 && !ev.some((e) => e[2] === "generate_lead"), "BUILD: chua co FORM_ENDPOINT thi KHONG ban Lead (khong Lead gia)");
+  if (PROD) ok(lead.length === 0 && !(await page.evaluate(() => (window.dataLayer || []).some((e) => e.event === "generate_lead"))), "BUILD: chua co FORM_ENDPOINT thi KHONG ban Lead (khong Lead gia)");
   else {
     ok(lead.length === 1 && lead[0][3].lang === "en", `EN: Lead ban dung 1 lan, kem lang=en: ${JSON.stringify(lead)}`);
-    ok(ev.some((e) => e[0] === "gtag" && e[2] === "generate_lead" && e[3].lang === "en"), "EN: Google generate_lead kem lang");
+    ok((await page.evaluate(() => window.dataLayer || [])).some((e) => e.event === "generate_lead" && e.lang === "en"), "EN: dataLayer generate_lead kem lang");
   }
   await page.evaluate(() => { document.querySelector('[data-contact="whatsapp"]').dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true })); document.querySelector('[data-contact="hotline"]').dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true })); });
   const ct = (await page.evaluate(() => window.__ev)).filter((e) => e[0] === "fbq" && e[2] === "Contact").map((e) => e[3]);
