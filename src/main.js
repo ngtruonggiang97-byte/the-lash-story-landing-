@@ -43,7 +43,7 @@ if (new URLSearchParams(location.search).has("freeze")) document.documentElement
 }
 
 /* ================= Lash Extension: tablist + khung anh ================= */
-// HTML (tab, panel, anh) da dung san trong build/render.js. JS chi doi trang thai chon + vet nacre.
+// HTML (tab, panel, anh) da dung san trong build/render.js. JS chi doi trang thai chon.
 const lx = $("[data-lx]");
 if (lx) {
   const tabs = $$('[role="tab"]', lx);
@@ -73,14 +73,8 @@ if (lx) {
       t.tabIndex = on ? 0 : -1;
       t.classList.toggle("is-on", on);
       panels[k].classList.toggle("is-on", on);
-      panels[k].classList.remove("is-sheen");
     });
     place(i);
-    if (!reduce) {
-      const p = panels[i];
-      void p.offsetWidth;                       // chay lai animation moi lan doi anh
-      p.classList.add("is-sheen");
-    }
     return true;
   }
   // Mobile: hang khac dong lai o phia tren se day trang len; giu hang vua bam dung yen trong luc mo / dong
