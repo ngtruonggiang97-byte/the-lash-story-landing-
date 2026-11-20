@@ -274,9 +274,22 @@
         <li><a href="{{social.facebook}}" target="_blank" rel="noopener" aria-label="Facebook"><i>{{icon:facebook}}</i></a></li>
         <li><a href="{{social.tiktok}}" target="_blank" rel="noopener" aria-label="TikTok"><i>{{icon:tiktok}}</i></a></li>
       </ul>
-      <p class="foot__copy">{{footer.copy}}</p>
+      <div class="foot__copy">
+        <p>{{footer.copy}}</p>
+        <button type="button" class="foot__policy" data-policy-open aria-haspopup="dialog">{{footer.policyLink}}</button>
+      </div>
     </div>
   </footer>
+
+  <dialog class="policy" data-policy aria-labelledby="policy-title">
+    <div class="policy__box">
+      <div class="policy__head">
+        <h2 id="policy-title" class="policy__title">{{footer.policyTitle}}</h2>
+        <button type="button" class="policy__x" data-policy-close aria-label="{{footer.policyClose}}"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="policy__body" tabindex="0">{{{footer.policyHtml}}}</div>
+    </div>
+  </dialog>
 
   <a href="#dat-lich" class="sticky-cta" data-sticky aria-hidden="true" tabindex="-1">{{sticky.cta}}</a>
 

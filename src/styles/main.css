@@ -621,7 +621,24 @@ html[lang="en"] .rv__text { font-family: var(--f-en); font-size: 13px; line-heig
 .foot__social a:hover { background: rgba(250, 249, 244, .1); border-color: rgba(250, 249, 244, .6); }
 .foot__social i { display: grid; place-items: center; line-height: 0; } /* <i> inline lam lech icon theo baseline */
 .foot__social svg { display: block; width: 17px; height: 17px; }
-.foot__copy { margin: 8px 0 0; padding-top: 24px; border-top: 1px solid rgba(250, 249, 244, .18); font-size: 12px; opacity: .75; }
+.foot__copy { margin: 8px 0 0; padding-top: 24px; border-top: 1px solid rgba(250, 249, 244, .18); font-size: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.foot__copy p { margin: 0; opacity: .75; }
+.foot__policy { padding: 0; border: 0; background: none; color: inherit; font: inherit; opacity: .75; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; transition: opacity var(--dur-ui) var(--ease-soft); }
+.foot__policy:hover { opacity: 1; }
+
+/* Popup chinh sach bao mat */
+.policy { border: 0; padding: 0; background: transparent; color: var(--moss); max-width: none; max-height: none; width: 100%; height: 100%; }
+.policy:not([open]) { display: none; }
+.policy::backdrop { background: rgba(31, 27, 21, .55); }
+.policy[open] { display: grid; place-items: center; padding: 16px; }
+.policy__box { width: min(560px, 100%); max-height: min(80vh, 100%); display: flex; flex-direction: column; background: var(--pearl); box-shadow: 0 30px 60px -24px rgba(31, 27, 21, .5); }
+.policy__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px 16px; border-bottom: 1px solid rgba(95, 88, 70, .2); }
+.policy__title { margin: 0; font-family: var(--f-en); font-weight: 400; font-size: 22px; letter-spacing: -.02em; }
+.policy__x { display: grid; place-items: center; width: 44px; height: 44px; margin: -8px -10px -8px 0; border: 0; background: none; color: inherit; font-size: 28px; line-height: 1; cursor: pointer; }
+.policy__body { overflow-y: auto; padding: 20px 24px 28px; font-size: 14px; line-height: 1.65; overscroll-behavior: contain; }
+.policy__body p { margin: 0 0 12px; }
+.policy__body h3 { margin: 20px 0 6px; font-size: 14px; font-weight: 600; }
+html:has(.policy[open]) { overflow: hidden; }
 :where(.foot__base) :focus-visible { outline-color: var(--pearl); }
 @media (min-width: 1024px) {
   .foot__base { grid-template-columns: 1.4fr 1fr auto; align-items: start; padding-top: 72px; }

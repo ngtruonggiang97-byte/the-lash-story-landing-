@@ -169,6 +169,22 @@ export default {
     address: "43 Quan Thanh Street, Ba Dinh, Hanoi",
     social: "Social media",
     copy: "© 2026 The Lash Story",
+    policyLink: "Privacy policy",
+    policyTitle: "Privacy policy",
+    policyClose: "Close",
+    policyHtml: `<p>The Lash Story only collects what you enter in the booking form, to confirm your appointment and talk through your lash style.</p>
+<h3>What we collect</h3>
+<p>Your name, phone number / WhatsApp, preferred date and time, and any note you leave.</p>
+<h3>How we use it</h3>
+<p>The studio uses it to message or call you to confirm the booking and discuss the service. We do not use it for anything else without your consent.</p>
+<h3>Sharing</h3>
+<p>We do not sell or share your information with third parties, unless required by law. It is stored in the studio's internal booking tools.</p>
+<h3>Cookies and measurement</h3>
+<p>This page may use ad measurement tools (such as Meta Pixel and Google) to understand how visitors find us. This data is anonymous and not used to identify you.</p>
+<h3>Your rights</h3>
+<p>You can ask to see, correct or delete your information at any time via WhatsApp / hotline 0866 566 819.</p>
+<h3>Contact</h3>
+<p>The Lash Story, 43 Quan Thanh Street, Ba Dinh, Hanoi.</p>`,
   },
 
   sticky: { cta: "Book now" },

@@ -67,3 +67,6 @@ npm run i18n:table                # tạo lại I18N-REVIEW.md
 - GA4 Lash: G-4DZ28MX4VL, cấu hình trong GTM (tag đã nổ trong Preview). Ryan chưa Publish GTM, chưa link GA4 - Ads, chưa tạo conversion trong Ads.
 - Đang debug: Sheet chưa nhận gclid (dòng test có page_url chứa gclid nhưng O trống => deployment Apps Script chưa chạy code mới; kiểm tra bằng doGet trả "v2-gclid").
 - Chung tài khoản Ads với Nail: đặt tên conversion "Lash Story - ...", goal cấp campaign chỉ gồm conversion Lash.
+
+### Cập nhật 20/11/2026
+- Thêm popup Chính sách bảo mật ở footer (dialog, song ngữ, nội dung ở `footer.policyHtml` trong i18n). Nội dung do Claude soạn dựa trên các trường form, Ryan cần đọc lại.

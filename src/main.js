@@ -147,6 +147,18 @@ const io2 = new IntersectionObserver((entries) => {
 });
 [$(".hero"), $("#dat-lich"), $(".foot")].forEach((el) => io2.observe(el));
 
+/* ================= Popup chinh sach bao mat ================= */
+{
+  const dlg = $("[data-policy]");
+  const open = $("[data-policy-open]");
+  if (dlg && open && dlg.showModal) {
+    open.addEventListener("click", () => { dlg.showModal(); $(".policy__body", dlg).scrollTop = 0; });
+    $("[data-policy-close]", dlg).addEventListener("click", () => dlg.close());
+    dlg.addEventListener("click", (e) => { if (!e.target.closest(".policy__box")) dlg.close(); });   // bam nen toi de dong
+    dlg.addEventListener("close", () => open.focus());
+  }
+}
+
 /* ================= Nav (switch ngon ngu, doi mau), form, tracking ================= */
 initNav();
 initForm();

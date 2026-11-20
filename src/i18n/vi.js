@@ -170,6 +170,22 @@ export default {
     address: "43 Quán Thánh, Ba Đình, Hà Nội",
     social: "Mạng xã hội",
     copy: "© 2026 The Lash Story",
+    policyLink: "Chính sách bảo mật",
+    policyTitle: "Chính sách bảo mật",
+    policyClose: "Đóng",
+    policyHtml: `<p>The Lash Story chỉ thu thập thông tin bạn điền trong form đặt lịch để xác nhận lịch hẹn và tư vấn kiểu mi.</p>
+<h3>Thông tin chúng tôi thu thập</h3>
+<p>Tên, số điện thoại / Zalo, ngày giờ mong muốn và ghi chú bạn để lại.</p>
+<h3>Mục đích sử dụng</h3>
+<p>Studio dùng thông tin này để nhắn tin hoặc gọi xác nhận lịch và trao đổi về dịch vụ. Chúng tôi không dùng cho mục đích nào khác khi chưa có sự đồng ý của bạn.</p>
+<h3>Chia sẻ thông tin</h3>
+<p>Chúng tôi không bán hay chia sẻ thông tin của bạn cho bên thứ ba, trừ khi pháp luật yêu cầu. Thông tin được lưu trên công cụ quản lý lịch hẹn nội bộ của studio.</p>
+<h3>Cookie và đo lường</h3>
+<p>Trang có thể dùng công cụ đo lường quảng cáo (như Meta Pixel, Google) để hiểu cách khách tìm đến trang. Dữ liệu này ở dạng ẩn danh, không dùng để nhận diện riêng bạn.</p>
+<h3>Quyền của bạn</h3>
+<p>Bạn có thể yêu cầu xem, chỉnh sửa hoặc xóa thông tin của mình bất cứ lúc nào qua Zalo / hotline 0866 566 819.</p>
+<h3>Liên hệ</h3>
+<p>The Lash Story, 43 Quán Thánh, Ba Đình, Hà Nội.</p>`,
   },
 
   sticky: { cta: "Đặt lịch" },
